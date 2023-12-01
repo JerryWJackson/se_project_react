@@ -1,0 +1,38 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 60px;
+  padding: 0 20px 0;
+  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-weight: 700;
+}
+
+.header__app-logo {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.header__app-logo_image {
+  /* background-image: url('../../../public/images/logo.svg');
+  background-size: contain; */
+}
+
+.header__avatar {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.header__avatar_button {
+  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-weight: 700;
+}
+
+.header__avatar_image {
+  /* background-image: url('../../../public/images/my-avatar.png');
+  background-size: contain; */
+  height: 40px;
+  border-radius: 50%;
+}
