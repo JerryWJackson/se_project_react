@@ -3,15 +3,15 @@ import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import { useEffect, useState } from "react";
 import ItemModal from "../ItemModal/ItemModal";
+import { useEffect, useState } from "react";
 import { getForecastWeather, parseWeatherData } from "../../utils/weatherApi";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [temp, setTemp] = useState(0);
-  const [weather, setWeather] = useState('');
+  const [weather, setWeather] = useState("");
   const [isDay, setIsDay] = useState(false);
 
   const handleCreateModal = () => {
@@ -23,23 +23,22 @@ function App() {
   };
 
   const handleSelectedCard = (card) => {
-    setActiveModal('preview');
+    setActiveModal("preview");
     setSelectedCard(card);
   };
 
   useEffect(() => {
-    getForecastWeather().then((data) => {
-      const conditions = parseWeatherData(data);
-      console.log(`Conditions are ${conditions}`);
+    getForecastWeather().then((conditions) => {
       setTemp(conditions.temp);
-      const weatherCond = conditions.cond.toLowerCase();
-      setWeather(weatherCond);
-      if (conditions.time > conditions.sunrise && conditions.time < conditions.sunset) {
+      setWeather(conditions.cond);
+      if (
+        conditions.time > conditions.sunrise &&
+        conditions.time < conditions.sunset
+      ) {
         setIsDay(true);
       } else {
         setIsDay(false);
       }
-      console.log(conditions);
     });
   }, []);
 
@@ -47,7 +46,12 @@ function App() {
     <>
       <div>
         <Header onCreateModal={handleCreateModal} />
-        <Main day={isDay} weather={weather} temp={temp} onSelectCard={handleSelectedCard} />
+        <Main
+          day={isDay}
+          weather={weather}
+          temp={temp}
+          onSelectCard={handleSelectedCard}
+        />
         <Footer />
         {activeModal === "create" && (
           <ModalWithForm title="New Garment" onClose={handleCloseModal}>

@@ -7,12 +7,14 @@ export const getForecastWeather = () => {
     } else {
       return Promise.reject(`Error: ${res.status}`);
     }
-  });
+  }).then((data) => {
+    parseWeatherData(data);
+  })
   return weatherApi;
 };
 
 
-export const parseWeatherData = (data) => {
+const parseWeatherData = (data) => {
   const main = data.main;
   const temperature = main && main.temp;
   const weather = data.weather;
@@ -21,7 +23,7 @@ export const parseWeatherData = (data) => {
   const misc = data.sys;
   const sunrise = misc && misc.sunrise;
   const sunset = misc&& misc.sunset;
-  const weatherData = { temp: Math.ceil(temperature), cond: conditions, time: currentTime, sunrise: sunrise, sunset: sunset}
+  const weatherData = { temp: Math.ceil(temperature), cond: conditions.toLowerCase(), time: currentTime, sunrise: sunrise, sunset: sunset}
   console.log(weatherData);
   return weatherData;
 }
