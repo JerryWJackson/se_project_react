@@ -29,11 +29,11 @@ function App() {
 
   useEffect(() => {
     getForecastWeather().then((conditions) => {
-      setTemp(conditions.temp);
-      setWeather(conditions.cond);
+      setTemp(conditions?.temp);
+      setWeather(conditions?.cond);
       if (
-        conditions.time > conditions.sunrise &&
-        conditions.time < conditions.sunset
+        conditions?.time > conditions?.sunrise &&
+        conditions?.time < conditions?.sunset
       ) {
         setIsDay(true);
       } else {
