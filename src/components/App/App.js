@@ -40,7 +40,7 @@ function App() {
         setIsDay(false);
       }
     });
-  }, []);
+  });
 
   return (
     <>
