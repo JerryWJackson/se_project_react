@@ -4,10 +4,10 @@ const ItemModal = ({ selectedCard, onClose }) => {
   return (
     <div className="modal">
       <div className="modal__content">
-      <button type="button" onClick={onClose}>Close</button>
-        <img src={selectedCard.link} />
-        <div>{selectedCard.name}</div>
-        <div>Weather: {selectedCard.weather}</div>
+      <button className='modal__button-close' type="button" onClick={onClose}></button>
+        <img className='modal__item-image' src={selectedCard.link} alt={selectedCard.name} />
+        <div className='modal__item-name'>{selectedCard.name}</div>
+        <div className='modal__item-weather'>Weather: {selectedCard.weather}</div>
       </div>
     </div>
   );

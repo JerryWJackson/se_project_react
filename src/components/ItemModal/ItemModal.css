@@ -1,0 +1,47 @@
+.modal__content {
+  display: flex;
+  flex-direction: row;
+  max-width: 670px;
+  width: 100vw;
+  max-height: 368px;
+  height: 100vh;
+}
+
+.modal__item-image {
+  border-radius: 20px;
+}
+
+.modal__item-name {
+  position: relative;
+  height: 24px;
+  right: calc(100% - 460px) ;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2;
+  margin-top: 20px;
+  background-color: white;
+  border: 1px solid white;
+  border-radius: 4px;
+  padding: 2px, 12px;
+}
+
+.modal__item-weather {
+  position: relative;
+  top: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-top: 12px;
+}
+
+.modal__button-close {
+  background-image: url(../../images/modal__button-close.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 16px;
+  height: 16px;
+  border: none;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}

@@ -12,8 +12,36 @@
 
 .modal__content {
   background-color: white;
+  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-weight: 700;
   max-width: 496px;
-  width: 100%;
+  width: 100vw;
+  max-height: 436px;
+  height: 100vh;
   border-radius: 20px;
-  padding: 34px 36px;;
+  padding: 20px 20px;
+  position: relative;
+}
+
+.modal__button-close {
+  background-image: url(../../images/modal__button-close.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 16px;
+  height: 16px;
+  border: none;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+.modal__form_input {
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+  width: 440px;
+}
+
+.modal__title {
+  font-size: 16px;
+  line-height: 1.2;
 }
