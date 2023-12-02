@@ -10,17 +10,17 @@
   background-color: rgba(0, 0, 0, 0.8);
 }
 
-.modal__content {
+.modal_type_addGarment .modal__content {
   background-color: white;
   font-family: "Cabinet Grotesk", Arial, sans-serif;
   font-weight: 700;
-  max-width: 496px;
-  width: 100vw;
-  max-height: 436px;
-  height: 100vh;
+  width: 496px;
+  height: 436px;
   border-radius: 20px;
   padding: 20px 20px;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .modal__button-close {
