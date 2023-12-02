@@ -15,8 +15,8 @@
 }
 
 .header__app-logo_image {
-  /* background-image: url('../../../public/images/logo.svg');
-  background-size: contain; */
+  /* background-image: url('../../../public/images/logo.svg'); */
+  background-size: contain;
 }
 
 .header__avatar {
