@@ -30,6 +30,7 @@ function App() {
   useEffect(() => {
     getForecastWeather().then((data) => {
       const conditions = parseWeatherData(data);
+      console.log(`Conditions are ${conditions}`);
       setTemp(conditions.temp);
       const weatherCond = conditions.cond.toLowerCase();
       setWeather(weatherCond);

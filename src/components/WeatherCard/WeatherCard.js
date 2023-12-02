@@ -40,12 +40,13 @@ const weatherOptions = [
 ];
 
 const WeatherCard = ({ day, weather, temp = "" }) => {
+  console.log(`day is ${day}, weather is ${weather}, temp is ${temp}`)
   const imgSrc = weatherOptions.filter((item) => {
     return item.day === day && item.weather === weather;
   });
   console.log('imgSrc', imgSrc);
 
-  let imgSrcUrl;
+  let imgSrcUrl = '';
   if (imgSrcUrl !== 0) {
     imgSrcUrl = imgSrc[0].url || "";
   }
