@@ -3,11 +3,11 @@ import WeatherCard from "../WeatherCard/WeatherCard";
 import ItemCard from "../ItemCard/ItemCard";
 import './Main.css';
 
-function Main({ weatherTemp, onSelectCard}) {
+function Main({ day, weather, temp, onSelectCard}) {
   return <main className="main">
-    <WeatherCard day={false} type={"storm"} weatherTemp={weatherTemp} />
+    <WeatherCard day={day} weather={weather} temp={temp} />
     <section className="card_section" id="card-section">
-      <p className="card_section-title">Today is {weatherTemp} / You may want to wear:</p>
+      <p className="card_section-title">Today is {temp} / You may want to wear:</p>
       <div className="card_items">
         {defaultClothingItems.map((item) => {
           return <ItemCard item={item} key={item._id} onSelectCard={onSelectCard} />;

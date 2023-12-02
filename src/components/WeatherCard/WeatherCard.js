@@ -1,58 +1,58 @@
 import "./WeatherCard.css";
 
 const weatherOptions = [
-  { url: require("../images/day/clear.svg").default, day: true, type: "clear" },
+  { url: require("../images/day/clear.svg").default, day: true, weather: "clear" },
   {
     url: require("../images/day/clouds.svg").default,
     day: true,
-    type: "clouds",
+    weather: "clouds",
   },
-  { url: require("../images/day/fog.svg").default, day: true, type: "fog" },
-  { url: require("../images/day/rain.svg").default, day: true, type: "rain" },
-  { url: require("../images/day/snow.svg").default, day: true, type: "snow" },
-  { url: require("../images/day/storm.svg").default, day: true, type: "storm" },
+  { url: require("../images/day/fog.svg").default, day: true, weather: "fog" },
+  { url: require("../images/day/rain.svg").default, day: true, weather: "rain" },
+  { url: require("../images/day/snow.svg").default, day: true, weather: "snow" },
+  { url: require("../images/day/storm.svg").default, day: true, weather: "storm" },
   {
     url: require("../images/night/clear.svg").default,
     day: false,
-    type: "clear",
+    weather: "clear",
   },
   {
     url: require("../images/night/clouds.svg").default,
     day: false,
-    type: "clouds",
+    weather: "clouds",
   },
-  { url: require("../images/night/fog.svg").default, day: false, type: "fog" },
+  { url: require("../images/night/fog.svg").default, day: false, weather: "fog" },
   {
     url: require("../images/night/rain.svg").default,
     day: false,
-    type: "rain",
+    weather: "rain",
   },
   {
     url: require("../images/night/snow.svg").default,
     day: false,
-    type: "snow",
+    weather: "snow",
   },
   {
     url: require("../images/night/storm.svg").default,
     day: false,
-    type: "storm",
+    weather: "storm",
   },
 ];
 
-const WeatherCard = ({ day, type, weatherTemp = "" }) => {
-  console.log("Weather Card");
+const WeatherCard = ({ day, weather, temp = "" }) => {
   const imgSrc = weatherOptions.filter((i) => {
-    return i.day === day && i.type === type;
+    return i.day === day && i.weather === weather;
   });
+  console.log(imgSrc);
 
   const imgSrcUrl = imgSrc[0].url || "";
   console.log(imgSrcUrl);
 
   return (
     <section className="weather_card" id="weather">
-      <div className="weather_card-info">{weatherTemp}</div>
+      <div className="weather_card-info">{temp}</div>
       <div>
-        <img className="weather_card-image" src={imgSrcUrl} />
+        <img className="weather_card-image" src={imgSrcUrl} alt="weather conditions banner" />
       </div>
     </section>
   );
