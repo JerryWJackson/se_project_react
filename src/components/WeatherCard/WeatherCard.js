@@ -39,7 +39,7 @@ const weatherOptions = [
   },
 ];
 
-const WeatherCard = ({ day, weather = "clear", temp = "60" }) => {
+const WeatherCard = ({ day, weather, temp }) => {
   console.log(`day is ${day}, weather is ${weather}, temp is ${temp}`)
   const imgSrc = weatherOptions.find((item) => {
     return item.day === day && item.weather === weather;

@@ -4,7 +4,7 @@ import ItemCard from "../ItemCard/ItemCard";
 import "./Main.css";
 import { useMemo } from "react";
 
-function Main({ day, weather, temp = "60", onSelectCard }) {
+function Main({ day, weather, temp, onSelectCard }) {
   const weatherType = useMemo(() => {
     if (temp >= 86) {
       return "hot";
