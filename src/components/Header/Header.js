@@ -1,15 +1,15 @@
 import "./Header.css";
+import logo from '../images/logo.svg';
+import avatar from '../images/my-avatar.png';
 
 const Header = ({ onCreateModal }) => {
-  console.log("Header");
-
   return (
     <header className="header">
       <div className="header__app-logo">
         <div className="">
           <img
             className="header__app-logo_image"
-            src={require("../images/logo.svg").default}
+            src={logo}
             alt="logo"
           />
         </div>
@@ -25,7 +25,7 @@ const Header = ({ onCreateModal }) => {
         <div>
           <img
             className="header__avatar_image"
-            src={require("../images/my-avatar.png").default}
+            src={avatar}
             alt="avatar"
           />
         </div>

@@ -37,7 +37,6 @@ export const defaultClothingItems = [
   },
 ];
 
-
 export const weatherTemp = "68° F";
 
 const apiKey = 'd4f7aaf277abe33386f84dc212a69e83';

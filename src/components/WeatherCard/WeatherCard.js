@@ -40,17 +40,21 @@ const weatherOptions = [
 ];
 
 const WeatherCard = ({ day, weather, temp = "" }) => {
-  const imgSrc = weatherOptions.filter((i) => {
-    return i.day === day && i.weather === weather;
+  const imgSrc = weatherOptions.filter((item) => {
+    return item.day === day && item.weather === weather;
   });
-  console.log(imgSrc);
+  console.log('imgSrc', imgSrc);
 
-  const imgSrcUrl = imgSrc[0].url || "";
-  console.log(imgSrcUrl);
+  let imgSrcUrl;
+  if (imgSrcUrl !== 0) {
+    imgSrcUrl = imgSrc[0].url || "";
+  }
+
+  console.log('imgSrcUrl', imgSrcUrl);
 
   return (
     <section className="weather_card" id="weather">
-      <div className="weather_card-info">{temp}</div>
+      <div className="weather_card-info">{temp}° F</div>
       <div>
         <img className="weather_card-image" src={imgSrcUrl} alt="weather conditions banner" />
       </div>
