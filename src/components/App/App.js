@@ -40,11 +40,11 @@ function App() {
         } else {
           setIsDay(false);
         }
-      }, [])
+      })
       .catch((err) => {
         console.error('An error occurred:', err);
       });
-  });
+  }, []);
 
   return (
     <div className="page">
