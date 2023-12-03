@@ -6,6 +6,12 @@
   margin: 0 auto;
 }
 
+.weather-type-selector {
+  border: none;
+  margin-top: 24px;
+  margin-bottom: 32px;
+}
+
 .radio-button {
   margin: 8px 0;
 }
@@ -19,11 +25,6 @@
 
 .radio-container radio-button_label + input[type="radio"]:checked {
   font-weight: 700;
-}
-
-.radio-container {
-  margin-top: 24px;
-  margin-bottom: 32px;
 }
 
 .modal__form_item {
