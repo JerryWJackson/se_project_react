@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/se_project_react/static/css/main.ab4d8c3c.css",
-    "main.js": "/se_project_react/static/js/main.9bd5246e.js",
+    "main.js": "/se_project_react/static/js/main.bf62b356.js",
     "static/js/787.aec36e2a.chunk.js": "/se_project_react/static/js/787.aec36e2a.chunk.js",
     "static/media/my-avatar.png": "/se_project_react/static/media/my-avatar.740181f1965ced26ee3a.png",
     "static/media/CabinetGrotesk-Bold.woff": "/se_project_react/static/media/CabinetGrotesk-Bold.0fb1cbec860aa3537c32.woff",
@@ -20,11 +20,11 @@
     "index.html": "/se_project_react/index.html",
     "static/media/clear.svg": "/se_project_react/static/media/clear.ae0e6bbe1e0bfc883f3ba207396bf3b4.svg",
     "main.ab4d8c3c.css.map": "/se_project_react/static/css/main.ab4d8c3c.css.map",
-    "main.9bd5246e.js.map": "/se_project_react/static/js/main.9bd5246e.js.map",
+    "main.bf62b356.js.map": "/se_project_react/static/js/main.bf62b356.js.map",
     "787.aec36e2a.chunk.js.map": "/se_project_react/static/js/787.aec36e2a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ab4d8c3c.css",
-    "static/js/main.9bd5246e.js"
+    "static/js/main.bf62b356.js"
   ]
 }
