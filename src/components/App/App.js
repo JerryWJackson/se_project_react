@@ -6,11 +6,13 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import ItemModal from "../ItemModal/ItemModal";
 import { useEffect, useState } from "react";
 import { getForecastWeather } from "../../utils/weatherApi";
+import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [temp, setTemp] = useState(0);
+  const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [weather, setWeather] = useState("");
   const [isDay, setIsDay] = useState(false);
 
@@ -25,6 +27,11 @@ function App() {
   const handleSelectedCard = (card) => {
     setActiveModal("preview");
     setSelectedCard(card);
+  };
+
+  const handleToggleSwitchChange = () => {
+    if (currentTemperatureUnit === "F") setCurrentTemperatureUnit("C");
+    if (currentTemperatureUnit === "C") setCurrentTemperatureUnit("F");
   };
 
   useEffect(() => {
@@ -42,78 +49,82 @@ function App() {
         }
       })
       .catch((err) => {
-        console.error('An error occurred:', err);
+        console.error("An error occurred:", err);
       });
   }, []);
 
   return (
     <div className="page">
-      <Header onCreateModal={handleCreateModal} />
-      <Main
-        day={isDay}
-        weather={weather}
-        temp={temp}
-        onSelectCard={handleSelectedCard}
-      />
-      <Footer />
-      {activeModal === "create" && (
-        <ModalWithForm
-          title="New Garment"
-          name="addGarment"
-          onClose={handleCloseModal}
-        >
-          <div>
-            <label className="modal__form_item">
-              <p>Name</p>
-              <input
-                className="modal__form_input"
-                type="text"
-                name="name"
-                minLength="1"
-                maxLength="30"
-                placeholder="Name"
-              />
-            </label>
-            <label className="modal__form_item">
-              <p>Image</p>
-              <input
-                className="modal__form_input"
-                type="url"
-                name="link"
-                placeholder="Image URL"
-              />
-            </label>
-            <fieldset className="weather-type-selector">
-              <legend>Select the weather type:</legend>
-              <div className="radio-button">
-                <label className="radio-button_label">
-                  <input type="radio" id="hot" name="type" value="hot" />
-                  Hot
-                </label>
-              </div>
-              <div className="radio-button">
-                <label className="radio-button_label">
-                  <input type="radio" id="warm" name="type" value="warm" />
-                  Warm
-                </label>
-              </div>
-              <div className="radio-button">
-                <label className="radio-button_label">
-                  <input type="radio" id="cold" name="type" value="cold" />
-                  Cold
-                </label>
-              </div>
-            </fieldset>
-          </div>
-        </ModalWithForm>
-      )}
-      {activeModal === "preview" && (
-        <ItemModal
-          selectedCard={selectedCard}
-          name="previewGarment"
-          onClose={handleCloseModal}
+      <CurrentTemperatureUnitContext.Provider
+        value={{ currentTemperatureUnit, handleToggleSwitchChange }}
+      >
+        <Header onCreateModal={handleCreateModal} />
+        <Main
+          day={isDay}
+          weather={weather}
+          temp={temp}
+          onSelectCard={handleSelectedCard}
         />
-      )}
+        <Footer />
+        {activeModal === "create" && (
+          <ModalWithForm
+            title="New Garment"
+            name="addGarment"
+            onClose={handleCloseModal}
+          >
+            <div>
+              <label className="modal__form_item">
+                <p>Name</p>
+                <input
+                  className="modal__form_input"
+                  type="text"
+                  name="name"
+                  minLength="1"
+                  maxLength="30"
+                  placeholder="Name"
+                />
+              </label>
+              <label className="modal__form_item">
+                <p>Image</p>
+                <input
+                  className="modal__form_input"
+                  type="url"
+                  name="link"
+                  placeholder="Image URL"
+                />
+              </label>
+              <fieldset className="weather-type-selector">
+                <legend>Select the weather type:</legend>
+                <div className="radio-button">
+                  <label className="radio-button_label">
+                    <input type="radio" id="hot" name="type" value="hot" />
+                    Hot
+                  </label>
+                </div>
+                <div className="radio-button">
+                  <label className="radio-button_label">
+                    <input type="radio" id="warm" name="type" value="warm" />
+                    Warm
+                  </label>
+                </div>
+                <div className="radio-button">
+                  <label className="radio-button_label">
+                    <input type="radio" id="cold" name="type" value="cold" />
+                    Cold
+                  </label>
+                </div>
+              </fieldset>
+            </div>
+          </ModalWithForm>
+        )}
+        {activeModal === "preview" && (
+          <ItemModal
+            selectedCard={selectedCard}
+            name="previewGarment"
+            onClose={handleCloseModal}
+          />
+        )}
+      </CurrentTemperatureUnitContext.Provider>
     </div>
   );
 }
