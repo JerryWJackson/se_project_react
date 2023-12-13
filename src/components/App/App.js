@@ -8,7 +8,8 @@ import { useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import { getForecastWeather } from "../../utils/weatherApi";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
-import AddItemModal from "../../AddItemModal/AddItemModal";
+import AddItemModal from "../AddItemModal/AddItemModal";
+import Profile from "../Profile/Profile";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
@@ -69,7 +70,7 @@ function App() {
         <Header onCreateModal={handleCreateModal} />
         <Switch>
           <Route exact path="/profile">
-            Profile
+            <Profile handleCloseModal={handleCloseModal} onCreateModal={handleCreateModal} onAddItem={onAddItem} onSelectCard={handleSelectedCard} />
           </Route>
           <Route path="/">
             <Main
@@ -89,6 +90,7 @@ function App() {
             selectedCard={selectedCard}
             name="previewGarment"
             onClose={handleCloseModal}
+            onAddItem={onAddItem}
           />
         )}
       </CurrentTemperatureUnitContext.Provider>
