@@ -1,5 +1,4 @@
 import avatar from "../../images/my-avatar.png";
-import { Link } from "react-router-dom";
 import "./SideBar.css";
 
 function SideBar() {

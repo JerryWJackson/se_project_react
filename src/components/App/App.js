@@ -2,7 +2,6 @@ import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
-import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import ItemModal from "../ItemModal/ItemModal";
 import { useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
@@ -10,6 +9,7 @@ import { getForecastWeather } from "../../utils/weatherApi";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import Profile from "../Profile/Profile";
+import { fetchAllClothing, addNewItem } from "../../utils/api";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
@@ -18,6 +18,7 @@ function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [weather, setWeather] = useState("");
   const [isDay, setIsDay] = useState(false);
+  const [clothingItems, setClothingItems] = useState([]);
 
   const handleCreateModal = () => {
     setActiveModal("create");
@@ -28,8 +29,8 @@ function App() {
   };
 
   const onAddItem = (values) => {
-    console.log(values);
-  }
+    addNewItem(values)
+  };
 
   const handleSelectedCard = (card) => {
     setActiveModal("preview");
@@ -58,6 +59,10 @@ function App() {
       .catch((err) => {
         console.error("An error occurred:", err);
       });
+    fetchAllClothing().then((res) => {
+      console.log(res);
+      setClothingItems(res);
+    });
   }, []);
 
   // console.log('App.js --', currentTemperatureUnit);
@@ -70,7 +75,13 @@ function App() {
         <Header onCreateModal={handleCreateModal} />
         <Switch>
           <Route exact path="/profile">
-            <Profile handleCloseModal={handleCloseModal} onCreateModal={handleCreateModal} onAddItem={onAddItem} onSelectCard={handleSelectedCard} />
+            <Profile
+              handleCloseModal={handleCloseModal}
+              onCreateModal={handleCreateModal}
+              onAddItem={onAddItem}
+              onSelectCard={handleSelectedCard}
+              clothingItems={clothingItems}
+            />
           </Route>
           <Route path="/">
             <Main
@@ -78,12 +89,17 @@ function App() {
               weather={weather}
               temp={temp}
               onSelectCard={handleSelectedCard}
+              setClothingItems={clothingItems}
             />
           </Route>
         </Switch>
         <Footer />
         {activeModal === "create" && (
-          <AddItemModal handleCloseModal={handleCloseModal} onAddItem={onAddItem} isOpen={activeModal === "create"} />
+          <AddItemModal
+            handleCloseModal={handleCloseModal}
+            onAddItem={onAddItem}
+            isOpen={activeModal === "create"}
+          />
         )}
         {activeModal === "preview" && (
           <ItemModal

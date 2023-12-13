@@ -8,7 +8,7 @@ const AddItemModal = ({handleCloseModal, onAddItem, isOpen}) => {
     setName(e.target.value)
   }
 
-  const [link, setUrl] = useState('');
+  const [imageUrl, setUrl] = useState('');
   const handleURLChange = (e) => {
     console.log(e.target.value)
     setUrl(e.target.value)
@@ -22,7 +22,7 @@ const AddItemModal = ({handleCloseModal, onAddItem, isOpen}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAddItem({ name, link, weather })
+    onAddItem({ name, imageUrl, weather })
   }
 
   return(
@@ -53,9 +53,9 @@ const AddItemModal = ({handleCloseModal, onAddItem, isOpen}) => {
                 <input
                   className="modal__form_input"
                   type="url"
-                  name="link"
+                  name="imageUrl"
                   placeholder="Image URL"
-                  value={link}
+                  value={imageUrl}
                   onChange={handleURLChange}
                 />
               </label>
