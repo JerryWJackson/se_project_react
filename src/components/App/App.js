@@ -32,18 +32,16 @@ function App() {
   const onAddItem = (values) => {
     addNewItem(values)
       .then((res) => {
-        console.log(res);
-        console.log(clothingItems);
-        // setClothingItems(res);
-        // clothingItems.append(res);
+        const newItemList = clothingItems.filter((item) => {
+          return item._ === res;
+        });
+        setClothingItems(newItemList);
         handleCloseModal();
-        window.location.reload();
       })
       .catch((err) => console.log("Error:", err));
   };
 
   const openConfirmationModal = (e) => {
-    console.log('fired delete confirmation modal!')
     handleCloseModal();
     setActiveModal("confirm");
   };
@@ -52,9 +50,11 @@ function App() {
     e.preventDefault();
     deleteItem(selectedCard._id)
       .then((res) => {
-        console.log(res);
+        const newItemList = clothingItems.filter((item) => {
+          return item._ !== selectedCard;
+        });
+        setClothingItems(newItemList);
         handleCloseModal();
-        window.location.reload();
       })
       .catch((err) => console.log("Error:", err));
   };
@@ -65,8 +65,7 @@ function App() {
   };
 
   const handleToggleSwitchChange = () => {
-    if (currentTemperatureUnit === "F") setCurrentTemperatureUnit("C");
-    if (currentTemperatureUnit === "C") setCurrentTemperatureUnit("F");
+    setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
   };
 
   useEffect(() => {
@@ -74,25 +73,25 @@ function App() {
       .then((conditions) => {
         setTemp(conditions?.temperature?.temps);
         setWeather(conditions?.cond);
-        if (
+        setIsDay(
           conditions?.time > conditions?.sunrise &&
-          conditions?.time < conditions?.sunset
-        ) {
-          setIsDay(true);
-        } else {
-          setIsDay(false);
-        }
+            conditions?.time < conditions?.sunset
+        );
       })
       .catch((err) => {
         console.error("An error occurred:", err);
       });
-    fetchAllClothing().then((res) => {
-      console.log(res);
-      setClothingItems(res);
-    });
   }, []);
 
-  // console.log('App.js --', currentTemperatureUnit);
+  useEffect(() => {
+    fetchAllClothing()
+      .then((items) => {
+        setClothingItems(items);
+      })
+      .catch((error) => {
+        console.error("Error: An error occurred", error);
+      });
+  }, []);
 
   return (
     <div className="page">

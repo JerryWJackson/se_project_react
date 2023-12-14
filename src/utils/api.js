@@ -1,11 +1,9 @@
-const baseUrl = "http://localhost:3001/items";
-const defaultHeaders = { "Content-Type": "application/json" };
+import { defaultHeaders,  baseUrl } from './constants'
 
-function checkServerResponse(res) {
+export function checkServerResponse(res) {
   if (res.ok) {
     return res.json();
   }
-  // if the server returns an error, reject the promise
   return Promise.reject(`Error: ${res.status}`);
 }
 

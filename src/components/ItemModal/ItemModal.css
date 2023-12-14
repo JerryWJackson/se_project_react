@@ -23,6 +23,10 @@
   top: 20px;
 }
 
+.modal__button-close:hover {
+  cursor: pointer;
+}
+
 .modal__item-id{
   visibility: hidden;
   opacity: 0;
@@ -68,4 +72,8 @@
   background-color: transparent;
   position: relative;
   bottom: -170px;
+}
+
+.modal__button-close:hover {
+  cursor: pointer;
 }

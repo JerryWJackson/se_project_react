@@ -35,6 +35,21 @@
   top: 20px;
 }
 
+.modal__button-close:hover {
+  cursor: pointer;
+}
+
+.modal__button-submit {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 1);
+  padding: 8px 16px;
+  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.2;
+}
+
 .modal__form_input {
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.8);

@@ -15,6 +15,10 @@
   top: 20px;
 }
 
+.modal__button-close:hover {
+  cursor: pointer;
+}
+
 .modal__delete-confirmation_container {
   display: flex;
   flex-direction: column;
@@ -52,6 +56,10 @@
   top: 50px;
 }
 
+.modal__button-delete:hover {
+  cursor: pointer;
+}
+
 .modal__button-cancel {
   font-size: 20px;
   font-weight: 700;
@@ -60,4 +68,9 @@
   background-color: transparent;
   position: relative;
   top: 70px;
+}
+
+
+.modal__button-cancel:hover {
+  cursor: pointer;
 }

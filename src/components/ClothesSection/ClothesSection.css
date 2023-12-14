@@ -31,3 +31,7 @@
   border: none;
   background-color: transparent;
 }
+
+.card-section__avatar_button:hover {
+  cursor: pointer;
+}

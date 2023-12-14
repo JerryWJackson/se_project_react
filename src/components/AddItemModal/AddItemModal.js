@@ -1,22 +1,20 @@
 import React, { useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import './AddItemModal.css'
 
 const AddItemModal = ({handleCloseModal, onAddItem, isOpen}) => {
   const [name, setName] = useState('');
   const handleNameChange = (e) => {
-    console.log(e.target.value)
     setName(e.target.value)
   }
 
   const [imageUrl, setUrl] = useState('');
   const handleURLChange = (e) => {
-    console.log(e.target.value)
     setUrl(e.target.value)
   }
 
   const [weather, setWeather] = useState('');
   const handleWeatherChange = (e) => {
-    console.log(e.target.value)
     setWeather(e.target.value)
   }
 
@@ -32,6 +30,7 @@ const AddItemModal = ({handleCloseModal, onAddItem, isOpen}) => {
             onClose={handleCloseModal}
             isOpen={isOpen}
             onSubmit={handleSubmit}
+            buttonText='Add garment'
           >
             <div>
               <label className="modal__form_item">
