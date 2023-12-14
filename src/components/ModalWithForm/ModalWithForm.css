@@ -40,7 +40,7 @@
 }
 
 .modal__button-submit {
-  background-color: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 1);
   border-radius: 4px;
   color: rgba(255, 255, 255, 1);
   padding: 8px 16px;
@@ -48,6 +48,15 @@
   font-weight: 700;
   font-size: 16px;
   line-height: 1.2;
+}
+
+
+.modal__button-submit:hover {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.modal__button-submit:disabled {
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .modal__form_input {

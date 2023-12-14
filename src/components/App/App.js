@@ -32,7 +32,8 @@ function App() {
   const onAddItem = (values) => {
     addNewItem(values)
       .then((item) => {
-        const newItemList = clothingItems.append(item)
+        const newItemList = Array.from(clothingItems);
+        newItemList.push(item);
         setClothingItems(newItemList);
         handleCloseModal();
       })
