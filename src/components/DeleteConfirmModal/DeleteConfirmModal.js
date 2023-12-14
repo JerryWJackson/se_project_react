@@ -15,7 +15,7 @@ const DeleteConfirmModal = ({ selectedCard, onClose, onDeleteItem }) => {
           <p className="modal__delete-confirmation_text">
             Are you sure you want to delete this item?
           </p>
-          <p className="modal__delete-confirmation_text">
+          <p className="modal__delete-confirmation_warning">
             This action is irreversible.
           </p>
           <button

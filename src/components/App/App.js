@@ -44,8 +44,8 @@ function App() {
 
   const openConfirmationModal = (e) => {
     console.log('fired delete confirmation modal!')
-    onDeleteItem(e);
     handleCloseModal();
+    setActiveModal("confirm");
   };
 
   const onDeleteItem = (e) => {
@@ -106,7 +106,7 @@ function App() {
               handleCloseModal={handleCloseModal}
               onCreateModal={handleCreateModal}
               onAddItem={onAddItem}
-              onDeleteItem={onDeleteItem}
+              onDeleteItem={openConfirmationModal}
               onSelectCard={handleSelectedCard}
               clothingItems={clothingItems}
             />
@@ -137,7 +137,7 @@ function App() {
             openConfirmationModal={openConfirmationModal}
           />
         )}
-        {activeModal == "confirm" && (
+        {activeModal === "confirm" && (
           <DeleteConfirmModal
             selectedCard={selectedCard}
             name="deleteConfirm"
