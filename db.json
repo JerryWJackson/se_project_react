@@ -101,6 +101,12 @@
       "name": "T-Shirt",
       "weather": "hot",
       "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/T-Shirt.png?etag=44ed1963c44ab19cd2f5011522c5fc09"
+    },
+    {
+      "name": "Rain Slicker",
+      "imageUrl": "https://media.istockphoto.com/id/1058523492/vector/yellow-raincoat-vector-illustration.jpg?s=1024x1024&w=is&k=20&c=uw6TystXnL__LLmorPe5NrpCqm5qDgxFWW5KuVkb1Ms=",
+      "weather": "cold",
+      "_id": 17
     }
   ]
 }

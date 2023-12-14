@@ -31,10 +31,8 @@ function App() {
 
   const onAddItem = (values) => {
     addNewItem(values)
-      .then((res) => {
-        const newItemList = clothingItems.filter((item) => {
-          return item._ === res;
-        });
+      .then((item) => {
+        const newItemList = clothingItems.append(item)
         setClothingItems(newItemList);
         handleCloseModal();
       })
@@ -49,9 +47,9 @@ function App() {
   const onDeleteItem = (e) => {
     e.preventDefault();
     deleteItem(selectedCard._id)
-      .then((res) => {
+      .then(() => {
         const newItemList = clothingItems.filter((item) => {
-          return item._ !== selectedCard;
+          return item._id !== selectedCard._id;
         });
         setClothingItems(newItemList);
         handleCloseModal();
