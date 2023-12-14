@@ -31,7 +31,7 @@ const AddItemModal = ({handleCloseModal, onAddItem, isOpen}) => {
             name="addGarment"
             onClose={handleCloseModal}
             isOpen={isOpen}
-            onSubmit={(e) => onAddItem(handleSubmit)}
+            onSubmit={handleSubmit}
           >
             <div>
               <label className="modal__form_item">

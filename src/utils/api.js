@@ -31,13 +31,9 @@ export function addNewItem(item) {
   });
 }
 
-export function deleteItem(item) {
-  return makeServerRequest(baseUrl, {
+export function deleteItem(id) {
+  console.log('id to delete', id);
+  return makeServerRequest(`${baseUrl}/${id}`, {
     method: "DELETE",
-    headers: defaultHeaders,
-    body: JSON.stringify({
-      _id: item._id,
-    }),
   });
 }
-

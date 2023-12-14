@@ -9,7 +9,8 @@ import { getForecastWeather } from "../../utils/weatherApi";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import Profile from "../Profile/Profile";
-import { fetchAllClothing, addNewItem } from "../../utils/api";
+import { fetchAllClothing, addNewItem, deleteItem } from "../../utils/api";
+import DeleteConfirmModal from "../DeleteConfirmModal/DeleteConfirmModal";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
@@ -30,6 +31,32 @@ function App() {
 
   const onAddItem = (values) => {
     addNewItem(values)
+      .then((res) => {
+        console.log(res);
+        console.log(clothingItems);
+        // setClothingItems(res);
+        // clothingItems.append(res);
+        handleCloseModal();
+        window.location.reload();
+      })
+      .catch((err) => console.log("Error:", err));
+  };
+
+  const openConfirmationModal = (e) => {
+    console.log('fired delete confirmation modal!')
+    onDeleteItem(e);
+    handleCloseModal();
+  };
+
+  const onDeleteItem = (e) => {
+    e.preventDefault();
+    deleteItem(selectedCard._id)
+      .then((res) => {
+        console.log(res);
+        handleCloseModal();
+        window.location.reload();
+      })
+      .catch((err) => console.log("Error:", err));
   };
 
   const handleSelectedCard = (card) => {
@@ -79,6 +106,7 @@ function App() {
               handleCloseModal={handleCloseModal}
               onCreateModal={handleCreateModal}
               onAddItem={onAddItem}
+              onDeleteItem={onDeleteItem}
               onSelectCard={handleSelectedCard}
               clothingItems={clothingItems}
             />
@@ -106,7 +134,15 @@ function App() {
             selectedCard={selectedCard}
             name="previewGarment"
             onClose={handleCloseModal}
-            onAddItem={onAddItem}
+            openConfirmationModal={openConfirmationModal}
+          />
+        )}
+        {activeModal == "confirm" && (
+          <DeleteConfirmModal
+            selectedCard={selectedCard}
+            name="deleteConfirm"
+            onClose={handleCloseModal}
+            onDeleteItem={onDeleteItem}
           />
         )}
       </CurrentTemperatureUnitContext.Provider>
