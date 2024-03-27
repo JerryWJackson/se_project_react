@@ -9,6 +9,7 @@ const WeatherCard = ({ day, weather, temp }) => {
     return item.day === day && item.weather === weather;
   });
 
+  console.log('imgSrc is', imgSrc);
   const imgSrcUrl = imgSrc?.url || "";
 
   return (

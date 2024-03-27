@@ -85,6 +85,7 @@ function App() {
   useEffect(() => {
     fetchAllClothing()
       .then((items) => {
+        console.log(items);
         setClothingItems(items);
       })
       .catch((error) => {

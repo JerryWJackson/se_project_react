@@ -1,61 +1,61 @@
 export const weatherOptions = [
   {
-    url: require("../images/day/clear.svg").default,
+    url: "/se_project_react/src/images/day/clear.svg",
     day: true,
     weather: "clear",
   },
   {
-    url: require("../images/day/clouds.svg").default,
+    url: "/se_project_react/src/images/day/clouds.svg",
     day: true,
     weather: "clouds",
   },
   {
-    url: require("../images/day/fog.svg").default,
+    url: "/se_project_react/src/images/day/fog.svg",
     day: true,
     weather: "fog",
   },
   {
-    url: require("../images/day/rain.svg").default,
+    url: "/se_project_react/src/images/day/rain.svg",
     day: true,
     weather: "rain",
   },
   {
-    url: require("../images/day/snow.svg").default,
+    url: "/se_project_react/src/images/day/snow.svg",
     day: true,
     weather: "snow",
   },
   {
-    url: require("../images/day/storm.svg").default,
+    url: "/se_project_react/src/images/day/storm.svg",
     day: true,
     weather: "storm",
   },
   {
-    url: require("../images/night/clear.svg").default,
+    url: "/se_project_react/src/images/night/clear.svg",
     day: false,
     weather: "clear",
   },
   {
-    url: require("../images/night/clouds.svg").default,
+    url: "/se_project_react/src/images/night/clouds.svg",
     day: false,
     weather: "clouds",
   },
   {
-    url: require("../images/night/fog.svg").default,
+    url: "/se_project_react/src/images/night/fog.svg",
     day: false,
     weather: "fog",
   },
   {
-    url: require("../images/night/rain.svg").default,
+    url: "/se_project_react/src/images/night/rain.svg",
     day: false,
     weather: "rain",
   },
   {
-    url: require("../images/night/snow.svg").default,
+    url: "/se_project_react/src/images/night/snow.svg",
     day: false,
     weather: "snow",
   },
   {
-    url: require("../images/night/storm.svg").default,
+    url: "/se_project_react/src/images/night/storm.svg",
     day: false,
     weather: "storm",
   },
