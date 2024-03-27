@@ -12,7 +12,7 @@ function makeServerRequest(url, options) {
 }
 
 export function fetchAllClothing() {
-  return makeServerRequest(baseUrl, {
+  return makeServerRequest(`${baseUrl}/${items}`, {
     headers: defaultHeaders,
   });
 }

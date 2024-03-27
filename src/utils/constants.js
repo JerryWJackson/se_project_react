@@ -69,4 +69,8 @@ const units = "Imperial";
 export const endpointUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=${units}&appid=${apiKey}`;
 
 export const baseUrl = "http://localhost:3001/items";
-export const defaultHeaders = { "Content-Type": "application/json" };
+export const BASE_URL = "http://localhost:3000/";
+export const defaultHeaders = {
+  Accept: "application/json",
+  "Content-Type": "application/json",
+};

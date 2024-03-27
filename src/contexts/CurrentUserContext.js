@@ -2,7 +2,7 @@ import { createContext } from 'react';
 
 const CurrentUserContext = createContext({
   currentUser: '',
-  handleToggleSwitchChange: () => {}
-})
+  avatar: '',
+});
 
 export {CurrentUserContext};
