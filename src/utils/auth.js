@@ -1,8 +1,7 @@
 // authorization/registration middleware
 
-
 import { checkServerResponse, makeServerRequest } from "./api";
-import { baseUrl,defaultHeaders } from './constants';
+import { baseUrl, defaultHeaders } from "./constants";
 
 export const register = ({ name, avatar, email, password }) => {
   return makeServerRequest(`${baseUrl}/signup`, {

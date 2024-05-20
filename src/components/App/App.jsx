@@ -8,8 +8,8 @@ import ItemModal from "../ItemModal/ItemModal";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import DeleteConfirmModal from "../DeleteConfirmModal/DeleteConfirmModal";
 // import LoginModal from "../LogInModal/LoginModal";
-// import RegisterModal from "../RegisterModal/RegisterModal";
-// import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import RegisterModal from "../RegisterModal/RegisterModal";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 // context imports
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
@@ -19,6 +19,7 @@ import { Switch, Route, useHistory } from "react-router-dom";
 import { getForecastWeather } from "../../utils/weatherApi";
 import * as api from "../../utils/api";
 import * as auth from "../../utils/auth";
+import { handleToken, getToken } from "../../utils/token";
 // css imports
 import "./App.css";
 
@@ -62,7 +63,8 @@ function App() {
   };
 
   const onAddItem = (values) => {
-    api.addNewItem(values)
+    api
+      .addNewItem(values)
       .then((item) => {
         const newItemList = Array.from(clothingItems);
         newItemList.push(item);
@@ -79,7 +81,8 @@ function App() {
 
   const onDeleteItem = (e) => {
     e.preventDefault();
-    api.deleteItem(selectedCard._id)
+    api
+      .deleteItem(selectedCard._id)
       .then(() => {
         const newItemList = clothingItems.filter((item) => {
           return item._id !== selectedCard._id;
@@ -94,7 +97,6 @@ function App() {
     setActiveModal("preview");
     setSelectedCard(card);
   };
-
 
   function handleOpenItemModal() {
     setActiveModal("preview");
@@ -112,20 +114,15 @@ function App() {
     setActiveModal("edit");
   };
 
-  const registerUser = (values) => {
-    handleSubmit(() => register(values).then(() => loginUser(values)));
-  };
-
-  const loginUser = (user) => {
+  const handleRegisterModalSubmit = (values) => {
     setIsLoading(true);
+    auth
+      .signUp(user)
+      .then(() => {
+        setIsLoggedIn(true);
 
-    return login(user)
-      .then((res) => {
-        checkLoggedIn(res.token);
-        setToken(res.token);
-        localStorage.setItem("jwt", res.token);
-        handleCloseModal();
         history.push("/profile");
+        handleCloseModal();
       })
       .catch((err) => {
         console.error(err);
@@ -135,24 +132,42 @@ function App() {
       });
   };
 
-  function checkLoggedIn(token) {
-    return checkToken(token)
-      .then((res) => {
-        setLoggedIn(true);
-        setCurrentUser(res.data);
+  const handleLoginModalSubmit = (user) => {
+    setIsLoading(true);
+    auth
+      .signIn(user)
+      .then((data) => {
+        if (data.token) {
+          handleToken(data.token);
+
+          setIsLoggedIn(true);
+          handleCloseModal();
+          history.push("/profile");
+        }
       })
-      .catch((e) => {
-        console.error(e);
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-  }
+  };
+
+  // function checkLoggedIn(token) {
+  //   return checkToken(token)
+  //     .then((res) => {
+  //       setLoggedIn(true);
+  //       setCurrentUser(res.data);
+  //     })
+  //     .catch((e) => {
+  //       console.error(e);
+  //     });
+  // }
 
   const updateUser = (values) => {
     const jwt = localStorage.getItem("jwt");
-    handleSubmit(() =>
-      update(values, jwt).then((res) => setCurrentUser(res))
-    );
+    handleSubmit(() => update(values, jwt).then((res) => setCurrentUser(res)));
   };
-
 
   const onSignOut = () => {
     localStorage.removeItem("jwt");
@@ -182,7 +197,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    api.fetchAllClothing()
+    api
+      .fetchAllClothing()
       .then((items) => {
         console.log(items);
         setClothingItems(items);
@@ -227,9 +243,6 @@ function App() {
         >
           <Header onCreateModal={handleCreateModal} />
           <Switch>
-            <Route exact path="/register">
-              <Register handleRegistration={handleRegistration} />
-            </Route>
             <Route exact path="/profile">
               <Profile
                 handleCloseModal={handleCloseModal}
@@ -253,7 +266,7 @@ function App() {
           {activeModal === "login" && (
             <LoginModal
               onClose={handleCloseModal}
-              loginUser={loginUser}
+              onSubmitButtonClick={handleLoginModalSubmit}
               openLoginModal={handleOpenLoginModal}
               openRegisterModal={handleOpenRegisterModal}
             />
@@ -262,7 +275,7 @@ function App() {
           {activeModal === "register" && (
             <RegisterModal
               onClose={handleCloseModal}
-              registerUser={registerUser}
+              onSubmitButtonClick={handleRegisterModalSubmit}
               openLoginModal={handleOpenLoginModal}
               openRegisterModal={handleOpenRegisterModal}
             />

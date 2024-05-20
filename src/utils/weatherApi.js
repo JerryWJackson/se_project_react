@@ -11,6 +11,7 @@ export const getForecastWeather = () => {
 };
 
 const parseWeatherData = (data) => {
+  console.log('weatherdata is ', data)
   const location = data.name;
   const main = data.main;
   const temperature = {
