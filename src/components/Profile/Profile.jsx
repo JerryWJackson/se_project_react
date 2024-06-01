@@ -1,12 +1,24 @@
 import SideBar from "../SideBar/SideBar";
 import ClothesSection from "../ClothesSection/ClothesSection";
-import './Profile.css';
+import "./Profile.css";
 
-function Profile({ clothingItems, handleCloseModal, onCreateModal, onAddItem, onSelectCard }) {
+function Profile({
+  handleCloseModal,
+  onCreateModal,
+  onAddItem,
+  onSelectCard,
+  clothingItems,
+}) {
   return (
     <div className="profile__container">
       <SideBar />
-      <ClothesSection clothingItems={clothingItems} handleCloseModal={handleCloseModal} onCreateModal={onCreateModal} onAddItem={onAddItem} onSelectCard={onSelectCard} />
+      <ClothesSection
+        clothingItems={clothingItems}
+        handleCloseModal={handleCloseModal}
+        onCreateModal={onCreateModal}
+        onAddItem={onAddItem}
+        onSelectCard={onSelectCard}
+      />
     </div>
   );
 }

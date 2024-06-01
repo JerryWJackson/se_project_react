@@ -15,11 +15,11 @@ import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperature
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 // utility imports
 import { useEffect, useState } from "react";
-import { Switch, Route, useHistory } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { getForecastWeather } from "../../utils/weatherApi";
 import * as api from "../../utils/api";
 import * as auth from "../../utils/auth";
-import { handleToken, getToken } from "../../utils/token";
+import { getToken, handleToken } from "../../utils/token";
 // css imports
 import "./App.css";
 
@@ -33,7 +33,7 @@ function App() {
   const [isDay, setIsDay] = useState(false);
   const [clothingItems, setClothingItems] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const history = useHistory("");
+  const navigate = useNavigate();
   const [token, setToken] = useState(localStorage.getItem("jwt") || "");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -114,14 +114,14 @@ function App() {
     setActiveModal("edit");
   };
 
-  const handleRegisterModalSubmit = (values) => {
+  const handleRegisterModalSubmit = (user) => {
     setIsLoading(true);
     auth
       .signUp(user)
       .then(() => {
         setIsLoggedIn(true);
 
-        history.push("/profile");
+        navigate.push("/profile");
         handleCloseModal();
       })
       .catch((err) => {
@@ -142,7 +142,7 @@ function App() {
 
           setIsLoggedIn(true);
           handleCloseModal();
-          history.push("/profile");
+          navigate.push("/profile");
         }
       })
       .catch((err) => {
@@ -153,16 +153,16 @@ function App() {
       });
   };
 
-  // function checkLoggedIn(token) {
-  //   return checkToken(token)
-  //     .then((res) => {
-  //       setLoggedIn(true);
-  //       setCurrentUser(res.data);
-  //     })
-  //     .catch((e) => {
-  //       console.error(e);
-  //     });
-  // }
+  function checkLoggedIn(token) {
+    return checkToken(token)
+      .then((res) => {
+        setIsLoggedIn(true);
+        setCurrentUser(res.data);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  }
 
   const updateUser = (values) => {
     const jwt = localStorage.getItem("jwt");
@@ -172,9 +172,10 @@ function App() {
   const onSignOut = () => {
     localStorage.removeItem("jwt");
     setCurrentUser({});
-    setLoggedIn(false);
+    setIsLoggedIn(false);
     setCurrentUser(null);
-    history.push("/");
+    closeActiveModal();
+    navigate.push("/");
   };
 
   const handleToggleSwitchChange = () => {
@@ -209,7 +210,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const jwt = localStorage.getItem("jwt");
+    const jwt = getToken();
     if (jwt) {
       checkLoggedIn(jwt)
         .then(() => {
@@ -231,7 +232,7 @@ function App() {
           console.error(err);
         });
     } else {
-      setLoggedIn(false);
+      setIsLoggedIn(false);
     }
   }, []);
 
@@ -242,27 +243,38 @@ function App() {
           value={{ currentTemperatureUnit, handleToggleSwitchChange }}
         >
           <Header onCreateModal={handleCreateModal} />
-          <Switch>
-            <Route exact path="/profile">
-              <Profile
-                handleCloseModal={handleCloseModal}
-                onCreateModal={handleCreateModal}
-                onAddItem={onAddItem}
-                onDeleteItem={openConfirmationModal}
-                onSelectCard={handleSelectedCard}
-                clothingItems={clothingItems}
-              />
-            </Route>
-            <Route path="/">
-              <Main
-                day={isDay}
-                weather={weather}
-                temp={temp}
-                onSelectCard={handleSelectedCard}
-                setClothingItems={clothingItems}
-              />
-            </Route>
-          </Switch>
+          <Routes>
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  <Profile
+                    handleCloseModal={handleCloseModal}
+                    onCreateModal={handleCreateModal}
+                    onAddItem={onAddItem}
+                    onDeleteItem={openConfirmationModal}
+                    onSelectCard={handleSelectedCard}
+                    clothingItems={clothingItems}
+                  />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              exact
+              path="/"
+              element={
+                <Main
+                  day={isDay}
+                  weather={weather}
+                  temp={temp}
+                  onSelectCard={handleSelectedCard}
+                  setClothingItems={clothingItems}
+                  // onCardLike={handleCardLike}
+                  isLoggedIn={isLoggedIn}
+                />
+              }
+            />
+          </Routes>
           {activeModal === "login" && (
             <LoginModal
               onClose={handleCloseModal}
