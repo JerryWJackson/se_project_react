@@ -10,6 +10,7 @@ const WeatherCard = ({ day, weather, temp }) => {
   });
 
   console.log("imgSrc is", imgSrc);
+
   const imgSrcUrl = imgSrc?.url || "";
 
   return (

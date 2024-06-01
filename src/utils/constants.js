@@ -1,61 +1,67 @@
 export const weatherOptions = [
   {
-    url: "/se_project_react/src/images/day/clear.svg",
+    url: "/src/images/day/clear.svg",
     day: true,
     weather: "clear",
   },
   {
-    url: "/se_project_react/src/images/day/clouds.svg",
+    url: "/src/images/day/clouds.svg",
     day: true,
     weather: "clouds",
   },
   {
-    url: "/se_project_react/src/images/day/fog.svg",
+    url: "/src/images/day/fog.svg",
     day: true,
     weather: "fog",
   },
   {
-    url: "/se_project_react/src/images/day/rain.svg",
+    // haze has no image so we match fog to it.
+    url: "/src/images/day/fog.svg",
+    day: true,
+    weather: "haze",
+  },
+  {
+    url: "/src/images/day/rain.svg",
     day: true,
     weather: "rain",
   },
   {
-    url: "/se_project_react/src/images/day/snow.svg",
+    url: "/src/images/day/snow.svg",
     day: true,
     weather: "snow",
   },
   {
-    url: "/se_project_react/src/images/day/storm.svg",
+    url: "/src/images/day/storm.svg",
     day: true,
     weather: "storm",
   },
   {
-    url: "/se_project_react/src/images/night/clear.svg",
+    url: "/src/images/night/clear.svg",
     day: false,
     weather: "clear",
   },
   {
-    url: "/se_project_react/src/images/night/clouds.svg",
+    url: "/src/images/night/clouds.svg",
     day: false,
     weather: "clouds",
   },
   {
-    url: "/se_project_react/src/images/night/fog.svg",
+    url: "/src/images/night/fog.svg",
     day: false,
     weather: "fog",
   },
   {
-    url: "/se_project_react/src/images/night/rain.svg",
+    url: "/src/images/night/rain.svg",
     day: false,
     weather: "rain",
   },
   {
-    url: "/se_project_react/src/images/night/snow.svg",
+    url: "/src/images/night/snow.svg",
     day: false,
     weather: "snow",
   },
   {
-    url: "/se_project_react/src/images/night/storm.svg",
+    url: "/src/images/night/storm.svg",
     day: false,
     weather: "storm",
   },

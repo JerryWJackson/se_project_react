@@ -7,7 +7,7 @@ import Footer from "../Footer/Footer";
 import ItemModal from "../ItemModal/ItemModal";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import DeleteConfirmModal from "../DeleteConfirmModal/DeleteConfirmModal";
-// import LoginModal from "../LogInModal/LoginModal";
+import LoginModal from "../LoginModal/LoginModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 // context imports
@@ -37,24 +37,7 @@ function App() {
   const [token, setToken] = useState(localStorage.getItem("jwt") || "");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleRegistration = ({
-    name,
-    avatar,
-    email,
-    password,
-    confirmPassword,
-  }) => {
-    if (password === confirmPassword) {
-      auth
-        .register(name, avatar, password, email)
-        .then(() => {
-          // TODO: handle succesful registration
-        })
-        .catch(console.error);
-    }
-  };
-
-  const handleCreateModal = () => {
+  const handleActiveModal = () => {
     setActiveModal("create");
   };
 
@@ -114,10 +97,27 @@ function App() {
     setActiveModal("edit");
   };
 
+  const handleRegistration = ({
+    name,
+    avatar,
+    email,
+    password,
+    confirmPassword,
+  }) => {
+    if (password === confirmPassword) {
+      auth
+        .register(name, avatar, password, email)
+        .then(() => {
+          // TODO: handle succesful registration
+        })
+        .catch(console.error);
+    }
+  };
+
   const handleRegisterModalSubmit = (user) => {
     setIsLoading(true);
     auth
-      .signUp(user)
+      .register(user)
       .then(() => {
         setIsLoggedIn(true);
 
@@ -185,6 +185,7 @@ function App() {
   useEffect(() => {
     getForecastWeather()
       .then((conditions) => {
+        console.log("conditions are", conditions);
         setTemp(conditions?.temperature?.temps);
         setWeather(conditions?.cond);
         setIsDay(
@@ -201,7 +202,6 @@ function App() {
     api
       .fetchAllClothing()
       .then((items) => {
-        console.log(items);
         setClothingItems(items);
       })
       .catch((error) => {
@@ -242,7 +242,14 @@ function App() {
         <CurrentTemperatureUnitContext.Provider
           value={{ currentTemperatureUnit, handleToggleSwitchChange }}
         >
-          <Header onCreateModal={handleCreateModal} />
+          <Header
+            onSignUp={() => setActiveModal("register")}
+            onLogin={() => setActiveModal("login")}
+            onActiveModal={handleActiveModal}
+            location={location}
+            isLoggedIn={isLoggedIn}
+            currentUser={currentUser}
+          />
           <Routes>
             <Route
               path="/profile"
@@ -250,7 +257,7 @@ function App() {
                 <ProtectedRoute isLoggedIn={isLoggedIn}>
                   <Profile
                     handleCloseModal={handleCloseModal}
-                    onCreateModal={handleCreateModal}
+                    onActiveModal={handleActiveModal}
                     onAddItem={onAddItem}
                     onDeleteItem={openConfirmationModal}
                     onSelectCard={handleSelectedCard}
@@ -275,23 +282,6 @@ function App() {
               }
             />
           </Routes>
-          {activeModal === "login" && (
-            <LoginModal
-              onClose={handleCloseModal}
-              onSubmitButtonClick={handleLoginModalSubmit}
-              openLoginModal={handleOpenLoginModal}
-              openRegisterModal={handleOpenRegisterModal}
-            />
-          )}
-
-          {activeModal === "register" && (
-            <RegisterModal
-              onClose={handleCloseModal}
-              onSubmitButtonClick={handleRegisterModalSubmit}
-              openLoginModal={handleOpenLoginModal}
-              openRegisterModal={handleOpenRegisterModal}
-            />
-          )}
           <Footer />
           {activeModal === "create" && (
             <AddItemModal
@@ -314,6 +304,23 @@ function App() {
               name="deleteConfirm"
               onClose={handleCloseModal}
               onDeleteItem={onDeleteItem}
+            />
+          )}
+          {activeModal === "login" && (
+            <LoginModal
+              onClose={handleCloseModal}
+              onSubmitButtonClick={handleLoginModalSubmit}
+              openLoginModal={handleOpenLoginModal}
+              openRegisterModal={handleOpenRegisterModal}
+            />
+          )}
+
+          {activeModal === "register" && (
+            <RegisterModal
+              onClose={handleCloseModal}
+              onSubmitButtonClick={handleRegisterModalSubmit}
+              openLoginModal={handleOpenLoginModal}
+              openRegisterModal={handleOpenRegisterModal}
             />
           )}
         </CurrentTemperatureUnitContext.Provider>
