@@ -37,10 +37,6 @@ function App() {
   const [token, setToken] = useState(localStorage.getItem("jwt") || "");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleActiveModal = () => {
-    setActiveModal("create");
-  };
-
   const handleCloseModal = () => {
     setActiveModal("");
   };
@@ -97,45 +93,25 @@ function App() {
     setActiveModal("edit");
   };
 
-  const handleRegistration = ({
-    name,
-    avatar,
-    email,
-    password,
-    confirmPassword,
-  }) => {
+  const handleRegistration = (name, avatar, email, password) => {
     if (password === confirmPassword) {
       auth
-        .register(name, avatar, password, email)
+        .signup(name, avatar, password, email)
         .then(() => {
-          // TODO: handle succesful registration
+          console.log(res);
+          setIsLoggedIn(true);
+          setCurrentUser(res.data);
+          handleCloseModal();
+          navigate.push("/profile");
         })
         .catch(console.error);
     }
   };
 
-  const handleRegisterModalSubmit = (user) => {
-    setIsLoading(true);
-    auth
-      .register(user)
-      .then(() => {
-        setIsLoggedIn(true);
-
-        navigate.push("/profile");
-        handleCloseModal();
-      })
-      .catch((err) => {
-        console.error(err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
-
   const handleLoginModalSubmit = (user) => {
     setIsLoading(true);
     auth
-      .signIn(user)
+      .signin(user)
       .then((data) => {
         if (data.token) {
           handleToken(data.token);
@@ -243,9 +219,9 @@ function App() {
           value={{ currentTemperatureUnit, handleToggleSwitchChange }}
         >
           <Header
-            onSignUp={() => setActiveModal("register")}
-            onLogin={() => setActiveModal("login")}
-            onActiveModal={handleActiveModal}
+            onSignUp={() => handleOpenRegisterModal}
+            onLogin={() => handleOpenLoginModal}
+            // onActiveModal={setActiveModal("register")}
             location={location}
             isLoggedIn={isLoggedIn}
             currentUser={currentUser}
@@ -257,7 +233,7 @@ function App() {
                 <ProtectedRoute isLoggedIn={isLoggedIn}>
                   <Profile
                     handleCloseModal={handleCloseModal}
-                    onActiveModal={handleActiveModal}
+                    onActiveModal={handleOpenEditProfileModal}
                     onAddItem={onAddItem}
                     onDeleteItem={openConfirmationModal}
                     onSelectCard={handleSelectedCard}
@@ -318,7 +294,7 @@ function App() {
           {activeModal === "register" && (
             <RegisterModal
               onClose={handleCloseModal}
-              onSubmitButtonClick={handleRegisterModalSubmit}
+              onSubmitButtonClick={handleRegistration}
               openLoginModal={handleOpenLoginModal}
               openRegisterModal={handleOpenRegisterModal}
             />

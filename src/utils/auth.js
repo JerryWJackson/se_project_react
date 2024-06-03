@@ -3,7 +3,7 @@
 import { checkServerResponse, makeServerRequest } from "./api";
 import { baseUrl, defaultHeaders } from "./constants";
 
-export const register = ({ name, avatar, email, password }) => {
+export const signup = ({ name, avatar, email, password }) => {
   return makeServerRequest(`${baseUrl}/signup`, {
     method: "POST",
     headers: defaultHeaders,
@@ -11,7 +11,7 @@ export const register = ({ name, avatar, email, password }) => {
   }).then(checkServerResponse);
 };
 
-export const login = ({ email, password }) => {
+export const signin = ({ email, password }) => {
   return makeServerRequest(`${baseUrl}/signin`, {
     method: "POST",
     headers: defaultHeaders,
@@ -20,7 +20,7 @@ export const login = ({ email, password }) => {
 };
 
 export const update = ({ name, avatar }, token) => {
-  return fetch(`${baseUrl}/users/me`, {
+  return makeServerRequest(`${baseUrl}/users/me`, {
     method: "PATCH",
     headers: {
       Accept: "application/json",
@@ -32,7 +32,7 @@ export const update = ({ name, avatar }, token) => {
 };
 
 export const checkToken = (token) => {
-  return fetch(`${baseUrl}/users/me`, {
+  return makeServerRequest(`${baseUrl}/users/me`, {
     method: "GET",
     headers: {
       Accept: "application/json",
@@ -43,7 +43,7 @@ export const checkToken = (token) => {
 };
 
 export const getUserData = (token) => {
-  return fetch(`${baseUrl}/users/me`, {
+  return makeServerRequest(`${baseUrl}/users/me`, {
     method: "GET",
     headers: {
       Accept: "application/json",
