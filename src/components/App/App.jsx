@@ -185,7 +185,7 @@ function App() {
   useEffect(() => {
     getForecastWeather()
       .then((conditions) => {
-        console.log("conditions are", conditions);
+        // console.log("conditions are", conditions);
         setTemp(conditions?.temperature?.temps);
         setWeather(conditions?.cond);
         setIsDay(
