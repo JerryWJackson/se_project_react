@@ -93,11 +93,17 @@ function App() {
     setActiveModal("edit");
   };
 
-  const handleRegistration = (name, avatar, email, password) => {
+  const handleRegistration = (
+    name,
+    avatar,
+    email,
+    password,
+    confirmPassword
+  ) => {
     if (password === confirmPassword) {
       auth
         .signup(name, avatar, password, email)
-        .then(() => {
+        .then((res) => {
           console.log(res);
           setIsLoggedIn(true);
           setCurrentUser(res.data);
@@ -117,6 +123,7 @@ function App() {
           handleToken(data.token);
 
           setIsLoggedIn(true);
+          setCurrentUser(data.user);
           handleCloseModal();
           navigate.push("/profile");
         }
@@ -130,7 +137,8 @@ function App() {
   };
 
   function checkLoggedIn(token) {
-    return checkToken(token)
+    return token
+      .checkToken(token)
       .then((res) => {
         setIsLoggedIn(true);
         setCurrentUser(res.data);
@@ -142,7 +150,7 @@ function App() {
 
   const updateUser = (values) => {
     const jwt = localStorage.getItem("jwt");
-    handleSubmit(() => update(values, jwt).then((res) => setCurrentUser(res)));
+    auth.update(values, jwt).then((res) => setCurrentUser(res));
   };
 
   const onSignOut = () => {
@@ -150,7 +158,7 @@ function App() {
     setCurrentUser({});
     setIsLoggedIn(false);
     setCurrentUser(null);
-    closeActiveModal();
+    handleCloseModal();
     navigate.push("/");
   };
 
@@ -191,7 +199,8 @@ function App() {
       checkLoggedIn(jwt)
         .then(() => {
           setToken(jwt);
-          getUserData(jwt)
+          auth
+            .getUserData(jwt)
             .then((res) => {
               setCurrentUser(res.data);
             })
@@ -210,7 +219,7 @@ function App() {
     } else {
       setIsLoggedIn(false);
     }
-  }, []);
+  }, [onSignOut]);
 
   return (
     <div className="page">
@@ -222,7 +231,7 @@ function App() {
             onSignUp={() => handleOpenRegisterModal}
             onLogin={() => handleOpenLoginModal}
             // onActiveModal={setActiveModal("register")}
-            location={location}
+            // location={location}
             isLoggedIn={isLoggedIn}
             currentUser={currentUser}
           />
