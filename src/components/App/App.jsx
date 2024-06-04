@@ -302,10 +302,9 @@ function App() {
 
           {activeModal === "register" && (
             <RegisterModal
+              isOpen={activeModal === "register"}
               onClose={handleCloseModal}
               onSubmitButtonClick={handleRegistration}
-              openLoginModal={handleOpenLoginModal}
-              openRegisterModal={handleOpenRegisterModal}
             />
           )}
         </CurrentTemperatureUnitContext.Provider>
