@@ -1,87 +1,114 @@
 import React, { useEffect, useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
-const RegisterModal = ({ isOpen, onClose, onSubmitButtonClick }) => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    avatar: "",
-  });
+const RegisterModal = ({
+  activeModal,
+  closeActiveModal,
+  handleRegistration,
+  currentUser,
+  setActiveModal,
+  isLoading,
+  setIsLoading,
+}) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [avatar, setAvatar] = useState("");
 
-  useEffect(() => {
-    if (isOpen) {
-      setFormData("");
-    }
-  }, [isOpen]);
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
+  };
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleName = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleAvatar = (e) => {
+    setAvatar(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmitButtonClick(formData);
+    setIsLoading(true);
+    const user = { email, password, name, avatar };
+    handleRegistration({ user });
   };
+
+  const handleToggleModal = () => {
+    setActiveModal("login");
+  };
+
+  useEffect(() => {
+    setEmail("");
+    setPassword("");
+    setName("");
+    setAvatar("");
+  }, [currentUser]);
 
   return (
     <ModalWithForm
-      onSubmit={handleSubmit}
-      onClose={onClose}
-      name="signup"
+      closeActiveModal={closeActiveModal}
+      isOpen={activeModal === "register"}
+      buttonText={isLoading ? "..." : "Next"}
+      name="register"
       title="Sign up"
-      buttonText="Next"
-      isOpen={isOpen}
-      activeModal={"register"}
-      onSecondButtonClick={onSecondButtonClick}
+      onSubmit={handleSubmit}
+      altButton={true}
+      altButtonText="or Login"
+      handleAltButton={handleToggleModal}
     >
-      <label className="modal__label">
-        Email
-        <input
-          className="modal__input"
-          type="email"
-          placeholder="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-      </label>
-      <label className="modal__label">
-        Password
-        <input
-          className="modal__input"
-          type="password"
-          placeholder="Password"
-          name="Password"
-          value={formData.password}
-          onChange={handleChange}
-          minLength="1"
-          maxLength="30"
-        />
-      </label>
-      <label className="modal__label">
-        Name
-        <input
-          className="modal__input"
-          type="text"
-          placeholder="name"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-        />
-      </label>
-
-      <label className="modal__bottomlabel">
-        Avatar
-        <input
-          className="modal__input"
-          type="url"
-          placeholder="Avatar"
-          name="Avatar"
-          value={formData.avatar}
-          onChange={handleChange}
-        />
-      </label>
+      <fieldset className="modal__fieldset">
+        <label className="modal__label">
+          Email
+          <input
+            className="modal__input"
+            type="email"
+            placeholder="Email"
+            name="email"
+            value={email}
+            onChange={handleEmail}
+          />
+        </label>
+        <label className="modal__label">
+          Password
+          <input
+            className="modal__input"
+            type="password"
+            placeholder="Password"
+            name="password"
+            value={password}
+            onChange={handlePassword}
+            minLength="1"
+            maxLength="30"
+          />
+        </label>
+        <label className="modal__label">
+          Name
+          <input
+            className="modal__input"
+            type="text"
+            placeholder="Name"
+            name="name"
+            value={name}
+            onChange={handleName}
+          />
+        </label>
+        <label className="modal__label modal__bottomlabel">
+          Avatar
+          <input
+            className="modal__input"
+            type="url"
+            placeholder="Avatar"
+            name="avatar"
+            value={avatar}
+            onChange={handleAvatar}
+          />
+        </label>
+      </fieldset>
     </ModalWithForm>
   );
 };

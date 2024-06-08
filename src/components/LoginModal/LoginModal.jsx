@@ -2,21 +2,15 @@ import React, { useEffect, useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
 const LoginModal = ({
-  isOpen,
-  onClose,
   activeModal,
-  onSecondButtonClick,
-  onSubmitButtonClick,
+  closeActiveModal,
+  handleLogin,
+  setActivemodal,
+  isLoading,
+  setIsLoading,
 }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  useEffect(() => {
-    if (isOpen) {
-      setEmail("");
-      setPassword("");
-    }
-  }, [isOpen]);
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -27,19 +21,25 @@ const LoginModal = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmitButtonClick({ email, password });
+    setIsLoading(true);
+    handleLogin({ email, password }, setEmail, setPassword);
   };
+
+  const handleOrRegister = () => {
+    setActivemodal("register");
+  };
+
   return (
     <ModalWithForm
-      onSubmit={handleSubmit}
-      onClose={onClose}
-      name="login"
+      closeActiveModal={closeActiveModal}
+      isOpen={activeModal === "log-in"}
+      buttonText={isLoading ? "..." : "Next"}
       title="Log In"
-      buttonText="Log In"
-      isOpen={isOpen}
-      onSubmitButtonClick={onSubmitButtonClick}
-      onSecondButtonClick={onSecondButtonClick}
-      activeModal={activeModal}
+      onSubmit={handleSubmit}
+      logIn={true}
+      altButton={true}
+      altButtonText="or Register"
+      handleAltButton={handleOrRegister}
     >
       <label className="modal__label">
         Email

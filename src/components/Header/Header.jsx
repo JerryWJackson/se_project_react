@@ -4,7 +4,8 @@ import avatar from "../../images/my-avatar.png";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { Link } from "react-router-dom";
 
-const Header = ({ onCreateModal }) => {
+const Header = ({ onCreateModal, onregister, onLogin }) => {
+  const isLoggedIn = false;
   return (
     <header className="header">
       <div className="header__app-logo">
@@ -26,12 +27,26 @@ const Header = ({ onCreateModal }) => {
             +Add clothes
           </button>
         </div>
-        <Link to="/profile" className="header__avatar_name">
-          Jerry W Jackson
-        </Link>
-        <div>
-          <img className="header__avatar_image" src={avatar} alt="avatar" />
-        </div>
+        {isLoggedIn ? (
+          <>
+            <Link to="/profile" className="header__avatar_name">
+              Jerry W Jackson
+            </Link>
+            <div>
+              <img className="header__avatar_image" src={avatar} alt="avatar" />
+            </div>
+          </>
+        ) : (
+          //register and login buttons
+          <div>
+            <button type="button" onClick={onregister}>
+              Sign Up
+            </button>
+            <button type="button" onClick={onLogin}>
+              Log In
+            </button>
+          </div>
+        )}
       </div>
     </header>
   );

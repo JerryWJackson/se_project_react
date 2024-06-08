@@ -3,15 +3,15 @@
 import { checkServerResponse, makeServerRequest } from "./api";
 import { baseUrl, defaultHeaders } from "./constants";
 
-export const signup = ({ name, avatar, email, password }) => {
+export const register = ({ user }) => {
   return makeServerRequest(`${baseUrl}/signup`, {
     method: "POST",
     headers: defaultHeaders,
-    body: JSON.stringify({ name, avatar, email, password }),
+    body: JSON.stringify({ user }),
   }).then(checkServerResponse);
 };
 
-export const signin = ({ email, password }) => {
+export const login = ({ email, password }) => {
   return makeServerRequest(`${baseUrl}/signin`, {
     method: "POST",
     headers: defaultHeaders,

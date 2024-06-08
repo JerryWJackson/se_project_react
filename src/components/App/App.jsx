@@ -33,91 +33,31 @@ function App() {
   const [isDay, setIsDay] = useState(false);
   const [clothingItems, setClothingItems] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate();
   const [token, setToken] = useState(localStorage.getItem("jwt") || "");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleCloseModal = () => {
-    setActiveModal("");
-  };
+  const navigate = useNavigate();
 
-  const onAddItem = (values) => {
-    api
-      .addNewItem(values)
-      .then((item) => {
-        const newItemList = Array.from(clothingItems);
-        newItemList.push(item);
-        setClothingItems(newItemList);
+  /* -------------------------------------------------------------------------- */
+  /*                                User Methods                                */
+  /* -------------------------------------------------------------------------- */
+  const handleRegistration = ({ user }) => {
+    auth
+      .register({ user })
+      .then((res) => {
+        console.log(res);
+        setIsLoggedIn(true);
+        setCurrentUser(res.data);
         handleCloseModal();
+        navigate.push("/profile");
       })
-      .catch((err) => console.log("Error:", err));
+      .catch(console.error);
   };
 
-  const openConfirmationModal = (e) => {
-    handleCloseModal();
-    setActiveModal("confirm");
-  };
-
-  const onDeleteItem = (e) => {
-    e.preventDefault();
-    api
-      .deleteItem(selectedCard._id)
-      .then(() => {
-        const newItemList = clothingItems.filter((item) => {
-          return item._id !== selectedCard._id;
-        });
-        setClothingItems(newItemList);
-        handleCloseModal();
-      })
-      .catch((err) => console.log("Error:", err));
-  };
-
-  const handleSelectedCard = (card) => {
-    setActiveModal("preview");
-    setSelectedCard(card);
-  };
-
-  function handleOpenItemModal() {
-    setActiveModal("preview");
-  }
-
-  const handleOpenLoginModal = () => {
-    setActiveModal("login");
-  };
-
-  const handleOpenRegisterModal = () => {
-    setActiveModal("register");
-  };
-
-  const handleOpenEditProfileModal = () => {
-    setActiveModal("edit");
-  };
-
-  const handleRegistration = (
-    name,
-    avatar,
-    email,
-    password,
-    confirmPassword
-  ) => {
-    if (password === confirmPassword) {
-      auth
-        .signup(name, avatar, password, email)
-        .then((res) => {
-          console.log(res);
-          setIsLoggedIn(true);
-          setCurrentUser(res.data);
-          handleCloseModal();
-          navigate.push("/profile");
-        })
-        .catch(console.error);
-    }
-  };
-
-  const handleLoginModalSubmit = (user) => {
+  const handleLogin = (user) => {
     setIsLoading(true);
     auth
-      .signin(user)
+      .login(user)
       .then((data) => {
         if (data.token) {
           handleToken(data.token);
@@ -148,7 +88,7 @@ function App() {
       });
   }
 
-  const updateUser = (values) => {
+  const handleUpdateUser = (values) => {
     const jwt = localStorage.getItem("jwt");
     auth.update(values, jwt).then((res) => setCurrentUser(res));
   };
@@ -162,9 +102,76 @@ function App() {
     navigate.push("/");
   };
 
+  /* -------------------------------------------------------------------------- */
+  /*                                Item Methods                                */
+  /* -------------------------------------------------------------------------- */
+  const onAddItem = (values) => {
+    api
+      .addNewItem(values)
+      .then((item) => {
+        const newItemList = Array.from(clothingItems);
+        newItemList.push(item);
+        setClothingItems(newItemList);
+        handleCloseModal();
+      })
+      .catch((err) => console.log("Error:", err));
+  };
+
+  const onDeleteItem = (e) => {
+    e.preventDefault();
+    api
+      .deleteItem(selectedCard._id)
+      .then(() => {
+        const newItemList = clothingItems.filter((item) => {
+          return item._id !== selectedCard._id;
+        });
+        setClothingItems(newItemList);
+        handleCloseModal();
+      })
+      .catch((err) => console.log("Error:", err));
+  };
+
+  /* -------------------------------------------------------------------------- */
+  /*                                Modal Methods                               */
+  /* -------------------------------------------------------------------------- */
+
+  const handleCloseModal = () => {
+    setActiveModal("");
+  };
+
+  const handleOpenLoginModal = () => {
+    setActiveModal("login");
+  };
+
+  const handleOpenRegisterModal = () => {
+    setActiveModal("register");
+  };
+
+  const handleOpenSelectedCard = (card) => {
+    setActiveModal("preview");
+    setSelectedCard(card);
+  };
+
+  const handleOpenConfirmationModal = (e) => {
+    handleCloseModal();
+    setActiveModal("confirm");
+  };
+
+  const handleOpenEditProfileModal = () => {
+    setActiveModal("edit");
+  };
+
+  /* -------------------------------------------------------------------------- */
+  /*                                Other Methods                               */
+  /* -------------------------------------------------------------------------- */
+
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
   };
+
+  /* -------------------------------------------------------------------------- */
+  /*                              useEffect methods                             */
+  /* -------------------------------------------------------------------------- */
 
   useEffect(() => {
     getForecastWeather()
@@ -228,8 +235,8 @@ function App() {
           value={{ currentTemperatureUnit, handleToggleSwitchChange }}
         >
           <Header
-            onSignUp={() => handleOpenRegisterModal}
-            onLogin={() => handleOpenLoginModal}
+            onregister={() => handleOpenRegisterModal()}
+            onLogin={() => handleOpenLoginModal()}
             // onActiveModal={setActiveModal("register")}
             // location={location}
             isLoggedIn={isLoggedIn}
@@ -244,8 +251,8 @@ function App() {
                     handleCloseModal={handleCloseModal}
                     onActiveModal={handleOpenEditProfileModal}
                     onAddItem={onAddItem}
-                    onDeleteItem={openConfirmationModal}
-                    onSelectCard={handleSelectedCard}
+                    onDeleteItem={handleOpenConfirmationModal}
+                    onSelectCard={handleOpenSelectedCard}
                     clothingItems={clothingItems}
                   />
                 </ProtectedRoute>
@@ -259,7 +266,7 @@ function App() {
                   day={isDay}
                   weather={weather}
                   temp={temp}
-                  onSelectCard={handleSelectedCard}
+                  onSelectCard={handleOpenSelectedCard}
                   setClothingItems={clothingItems}
                   // onCardLike={handleCardLike}
                   isLoggedIn={isLoggedIn}
@@ -272,7 +279,6 @@ function App() {
             <AddItemModal
               handleCloseModal={handleCloseModal}
               onAddItem={onAddItem}
-              isOpen={activeModal === "create"}
             />
           )}
           {activeModal === "preview" && (
@@ -280,7 +286,7 @@ function App() {
               selectedCard={selectedCard}
               name="previewGarment"
               onClose={handleCloseModal}
-              openConfirmationModal={openConfirmationModal}
+              handleOpenConfirmationModal={handleOpenConfirmationModal}
             />
           )}
           {activeModal === "confirm" && (
@@ -293,18 +299,24 @@ function App() {
           )}
           {activeModal === "login" && (
             <LoginModal
+              activeModal={activeModal}
               onClose={handleCloseModal}
-              onSubmitButtonClick={handleLoginModalSubmit}
-              openLoginModal={handleOpenLoginModal}
-              openRegisterModal={handleOpenRegisterModal}
+              handleLogin={handleLogin}
+              onSecondButtonClick={handleOpenRegisterModal}
+              setActiveModal={setActiveModal}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
             />
           )}
 
           {activeModal === "register" && (
             <RegisterModal
-              isOpen={activeModal === "register"}
+              activeModal={activeModal}
               onClose={handleCloseModal}
-              onSubmitButtonClick={handleRegistration}
+              handleRegistration={handleRegistration}
+              setActiveModal={setActiveModal}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
             />
           )}
         </CurrentTemperatureUnitContext.Provider>
