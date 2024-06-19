@@ -8,15 +8,16 @@ export const register = ({ user }) => {
     method: "POST",
     headers: defaultHeaders,
     body: JSON.stringify({ user }),
-  }).then(checkServerResponse);
+  });
 };
 
 export const login = ({ email, password }) => {
+  console.log("starting login process for", email);
   return makeServerRequest(`${baseUrl}/signin`, {
     method: "POST",
     headers: defaultHeaders,
     body: JSON.stringify({ email, password }),
-  }).then(checkServerResponse);
+  });
 };
 
 export const update = ({ name, avatar }, token) => {
@@ -28,7 +29,7 @@ export const update = ({ name, avatar }, token) => {
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ name, avatar }),
-  }).then(checkServerResponse);
+  });
 };
 
 export const checkToken = (token) => {
@@ -39,7 +40,7 @@ export const checkToken = (token) => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-  }).then(checkServerResponse);
+  });
 };
 
 export const getUserData = (token) => {
@@ -50,5 +51,5 @@ export const getUserData = (token) => {
       "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
     },
-  }).then(checkServerResponse);
+  });
 };

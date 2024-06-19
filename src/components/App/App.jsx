@@ -33,6 +33,7 @@ function App() {
   const [isDay, setIsDay] = useState(false);
   const [clothingItems, setClothingItems] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedInLoading, setIsLoggedInLoading] = useState(true);
   const [token, setToken] = useState(localStorage.getItem("jwt") || "");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -56,12 +57,13 @@ function App() {
 
   const handleLogin = (user) => {
     setIsLoading(true);
+    console.log("attempting to log in user", user.email);
     auth
       .login(user)
       .then((data) => {
+        console.log("token is", data);
         if (data.token) {
           handleToken(data.token);
-
           setIsLoggedIn(true);
           setCurrentUser(data.user);
           handleCloseModal();
@@ -198,6 +200,29 @@ function App() {
       .catch((error) => {
         console.error("Error: An error occurred", error);
       });
+  }, []);
+
+  useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
+      checkToken(jwt)
+        .then((user) => {
+          setIsLoggedIn(true);
+        })
+        .catch((err) => {
+          if (err.response && err.resonse.status === 401) {
+            console.error("Token invalid or expired. Logging you out...");
+            onSignOut();
+          } else {
+            console.error("Error fetching user data:", err);
+          }
+        })
+        .finally(() => {
+          setIsLoggedInLoading(false); // Whether the token check was successful or not, we have our answer about whether the user is logged in now
+        });
+    } else {
+      setIsLoggedInLoading(false); // No token, so nothing to check
+    }
   }, []);
 
   useEffect(() => {

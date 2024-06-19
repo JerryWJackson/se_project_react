@@ -5,7 +5,7 @@ const LoginModal = ({
   activeModal,
   closeActiveModal,
   handleLogin,
-  setActivemodal,
+  setActiveModal,
   isLoading,
   setIsLoading,
 }) => {
@@ -22,11 +22,13 @@ const LoginModal = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
-    handleLogin({ email, password }, setEmail, setPassword);
+    console.log("submitting login");
+    handleLogin({ email, password });
   };
 
   const handleOrRegister = () => {
-    setActivemodal("register");
+    debugger;
+    setActiveModal("register");
   };
 
   return (

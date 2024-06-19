@@ -6,6 +6,7 @@ export const getToken = () => {
 
 export const handleToken = (token) => {
   if (token) {
+    console.log("got token, adding to local storage");
     localStorage.setItem(TOKEN_KEY, token);
     return token;
   } else {
