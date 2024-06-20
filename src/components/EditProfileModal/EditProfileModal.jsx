@@ -2,7 +2,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import * as api from "../../utils/api";
+import * as auth from "../../utils/auth";
 
 const EditProfileModal = ({ isOpen, onClose }) => {
   const currentUser = useContext(CurrentUserContext);
@@ -16,7 +16,7 @@ const EditProfileModal = ({ isOpen, onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    api
+    auth
       .updateUserProfile({ name, avatar })
       .then((updatedUser) => {
         // Update the context or handle updated user data here

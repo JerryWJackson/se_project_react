@@ -20,7 +20,7 @@ export const login = ({ email, password }) => {
   });
 };
 
-export const update = ({ name, avatar }, token) => {
+export const updateUserProfile = ({ name, avatar }, token) => {
   return makeServerRequest(`${baseUrl}/users/me`, {
     method: "PATCH",
     headers: {

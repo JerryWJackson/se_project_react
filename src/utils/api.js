@@ -35,14 +35,3 @@ export function deleteItem(id) {
     headers: defaultHeaders,
   });
 }
-
-export function updateUserProfile(user) {
-  return makeServerRequest(`${baseUrl}/${id}`, {
-    method: "PATCH",
-    headers: defaultHeaders,
-    body: JSON.stringify({
-      name: user.name,
-      avatar: user.avatar,
-    }),
-  });
-}
