@@ -3,9 +3,18 @@ import logo from "../../images/logo.svg";
 import avatar from "../../images/my-avatar.png";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-const Header = ({ onCreateModal, onregister, onLogin }) => {
-  const isLoggedIn = false;
+const Header = ({ onCreateModal, onRegister, onLogin, isLoggedIn }) => {
+  const currentUser = useContext(CurrentUserContext);
+  const formattedDate = new Date().toLocaleString("default", {
+    month: "long",
+    day: "numeric",
+  });
+
+  console.log("current user is ", currentUser);
+
   return (
     <header className="header">
       <div className="header__app-logo">
@@ -14,7 +23,7 @@ const Header = ({ onCreateModal, onregister, onLogin }) => {
             <img className="header__app-logo_image" src={logo} alt="logo" />
           </Link>
         </div>
-        <div className="header__app-logo_date">December 2, Austin</div>
+        <div className="header__app-logo_date">{formattedDate}, Austin</div>
       </div>
       <div className="header__avatar">
         <ToggleSwitch />
@@ -30,7 +39,7 @@ const Header = ({ onCreateModal, onregister, onLogin }) => {
         {isLoggedIn ? (
           <>
             <Link to="/profile" className="header__avatar_name">
-              Jerry W Jackson
+              {currentUser}
             </Link>
             <div>
               <img className="header__avatar_image" src={avatar} alt="avatar" />
@@ -39,7 +48,7 @@ const Header = ({ onCreateModal, onregister, onLogin }) => {
         ) : (
           //register and login buttons
           <div>
-            <button type="button" onClick={onregister}>
+            <button type="button" onClick={onRegister}>
               Sign Up
             </button>
             <button type="button" onClick={onLogin}>

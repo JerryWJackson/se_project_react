@@ -9,17 +9,18 @@ import AddItemModal from "../AddItemModal/AddItemModal";
 import DeleteConfirmModal from "../DeleteConfirmModal/DeleteConfirmModal";
 import LoginModal from "../LoginModal/LoginModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import EditProfileModal from "../EditProfileModal/EditProfileModal";
 // context imports
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 // utility imports
 import { useEffect, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { getForecastWeather } from "../../utils/weatherApi";
 import * as api from "../../utils/api";
 import * as auth from "../../utils/auth";
-import { getToken, handleToken } from "../../utils/token";
+import { getToken, handleToken, checkToken } from "../../utils/token";
 // css imports
 import "./App.css";
 
@@ -28,13 +29,11 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [temp, setTemp] = useState(0);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [weather, setWeather] = useState("");
   const [isDay, setIsDay] = useState(false);
   const [clothingItems, setClothingItems] = useState([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoggedInLoading, setIsLoggedInLoading] = useState(true);
-  const [token, setToken] = useState(localStorage.getItem("jwt") || "");
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -50,7 +49,7 @@ function App() {
         setIsLoggedIn(true);
         setCurrentUser(res.data);
         handleCloseModal();
-        navigate.push("/profile");
+        navigate("/profile");
       })
       .catch(console.error);
   };
@@ -61,13 +60,13 @@ function App() {
     auth
       .login(user)
       .then((data) => {
-        console.log("token is", data);
+        console.log("token is", data.token);
         if (data.token) {
           handleToken(data.token);
           setIsLoggedIn(true);
           setCurrentUser(data.user);
           handleCloseModal();
-          navigate.push("/profile");
+          navigate("/profile");
         }
       })
       .catch((err) => {
@@ -78,25 +77,26 @@ function App() {
       });
   };
 
-  function checkLoggedIn(token) {
-    return token
-      .checkToken(token)
-      .then((res) => {
-        setIsLoggedIn(true);
-        setCurrentUser(res.data);
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  }
+  const checkLoggedIn = (tokenToCheck) => {
+    console.log("tokenToCheck is ", tokenToCheck);
+    const tokenStatus = checkToken(tokenToCheck);
+    console.log("tokenCheck returned ", tokenStatus);
+    if (tokenStatus) {
+      setIsLoggedIn(true);
+      return true;
+    } else {
+      setIsLoggedIn(false);
+      return false;
+    }
+  };
 
   const handleUpdateUser = (values) => {
     const jwt = localStorage.getItem("jwt");
     auth.update(values, jwt).then((res) => setCurrentUser(res));
   };
 
-  const onSignOut = () => {
-    localStorage.removeItem("jwt");
+  const handleSignOut = () => {
+    handleToken();
     setCurrentUser({});
     setIsLoggedIn(false);
     setCurrentUser(null);
@@ -141,26 +141,18 @@ function App() {
     setActiveModal("");
   };
 
-  const handleOpenLoginModal = () => {
-    setActiveModal("login");
-  };
-
-  const handleOpenRegisterModal = () => {
-    setActiveModal("register");
-  };
-
-  const handleOpenSelectedCard = (card) => {
-    setActiveModal("preview");
-    setSelectedCard(card);
-  };
-
-  const handleOpenConfirmationModal = (e) => {
-    handleCloseModal();
-    setActiveModal("confirm");
-  };
-
-  const handleOpenEditProfileModal = () => {
-    setActiveModal("edit");
+  // available modals are =>
+  //   login, (login existing user)
+  //   register, (register new user)
+  //   preview, (card preview)
+  //   confirm, (confirm deletion)
+  //   edit, (edit profile)
+  //   create (create item)
+  const handleOpenModal = (modal) => {
+    if (modal === "preview") {
+      setSelectedCard(EventTarget);
+    }
+    setActiveModal(modal);
   };
 
   /* -------------------------------------------------------------------------- */
@@ -203,55 +195,27 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const jwt = localStorage.getItem("jwt");
-    if (jwt) {
-      checkToken(jwt)
-        .then((user) => {
-          setIsLoggedIn(true);
+    const jwt = getToken();
+    let tokenCheckStatus = checkLoggedIn(jwt);
+    if (tokenCheckStatus === true) {
+      handleToken(jwt);
+      auth
+        .getUserData(jwt)
+        .then((res) => {
+          setCurrentUser(res.data);
         })
         .catch((err) => {
           if (err.response && err.resonse.status === 401) {
             console.error("Token invalid or expired. Logging you out...");
-            onSignOut();
+            handleSignOut();
           } else {
             console.error("Error fetching user data:", err);
           }
-        })
-        .finally(() => {
-          setIsLoggedInLoading(false); // Whether the token check was successful or not, we have our answer about whether the user is logged in now
-        });
-    } else {
-      setIsLoggedInLoading(false); // No token, so nothing to check
-    }
-  }, []);
-
-  useEffect(() => {
-    const jwt = getToken();
-    if (jwt) {
-      checkLoggedIn(jwt)
-        .then(() => {
-          setToken(jwt);
-          auth
-            .getUserData(jwt)
-            .then((res) => {
-              setCurrentUser(res.data);
-            })
-            .catch((err) => {
-              if (err.response && err.resonse.status === 401) {
-                console.error("Token invalid or expired. Logging you out...");
-                onSignOut();
-              } else {
-                console.error("Error fetching user data:", err);
-              }
-            });
-        })
-        .catch((err) => {
-          console.error(err);
         });
     } else {
       setIsLoggedIn(false);
     }
-  }, [onSignOut]);
+  }, [handleSignOut]);
 
   return (
     <div className="page">
@@ -260,12 +224,10 @@ function App() {
           value={{ currentTemperatureUnit, handleToggleSwitchChange }}
         >
           <Header
-            onregister={() => handleOpenRegisterModal()}
-            onLogin={() => handleOpenLoginModal()}
-            // onActiveModal={setActiveModal("register")}
-            // location={location}
+            onCreateModal={() => handleOpenModal("create")}
+            onregister={() => handleOpenModal("register")}
+            onLogin={() => handleOpenModal("login")}
             isLoggedIn={isLoggedIn}
-            currentUser={currentUser}
           />
           <Routes>
             <Route
@@ -273,12 +235,16 @@ function App() {
               element={
                 <ProtectedRoute isLoggedIn={isLoggedIn}>
                   <Profile
+                    isLoggedIn={isLoggedIn}
                     handleCloseModal={handleCloseModal}
-                    onActiveModal={handleOpenEditProfileModal}
+                    onActiveModal={() => handleOpenModal("create")}
+                    onEditProfile={() => handleOpenModal("edit")}
                     onAddItem={onAddItem}
-                    onDeleteItem={handleOpenConfirmationModal}
-                    onSelectCard={handleOpenSelectedCard}
-                    clothingItems={clothingItems}
+                    onDeleteItem={() => handleOpenModal("confirm")}
+                    onSelectCard={() => handleOpenModal("preview")}
+                    setClothingItems={clothingItems}
+                    onEditUser={handleUpdateUser}
+                    onSignOut={handleSignOut}
                   />
                 </ProtectedRoute>
               }
@@ -291,7 +257,7 @@ function App() {
                   day={isDay}
                   weather={weather}
                   temp={temp}
-                  onSelectCard={handleOpenSelectedCard}
+                  onSelectCard={() => handleOpenModal("preview")}
                   setClothingItems={clothingItems}
                   // onCardLike={handleCardLike}
                   isLoggedIn={isLoggedIn}
@@ -311,7 +277,7 @@ function App() {
               selectedCard={selectedCard}
               name="previewGarment"
               onClose={handleCloseModal}
-              handleOpenConfirmationModal={handleOpenConfirmationModal}
+              handleOpenConfirmationModal={() => handleOpenModal("confirm")}
             />
           )}
           {activeModal === "confirm" && (
@@ -324,24 +290,28 @@ function App() {
           )}
           {activeModal === "login" && (
             <LoginModal
-              activeModal={activeModal}
               onClose={handleCloseModal}
               handleLogin={handleLogin}
-              onSecondButtonClick={handleOpenRegisterModal}
+              onSecondButtonClick={() => handleOpenModal("register")}
               setActiveModal={setActiveModal}
               isLoading={isLoading}
               setIsLoading={setIsLoading}
             />
           )}
-
           {activeModal === "register" && (
             <RegisterModal
-              activeModal={activeModal}
               onClose={handleCloseModal}
-              handleRegistration={handleRegistration}
+              onRegistration={handleRegistration}
+              onSecondButtonClick={() => handleOpenModal("login")}
               setActiveModal={setActiveModal}
               isLoading={isLoading}
               setIsLoading={setIsLoading}
+            />
+          )}
+          {activeModal === "edit" && (
+            <EditProfileModal
+              isOpen={() => handleOpenModal("edit")}
+              onClose={handleCloseModal}
             />
           )}
         </CurrentTemperatureUnitContext.Provider>

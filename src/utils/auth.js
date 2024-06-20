@@ -1,6 +1,6 @@
 // authorization/registration middleware
 
-import { checkServerResponse, makeServerRequest } from "./api";
+import { makeServerRequest } from "./api";
 import { baseUrl, defaultHeaders } from "./constants";
 
 export const register = ({ user }) => {

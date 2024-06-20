@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
 const LoginModal = ({
@@ -27,7 +27,6 @@ const LoginModal = ({
   };
 
   const handleOrRegister = () => {
-    debugger;
     setActiveModal("register");
   };
 

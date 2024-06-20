@@ -2,7 +2,6 @@ import { defaultHeaders, baseUrl } from "./constants";
 
 export function checkServerResponse(res) {
   if (res.ok) {
-    console.log("recieved ok, returning reponse");
     return res.json();
   }
   return Promise.reject(`Error: ${res.status}`);

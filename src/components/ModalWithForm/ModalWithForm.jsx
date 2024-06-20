@@ -13,10 +13,6 @@ const ModalWithForm = ({
   logIn,
   handleAltButton,
 }) => {
-  const handleToggleModal = (e) => {
-    console.log("I should open the login modal");
-  };
-
   return (
     <div className={`modal modal_type_${name} ${isOpen ? "modal_opened" : ""}`}>
       <div className={`modal__content ${logIn ? "modal_content_login" : ""}`}>
