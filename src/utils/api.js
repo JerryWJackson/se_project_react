@@ -32,5 +32,17 @@ export function addNewItem(item) {
 export function deleteItem(id) {
   return makeServerRequest(`${baseUrl}/${id}`, {
     method: "DELETE",
+    headers: defaultHeaders,
+  });
+}
+
+export function updateUserProfile(user) {
+  return makeServerRequest(`${baseUrl}/${id}`, {
+    method: "PATCH",
+    headers: defaultHeaders,
+    body: JSON.stringify({
+      name: user.name,
+      avatar: user.avatar,
+    }),
   });
 }
