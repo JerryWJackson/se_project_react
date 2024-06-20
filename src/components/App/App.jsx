@@ -92,7 +92,7 @@ function App() {
 
   const handleUpdateUser = (values) => {
     const jwt = localStorage.getItem("jwt");
-    auth.update(values, jwt).then((res) => setCurrentUser(res));
+    auth.updateUserProfile(values, jwt).then((res) => setCurrentUser(res));
   };
 
   const handleSignOut = () => {
