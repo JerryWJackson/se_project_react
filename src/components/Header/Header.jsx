@@ -1,20 +1,16 @@
 import "./Header.css";
 import logo from "../../images/logo.svg";
-import avatar from "../../images/my-avatar.png";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { Link } from "react-router-dom";
-import React, { useContext } from "react";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { PassCurrentUserProvider } from "../../contexts/CurrentUserContext";
 
 const Header = ({ onCreateModal, onRegister, onLogin, isLoggedIn }) => {
-  const currentUser = useContext(CurrentUserContext);
   const formattedDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
   });
 
-  console.log("current user is ", currentUser);
-
+  console.log("current user is ", PassCurrentUserProvider.currentUser);
   return (
     <header className="header">
       <div className="header__app-logo">
@@ -27,22 +23,25 @@ const Header = ({ onCreateModal, onRegister, onLogin, isLoggedIn }) => {
       </div>
       <div className="header__avatar">
         <ToggleSwitch />
-        <div>
-          <button
-            type="button"
-            className="header__avatar_button"
-            onClick={onCreateModal}
-          >
-            +Add clothes
-          </button>
-        </div>
+        <div></div>
         {isLoggedIn ? (
           <>
+            <button
+              type="button"
+              className="header__avatar_button"
+              onClick={onCreateModal}
+            >
+              +Add clothes
+            </button>
             <Link to="/profile" className="header__avatar_name">
-              {currentUser}
+              {PassCurrentUserProvider.currentUser.name}
             </Link>
             <div>
-              <img className="header__avatar_image" src={avatar} alt="avatar" />
+              <img
+                className="header__avatar_image"
+                src={PassCurrentUserProvider.currentUser.avatar}
+                alt="avatar"
+              />
             </div>
           </>
         ) : (

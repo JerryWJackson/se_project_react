@@ -11,12 +11,12 @@ export const register = ({ user }) => {
   });
 };
 
-export const login = ({ email, password }) => {
+export const login = (email, password) => {
   console.log("starting login process for", email);
   return makeServerRequest(`${baseUrl}/signin`, {
     method: "POST",
     headers: defaultHeaders,
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify(email, password),
   });
 };
 

@@ -6,7 +6,7 @@ const RegisterModal = ({
   activeModal,
   closeActiveModal,
   onRegistration,
-  handleLogin,
+  onLogin,
   setActiveModal,
   isLoading,
   setIsLoading,
@@ -40,7 +40,7 @@ const RegisterModal = ({
     const user = { email, password, name, avatar };
     onRegistration({ user });
     console.log("registered user, now logging in ", user);
-    handleLogin(user.email, user.password);
+    onLogin({ user });
   };
 
   const handleToggleModal = () => {

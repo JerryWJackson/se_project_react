@@ -12,7 +12,10 @@ import RegisterModal from "../RegisterModal/RegisterModal";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
 // context imports
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import {
+  CurrentUserProvider,
+  PassCurrentUserProvider,
+} from "../../contexts/CurrentUserContext.jsx";
 // utility imports
 import { useEffect, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
@@ -30,7 +33,6 @@ function App() {
   const [temp, setTemp] = useState(0);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState({});
   const [weather, setWeather] = useState("");
   const [isDay, setIsDay] = useState(false);
   const [clothingItems, setClothingItems] = useState([]);
@@ -45,26 +47,34 @@ function App() {
     auth
       .register({ user })
       .then((res) => {
-        console.log(res);
+        console.log("registration response is ", res);
         setIsLoggedIn(true);
-        setCurrentUser(res.data);
+        console.log("user is ", user);
+        PassCurrentUserProvider.setCurrentUser(res);
+        handleLogin(
+          CurrentUserProvider.currentUser.email,
+          CurrentUserProvider.currentUser.password
+        );
         handleCloseModal();
         navigate("/profile");
       })
       .catch(console.error);
   };
 
-  const handleLogin = (user) => {
+  const handleLogin = (email, password) => {
     setIsLoading(true);
-    console.log("attempting to log in user", user.email);
+    console.log("attempting to log in user", email);
     auth
-      .login(user)
+      .login(email, password)
       .then((data) => {
+        console.log("data is", data);
         console.log("token is", data.token);
         if (data.token) {
           handleToken(data.token);
+          const newCurrentUser = auth.getUserData(data.token);
+          console.log("current user is ", newCurrentUser);
           setIsLoggedIn(true);
-          setCurrentUser(data.user);
+          PassCurrentUserProvider.setCurrentUser(newCurrentUser.value);
           handleCloseModal();
           navigate("/profile");
         }
@@ -82,6 +92,9 @@ function App() {
     const tokenStatus = checkToken(tokenToCheck);
     console.log("tokenCheck returned ", tokenStatus);
     if (tokenStatus) {
+      auth.getUserData(tokenToCheck).then((data) => {
+        PassCurrentUserProvider.setCurrentUser(data);
+      });
       setIsLoggedIn(true);
       return true;
     } else {
@@ -92,14 +105,15 @@ function App() {
 
   const handleUpdateUser = (values) => {
     const jwt = localStorage.getItem("jwt");
-    auth.updateUserProfile(values, jwt).then((res) => setCurrentUser(res));
+    auth
+      .updateUserProfile(values, jwt)
+      .then((res) => PassCurrentUserProvider.setCurrentUser(res));
   };
 
   const handleSignOut = () => {
     handleToken();
-    setCurrentUser({});
+    PassCurrentUserProvider.setCurrentUser({});
     setIsLoggedIn(false);
-    setCurrentUser(null);
     handleCloseModal();
     navigate.push("/");
   };
@@ -202,7 +216,7 @@ function App() {
       auth
         .getUserData(jwt)
         .then((res) => {
-          setCurrentUser(res.data);
+          PassCurrentUserProvider.setCurrentUser(res.data);
         })
         .catch((err) => {
           if (err.response && err.resonse.status === 401) {
@@ -219,13 +233,13 @@ function App() {
 
   return (
     <div className="page">
-      <CurrentUserContext.Provider value={currentUser}>
+      <CurrentUserProvider>
         <CurrentTemperatureUnitContext.Provider
           value={{ currentTemperatureUnit, handleToggleSwitchChange }}
         >
           <Header
             onCreateModal={() => handleOpenModal("create")}
-            onregister={() => handleOpenModal("register")}
+            onRegister={() => handleOpenModal("register")}
             onLogin={() => handleOpenModal("login")}
             isLoggedIn={isLoggedIn}
           />
@@ -302,6 +316,7 @@ function App() {
             <RegisterModal
               onClose={handleCloseModal}
               onRegistration={handleRegistration}
+              onLogin={handleLogin}
               onSecondButtonClick={() => handleOpenModal("login")}
               setActiveModal={setActiveModal}
               isLoading={isLoading}
@@ -315,7 +330,7 @@ function App() {
             />
           )}
         </CurrentTemperatureUnitContext.Provider>
-      </CurrentUserContext.Provider>
+      </CurrentUserProvider>
     </div>
   );
 }
