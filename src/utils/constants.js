@@ -1,3 +1,5 @@
+import { getToken } from "../utils/token";
+
 export const weatherOptions = [
   {
     url: "/src/images/day/clear.svg",
@@ -78,4 +80,9 @@ export const baseUrl = "http://localhost:3001";
 export const defaultHeaders = {
   Accept: "application/json",
   "Content-Type": "application/json",
+};
+export const authHeaders = {
+  Accept: "application/json",
+  "Content-Type": "application/json",
+  Authorization: `Bearer ${getToken()}`,
 };

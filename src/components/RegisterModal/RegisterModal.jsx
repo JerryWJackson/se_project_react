@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 const RegisterModal = ({
   activeModal,
@@ -11,8 +10,6 @@ const RegisterModal = ({
   isLoading,
   setIsLoading,
 }) => {
-  const currentUser = useContext(CurrentUserContext);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -40,7 +37,7 @@ const RegisterModal = ({
     const user = { email, password, name, avatar };
     onRegistration({ user });
     console.log("registered user, now logging in ", user);
-    onLogin({ user });
+    onLogin({ email, password });
   };
 
   const handleToggleModal = () => {
@@ -52,7 +49,7 @@ const RegisterModal = ({
     setPassword("");
     setName("");
     setAvatar("");
-  }, [currentUser]);
+  }, []);
 
   return (
     <ModalWithForm

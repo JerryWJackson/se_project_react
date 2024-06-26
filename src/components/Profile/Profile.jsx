@@ -1,8 +1,7 @@
-import React, { useContext } from "react";
 import SideBar from "../SideBar/SideBar";
 import ClothesSection from "../ClothesSection/ClothesSection";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { PassCurrentUserProvider } from "../../contexts/CurrentUserContext.jsx";
 import "./Profile.css";
 
 function Profile({
@@ -17,7 +16,7 @@ function Profile({
   onEditUser,
   onSignOut,
 }) {
-  const currentUser = useContext(CurrentUserContext);
+  // const currentUser = useContext(CurrentUserContext);
 
   return (
     <div className="profile__container">
@@ -45,11 +44,13 @@ function Profile({
         </button>
       </div>
       <ClothesSection
-        currentUser={currentUser}
+        currentUser={PassCurrentUserProvider?.currentUser}
         clothingItems={clothingItems}
         handleCloseModal={handleCloseModal}
         onCreateModal={onCreateModal}
-        items={clothingItems.filter((card) => card.owner === currentUser._id)}
+        items={clothingItems.filter(
+          (card) => card.owner === PassCurrentUserProvider?.currentUser._id
+        )}
         onSelectCard={onSelectCard}
       />
       <EditProfileModal isOpen={onEditProfile} onClose={handleCloseModal} />

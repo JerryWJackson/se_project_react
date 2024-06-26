@@ -1,16 +1,18 @@
-import avatar from "../../images/my-avatar.png";
-import React, { useContext } from "react";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { PassCurrentUserProvider } from "../../contexts/CurrentUserContext.jsx";
 import "./SideBar.css";
 
 function SideBar(onEditUser, onSignOut) {
-  const currentUser = useContext(CurrentUserContext);
-
   return (
     <section className="sideBar">
       <div className="sideBar__container">
-        <img className="sideBar__avatar_image" src={avatar} alt="avatar" />
-        <p className="sideBar__username">{currentUser}</p>
+        <img
+          className="sideBar__avatar_image"
+          src={PassCurrentUserProvider.currentUser.avatar}
+          alt="avatar"
+        />
+        <p className="sideBar__username">
+          {PassCurrentUserProvider.currentUser.name}
+        </p>
         <button
           className="sideBar__button sideBar__button_edit-profile"
           type="button"

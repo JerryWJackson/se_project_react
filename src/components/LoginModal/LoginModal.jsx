@@ -23,7 +23,7 @@ const LoginModal = ({
     e.preventDefault();
     setIsLoading(true);
     console.log("submitting login");
-    handleLogin({ email, password });
+    handleLogin(email, password);
   };
 
   const handleOrRegister = () => {
@@ -33,7 +33,7 @@ const LoginModal = ({
   return (
     <ModalWithForm
       closeActiveModal={closeActiveModal}
-      isOpen={activeModal === "log-in"}
+      isOpen={activeModal === "login"}
       buttonText={isLoading ? "..." : "Next"}
       title="Log In"
       onSubmit={handleSubmit}

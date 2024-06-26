@@ -48,13 +48,11 @@ function App() {
       .register({ user })
       .then((res) => {
         console.log("registration response is ", res);
-        setIsLoggedIn(true);
-        console.log("user is ", user);
+        // console.log("app.jsx/L52 user is ", user);
         PassCurrentUserProvider.setCurrentUser(res);
-        handleLogin(
-          CurrentUserProvider.currentUser.email,
-          CurrentUserProvider.currentUser.password
-        );
+        setIsLoggedIn(true);
+        console.log("logging user in");
+        handleLogin(res.email, res.password);
         handleCloseModal();
         navigate("/profile");
       })
@@ -67,14 +65,12 @@ function App() {
     auth
       .login(email, password)
       .then((data) => {
-        console.log("data is", data);
-        console.log("token is", data.token);
         if (data.token) {
           handleToken(data.token);
-          const newCurrentUser = auth.getUserData(data.token);
-          console.log("current user is ", newCurrentUser);
+          auth.getUserData(data.token).then((user) => {
+            PassCurrentUserProvider.setCurrentUser(user.email, user.password);
+          });
           setIsLoggedIn(true);
-          PassCurrentUserProvider.setCurrentUser(newCurrentUser.value);
           handleCloseModal();
           navigate("/profile");
         }
@@ -88,17 +84,12 @@ function App() {
   };
 
   const checkLoggedIn = (tokenToCheck) => {
-    console.log("tokenToCheck is ", tokenToCheck);
     const tokenStatus = checkToken(tokenToCheck);
-    console.log("tokenCheck returned ", tokenStatus);
+    // console.log("tokenStatus", tokenStatus);
     if (tokenStatus) {
-      auth.getUserData(tokenToCheck).then((data) => {
-        PassCurrentUserProvider.setCurrentUser(data);
-      });
       setIsLoggedIn(true);
       return true;
     } else {
-      setIsLoggedIn(false);
       return false;
     }
   };
@@ -121,9 +112,10 @@ function App() {
   /* -------------------------------------------------------------------------- */
   /*                                Item Methods                                */
   /* -------------------------------------------------------------------------- */
-  const onAddItem = (values) => {
+  const onAddItem = (values, token) => {
+    console.log("new item values", values);
     api
-      .addNewItem(values)
+      .addNewItem(values, token)
       .then((item) => {
         const newItemList = Array.from(clothingItems);
         newItemList.push(item);
@@ -215,8 +207,8 @@ function App() {
       handleToken(jwt);
       auth
         .getUserData(jwt)
-        .then((res) => {
-          PassCurrentUserProvider.setCurrentUser(res.data);
+        .then((data) => {
+          PassCurrentUserProvider.setCurrentUser(data);
         })
         .catch((err) => {
           if (err.response && err.resonse.status === 401) {
