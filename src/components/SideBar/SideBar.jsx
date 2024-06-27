@@ -1,7 +1,7 @@
 import "./SideBar.css";
 import { PassCurrentUserProvider } from "../../contexts/CurrentUserContext.jsx";
 
-function SideBar(onEditUser, onSignOut, isLoggedIn) {
+const SideBar = ({ onEditUser, onSignOut, isLoggedIn }) => {
   return (
     <section className="sideBar">
       <div className="sideBar__container">
@@ -34,6 +34,6 @@ function SideBar(onEditUser, onSignOut, isLoggedIn) {
       </div>
     </section>
   );
-}
+};
 
 export default SideBar;

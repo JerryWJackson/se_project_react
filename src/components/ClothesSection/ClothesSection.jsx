@@ -1,7 +1,7 @@
 import ItemCard from "../ItemCard/ItemCard";
 import "./ClothesSection.css";
 
-function ClothesSection({ clothingItems, onCreateModal, onSelectCard }) {
+const ClothesSection = ({ clothingItems, onCreateModal, onSelectCard }) => {
   return (
     <section className="clothesSection">
       <div className="card_section-title">
@@ -23,6 +23,6 @@ function ClothesSection({ clothingItems, onCreateModal, onSelectCard }) {
       </div>
     </section>
   );
-}
+};
 
 export default ClothesSection;

@@ -18,7 +18,7 @@ import {
 } from "../../contexts/CurrentUserContext.jsx";
 // utility imports
 import { useEffect, useState } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { getForecastWeather } from "../../utils/weatherApi";
 import * as api from "../../utils/api";
@@ -187,18 +187,22 @@ function App() {
       .catch((err) => {
         console.error("An error occurred:", err);
       });
-  }, []);
+  }, [weather]);
+
+  // useEffect(() => {
+  //   api
+  //     .fetchAllClothing()
+  //     .then((items) => {
+  //       setClothingItems(items);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error: An error occurred", error);
+  //     });
+  // }, []);
 
   useEffect(() => {
-    api
-      .fetchAllClothing()
-      .then((items) => {
-        setClothingItems(items);
-      })
-      .catch((error) => {
-        console.error("Error: An error occurred", error);
-      });
-  }, []);
+    console.log("isLoggedIn state: ", isLoggedIn);
+  }, [isLoggedIn]);
 
   useEffect(() => {
     const jwt = getToken();
@@ -221,7 +225,7 @@ function App() {
     } else {
       setIsLoggedIn(false);
     }
-  }, [handleSignOut]);
+  }, []);
 
   return (
     <div className="page">

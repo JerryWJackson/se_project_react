@@ -4,7 +4,7 @@ import EditProfileModal from "../EditProfileModal/EditProfileModal";
 import { PassCurrentUserProvider } from "../../contexts/CurrentUserContext.jsx";
 import "./Profile.css";
 
-function Profile({
+const Profile = ({
   isLoggedIn,
   handleCloseModal,
   onCreateModal,
@@ -15,7 +15,8 @@ function Profile({
   clothingItems,
   onEditUser,
   onSignOut,
-}) {
+}) => {
+  console.log("opening Profile page...");
   return (
     <div className="profile__container">
       <SideBar
@@ -38,6 +39,6 @@ function Profile({
       <EditProfileModal isOpen={onEditProfile} onClose={handleCloseModal} />
     </div>
   );
-}
+};
 
 export default Profile;
