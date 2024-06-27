@@ -11,6 +11,8 @@ const Header = ({ onCreateModal, onRegister, onLogin, isLoggedIn }) => {
     day: "numeric",
   });
 
+  console.log("isLoggedIn is ", isLoggedIn);
+
   return (
     <header className="header">
       <div className="header__app-logo">

@@ -16,33 +16,13 @@ function Profile({
   onEditUser,
   onSignOut,
 }) {
-  // const currentUser = useContext(CurrentUserContext);
-
   return (
     <div className="profile__container">
-      <SideBar />
-      <div className="profile__items">
-        <h3 className="profile__items-your">Your Items</h3>
-        {isLoggedIn && (
-          <button
-            className="profile__button"
-            type="button"
-            onClick={onCreateModal}
-          >
-            + Add New
-          </button>
-        )}
-        <button
-          className="profile__button"
-          type="button"
-          onClick={onEditProfile}
-        >
-          Edit Profile
-        </button>
-        <button className="profile__button" type="button" onClick={onSignOut}>
-          Sign Out
-        </button>
-      </div>
+      <SideBar
+        onEditUser={onEditUser}
+        onSignOut={onSignOut}
+        isLoggedIn={isLoggedIn}
+      />
       <ClothesSection
         currentUser={PassCurrentUserProvider?.currentUser}
         clothingItems={clothingItems}
@@ -52,6 +32,8 @@ function Profile({
           (card) => card.owner === PassCurrentUserProvider?.currentUser._id
         )}
         onSelectCard={onSelectCard}
+        onAddItem={onAddItem}
+        onDeleteItem={onDeleteItem}
       />
       <EditProfileModal isOpen={onEditProfile} onClose={handleCloseModal} />
     </div>

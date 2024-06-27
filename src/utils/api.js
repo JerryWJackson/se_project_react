@@ -1,4 +1,5 @@
 import { defaultHeaders, authHeaders, baseUrl } from "./constants";
+import { PassCurrentUserProvider } from "../contexts/CurrentUserContext.jsx";
 import { getToken } from "../utils/token";
 
 export function checkServerResponse(res) {
@@ -26,6 +27,7 @@ export function addNewItem(item) {
       name: item.name,
       imageUrl: item.imageUrl,
       weather: item.weather,
+      owner: PassCurrentUserProvider?.currentUser?._id,
     }),
   });
 }
