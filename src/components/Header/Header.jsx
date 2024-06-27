@@ -38,28 +38,39 @@ const Header = ({
             >
               +Add clothes
             </button>
-            <Link to="/profile" className="header__avatar_name">
-              {PassCurrentUserProvider?.currentUser?.name}
-            </Link>
-
-            <img
-              className="header__avatar_image"
-              src={PassCurrentUserProvider?.currentUser?.avatar}
-              alt="avatar"
-              onClick={onSignOut}
-            />
+            <div>
+              <Link to="/profile" className="header__avatar_name">
+                {PassCurrentUserProvider?.currentUser?.name}
+              </Link>
+            </div>
+            <div className="header__avatar_image">
+              <img
+                className="header__avatar_image"
+                src={PassCurrentUserProvider?.currentUser?.avatar}
+                alt="avatar"
+                onClick={onSignOut}
+              />
+            </div>
           </div>
         </>
       ) : (
         //register and login buttons
         <>
-          <button className="header__button" type="button" onClick={onRegister}>
-            Sign Up
-          </button>
-          <button className="header__button" type="button" onClick={onLogin}>
-            Log In
-          </button>
           <div>
+            <button
+              className="header__button"
+              type="button"
+              onClick={onRegister}
+            >
+              Sign Up
+            </button>
+          </div>
+          <div>
+            <button className="header__button" type="button" onClick={onLogin}>
+              Log In
+            </button>
+          </div>
+          <div className="header__avatar_image">
             <img
               className="header__avatar_image"
               src={avatar_nouser}
