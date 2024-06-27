@@ -5,7 +5,13 @@ import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { Link } from "react-router-dom";
 import { PassCurrentUserProvider } from "../../contexts/CurrentUserContext.jsx";
 
-const Header = ({ onCreateModal, onRegister, onLogin, isLoggedIn }) => {
+const Header = ({
+  onCreateModal,
+  onRegister,
+  onLogin,
+  isLoggedIn,
+  onSignOut,
+}) => {
   const formattedDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
@@ -21,10 +27,10 @@ const Header = ({ onCreateModal, onRegister, onLogin, isLoggedIn }) => {
         </div>
         <div className="header__app-logo_date">{formattedDate}, Austin</div>
       </div>
-      <div className="header__avatar">
-        <ToggleSwitch />
-        {isLoggedIn ? (
-          <>
+      <ToggleSwitch />
+      {isLoggedIn ? (
+        <>
+          <div className="header__avatar">
             <button
               type="button"
               className="header__avatar_button"
@@ -35,39 +41,33 @@ const Header = ({ onCreateModal, onRegister, onLogin, isLoggedIn }) => {
             <Link to="/profile" className="header__avatar_name">
               {PassCurrentUserProvider?.currentUser?.name}
             </Link>
-            <div>
-              <Link to="/profile" className="header__avatar_name">
-                <img
-                  className="header__avatar_image"
-                  src={PassCurrentUserProvider?.currentUser?.avatar}
-                  alt="avatar"
-                />
-              </Link>
-            </div>
-          </>
-        ) : (
-          //register and login buttons
-          <>
-            <button
-              className="header__button"
-              type="button"
-              onClick={onRegister}
-            >
-              Sign Up
-            </button>
-            <button className="header__button" type="button" onClick={onLogin}>
-              Log In
-            </button>
-            <div>
-              <img
-                className="header__avatar_image"
-                src={avatar_nouser}
-                alt="avatar for no user"
-              />
-            </div>
-          </>
-        )}
-      </div>
+
+            <img
+              className="header__avatar_image"
+              src={PassCurrentUserProvider?.currentUser?.avatar}
+              alt="avatar"
+              onClick={onSignOut}
+            />
+          </div>
+        </>
+      ) : (
+        //register and login buttons
+        <>
+          <button className="header__button" type="button" onClick={onRegister}>
+            Sign Up
+          </button>
+          <button className="header__button" type="button" onClick={onLogin}>
+            Log In
+          </button>
+          <div>
+            <img
+              className="header__avatar_image"
+              src={avatar_nouser}
+              alt="avatar for no user"
+            />
+          </div>
+        </>
+      )}
     </header>
   );
 };

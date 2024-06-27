@@ -1,6 +1,7 @@
 import SideBar from "../SideBar/SideBar";
 import ClothesSection from "../ClothesSection/ClothesSection";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
+import { useEffect } from "react";
 import { PassCurrentUserProvider } from "../../contexts/CurrentUserContext.jsx";
 import "./Profile.css";
 
@@ -15,9 +16,17 @@ const Profile = ({
   clothingItems,
   onEditUser,
   onSignOut,
-  clothingItems,
+  // clothingItems,
 }) => {
-  console.log("opening Profile page...");
+  useEffect(() => {
+    console.log("ProfileComponent rendered");
+
+    // simulate fetching items
+    clothingItems().catch((err) => {
+      console.error("Error fetching items:", err);
+      // Check if this might cause a state change triggering redirects
+    });
+  }, []);
   return (
     <div className="profile__container">
       <SideBar

@@ -18,7 +18,7 @@ import {
 } from "../../contexts/CurrentUserContext.jsx";
 // utility imports
 import { useEffect, useState } from "react";
-import { Navigate, Routes, Route, Switch, useNavigate } from "react-router-dom";
+import { Navigate, Routes, Route, useNavigate } from "react-router-dom";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { getForecastWeather } from "../../utils/weatherApi";
 import * as api from "../../utils/api";
@@ -85,7 +85,7 @@ function App() {
 
   const checkLoggedIn = (tokenToCheck) => {
     const tokenStatus = checkToken(tokenToCheck);
-    // console.log("tokenStatus", tokenStatus);
+    console.log("tokenStatus", tokenStatus);
     if (tokenStatus) {
       setIsLoggedIn(true);
       return true;
@@ -239,23 +239,29 @@ function App() {
             onRegister={() => handleOpenModal("register")}
             onLogin={() => handleOpenModal("login")}
             isLoggedIn={isLoggedIn}
+            onSignOut={handleSignOut}
           />
-          <Switch>
-            <ProtectedRoute path="/profile" isLoggedIn={isLoggedIn}>
-              <Profile
-                isLoggedIn={isLoggedIn}
-                handleCloseModal={handleCloseModal}
-                onActiveModal={() => handleOpenModal("create")}
-                onEditProfile={() => handleOpenModal("edit")}
-                onAddItem={onAddItem}
-                onDeleteItem={() => handleOpenModal("confirm")}
-                onSelectCard={() => handleOpenModal("preview")}
-                setClothingItems={clothingItems}
-                onEditUser={handleUpdateUser}
-                onSignOut={handleSignOut}
-                clothingItems={fetchAllItems}
-              />
-            </ProtectedRoute>
+          <Routes>
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute path="/profile" isLoggedIn={isLoggedIn}>
+                  <Profile
+                    isLoggedIn={isLoggedIn}
+                    handleCloseModal={handleCloseModal}
+                    onActiveModal={() => handleOpenModal("create")}
+                    onEditProfile={() => handleOpenModal("edit")}
+                    onAddItem={onAddItem}
+                    onDeleteItem={() => handleOpenModal("confirm")}
+                    onSelectCard={() => handleOpenModal("preview")}
+                    setClothingItems={clothingItems}
+                    onEditUser={handleUpdateUser}
+                    onSignOut={handleSignOut}
+                    // clothingItems={fetchAllItems}
+                  />
+                </ProtectedRoute>
+              }
+            />
             <Route
               exact
               path="/"
@@ -271,7 +277,7 @@ function App() {
                 />
               }
             />
-          </Switch>
+          </Routes>
           <Footer />
           {activeModal === "create" && (
             <AddItemModal
