@@ -18,7 +18,7 @@ import {
 } from "../../contexts/CurrentUserContext.jsx";
 // utility imports
 import { useEffect, useState } from "react";
-import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
+import { Navigate, Routes, Route, Switch, useNavigate } from "react-router-dom";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { getForecastWeather } from "../../utils/weatherApi";
 import * as api from "../../utils/api";
@@ -112,6 +112,18 @@ function App() {
   /* -------------------------------------------------------------------------- */
   /*                                Item Methods                                */
   /* -------------------------------------------------------------------------- */
+
+  const fetchAllItems = () => {
+    api
+      .fetchAllClothing()
+      .then((items) => {
+        setClothingItems(items);
+      })
+      .catch((error) => {
+        console.error("Error: An error occurred", error);
+      });
+  };
+
   const onAddItem = (values, token) => {
     console.log("new item values", values);
     api
@@ -189,17 +201,6 @@ function App() {
       });
   }, [weather]);
 
-  // useEffect(() => {
-  //   api
-  //     .fetchAllClothing()
-  //     .then((items) => {
-  //       setClothingItems(items);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error: An error occurred", error);
-  //     });
-  // }, []);
-
   useEffect(() => {
     console.log("isLoggedIn state: ", isLoggedIn);
   }, [isLoggedIn]);
@@ -239,26 +240,22 @@ function App() {
             onLogin={() => handleOpenModal("login")}
             isLoggedIn={isLoggedIn}
           />
-          <Routes>
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute isLoggedIn={isLoggedIn}>
-                  <Profile
-                    isLoggedIn={isLoggedIn}
-                    handleCloseModal={handleCloseModal}
-                    onActiveModal={() => handleOpenModal("create")}
-                    onEditProfile={() => handleOpenModal("edit")}
-                    onAddItem={onAddItem}
-                    onDeleteItem={() => handleOpenModal("confirm")}
-                    onSelectCard={() => handleOpenModal("preview")}
-                    setClothingItems={clothingItems}
-                    onEditUser={handleUpdateUser}
-                    onSignOut={handleSignOut}
-                  />
-                </ProtectedRoute>
-              }
-            ></Route>
+          <Switch>
+            <ProtectedRoute path="/profile" isLoggedIn={isLoggedIn}>
+              <Profile
+                isLoggedIn={isLoggedIn}
+                handleCloseModal={handleCloseModal}
+                onActiveModal={() => handleOpenModal("create")}
+                onEditProfile={() => handleOpenModal("edit")}
+                onAddItem={onAddItem}
+                onDeleteItem={() => handleOpenModal("confirm")}
+                onSelectCard={() => handleOpenModal("preview")}
+                setClothingItems={clothingItems}
+                onEditUser={handleUpdateUser}
+                onSignOut={handleSignOut}
+                clothingItems={fetchAllItems}
+              />
+            </ProtectedRoute>
             <Route
               exact
               path="/"
@@ -274,7 +271,7 @@ function App() {
                 />
               }
             />
-          </Routes>
+          </Switch>
           <Footer />
           {activeModal === "create" && (
             <AddItemModal

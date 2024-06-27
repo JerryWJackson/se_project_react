@@ -4,11 +4,12 @@ function ProtectedRoute({ children, isLoggedIn, anonymous = false }) {
   const location = useLocation();
   const fromPage = location.state?.from || "/";
 
-  if (!anonymous && isLoggedIn) {
-    return <Navigate to="/" replace state={{ from: fromPage }} />;
+  if (!anonymous && !isLoggedIn) {
+    return <Navigate to="/signin" replace state={{ from: fromPage }} />;
   } else {
-    return <Navigate to={fromPage} />;
+    return children;
   }
+  children;
 }
 
 export default ProtectedRoute;

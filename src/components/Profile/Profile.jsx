@@ -15,6 +15,7 @@ const Profile = ({
   clothingItems,
   onEditUser,
   onSignOut,
+  clothingItems,
 }) => {
   console.log("opening Profile page...");
   return (
@@ -29,9 +30,9 @@ const Profile = ({
         clothingItems={clothingItems}
         handleCloseModal={handleCloseModal}
         onCreateModal={onCreateModal}
-        items={clothingItems.filter(
-          (card) => card.owner === PassCurrentUserProvider?.currentUser._id
-        )}
+        // items={clothingItems.filter(
+        //   (card) => card.owner === PassCurrentUserProvider?.currentUser._id
+        // )}
         onSelectCard={onSelectCard}
         onAddItem={onAddItem}
         onDeleteItem={onDeleteItem}
