@@ -1,6 +1,11 @@
 import "./ItemModal.css";
+import { PassCurrentUserProvider } from "../../contexts/CurrentUserContext.jsx";
 
 const ItemModal = ({ selectedCard, onClose, handleOpenConfirmationModal }) => {
+  const isOwn = selectedCard.owner === PassCurrentUserProvider.currentUser._id;
+  const itemDeleteButtonClassName = `item__delete-button ${
+    isOwn ? "item__delete-button_visible" : "item__delete-button_hidden"
+  }`;
   const buttonText = "Delete Item";
   return (
     <div className="modal">
@@ -21,7 +26,7 @@ const ItemModal = ({ selectedCard, onClose, handleOpenConfirmationModal }) => {
             Weather: {selectedCard.weather}
           </div>
           <button
-            className="modal__button-delete"
+            className={itemDeleteButtonClassName}
             type="button"
             onClick={handleOpenConfirmationModal}
           >

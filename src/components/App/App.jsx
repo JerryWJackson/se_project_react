@@ -124,10 +124,10 @@ function App() {
       });
   };
 
-  const onAddItem = (values, token) => {
+  const onAddItem = (values) => {
     console.log("new item values", values);
     api
-      .addNewItem(values, token)
+      .addNewItem(values)
       .then((item) => {
         const newItemList = Array.from(clothingItems);
         newItemList.push(item);
@@ -210,10 +210,15 @@ function App() {
     let tokenCheckStatus = checkLoggedIn(jwt);
     if (tokenCheckStatus === true) {
       handleToken(jwt);
+
       auth
         .getUserData(jwt)
         .then((data) => {
           PassCurrentUserProvider.setCurrentUser(data);
+          console.log(
+            "currentUser updated to ",
+            PassCurrentUserProvider.currentUser
+          );
         })
         .catch((err) => {
           if (err.response && err.resonse.status === 401) {
@@ -248,16 +253,17 @@ function App() {
                 <ProtectedRoute path="/profile" isLoggedIn={isLoggedIn}>
                   <Profile
                     isLoggedIn={isLoggedIn}
+                    clothingItems={clothingItems}
                     handleCloseModal={handleCloseModal}
+                    handleOpenModal={handleOpenModal}
                     onActiveModal={() => handleOpenModal("create")}
                     onEditProfile={() => handleOpenModal("edit")}
+                    activeModal={activeModal}
                     onAddItem={onAddItem}
                     onDeleteItem={() => handleOpenModal("confirm")}
                     onSelectCard={() => handleOpenModal("preview")}
-                    setClothingItems={clothingItems}
                     onEditUser={handleUpdateUser}
                     onSignOut={handleSignOut}
-                    // clothingItems={fetchAllItems}
                   />
                 </ProtectedRoute>
               }
@@ -320,12 +326,6 @@ function App() {
               setActiveModal={setActiveModal}
               isLoading={isLoading}
               setIsLoading={setIsLoading}
-            />
-          )}
-          {activeModal === "edit" && (
-            <EditProfileModal
-              isOpen={() => handleOpenModal("edit")}
-              onClose={handleCloseModal}
             />
           )}
         </CurrentTemperatureUnitContext.Provider>

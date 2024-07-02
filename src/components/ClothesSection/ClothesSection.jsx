@@ -1,5 +1,6 @@
 import ItemCard from "../ItemCard/ItemCard";
 import "./ClothesSection.css";
+import { PassCurrentUserProvider } from "../../contexts/CurrentUserContext.jsx";
 
 const ClothesSection = ({ clothingItems, onCreateModal, onSelectCard }) => {
   return (
@@ -16,9 +17,16 @@ const ClothesSection = ({ clothingItems, onCreateModal, onSelectCard }) => {
       </div>
       <div className="card_items">
         {clothingItems.map((item) => {
-          return (
-            <ItemCard item={item} key={item._id} onSelectCard={onSelectCard} />
-          );
+          const isOwn = item.owner === PassCurrentUserProvider.currentUser._id;
+          if (isOwn) {
+            return (
+              <ItemCard
+                item={item}
+                key={item._id}
+                onSelectCard={onSelectCard}
+              />
+            );
+          }
         })}
       </div>
     </section>

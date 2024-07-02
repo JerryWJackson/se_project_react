@@ -27,7 +27,7 @@
   cursor: pointer;
 }
 
-.modal__item-id{
+.modal__item-id {
   visibility: hidden;
   opacity: 0;
 }
@@ -39,7 +39,7 @@
 .modal__item-name {
   position: relative;
   height: 24px;
-  right: calc(100% - 460px) ;
+  right: calc(100% - 460px);
   font-size: 16px;
   font-weight: 500;
   line-height: 1.2;
@@ -63,15 +63,22 @@
   margin-top: 10px;
 }
 
-.modal__button-delete {
+.item__delete-button {
   font-size: 20px;
   font-weight: 700;
   line-height: 1.2;
-  color: #FF4D00;
+  color: #ff4d00;
   border: none;
   background-color: transparent;
   position: relative;
   bottom: -170px;
+}
+item__delete-button_visible {
+  visibility: visible;
+}
+
+item__delete-button_hidden {
+  visibility: hidden;
 }
 
 .modal__button-close:hover {

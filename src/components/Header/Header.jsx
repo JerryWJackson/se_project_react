@@ -4,7 +4,18 @@ import avatar_nouser from "../../images/avatar_nouser.png";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { Link } from "react-router-dom";
 import { PassCurrentUserProvider } from "../../contexts/CurrentUserContext.jsx";
+import RegisterModal from "../RegisterModal/RegisterModal.jsx";
+import LoginModal from "../LoginModal/LoginModal.jsx";
 
+/**
+ * modals ostensibly used in the header
+ *
+      <RegisterModal
+        isOpen={activeModal === "register"}
+        onClose={handleCloseModal}
+      />
+      <LoginModal isOpen={activeModal === "login"} onClose={handleCloseModal} />
+ */
 const Header = ({
   onCreateModal,
   onRegister,
@@ -27,10 +38,10 @@ const Header = ({
         </div>
         <div className="header__app-logo_date">{formattedDate}, Austin</div>
       </div>
-      <ToggleSwitch />
-      {isLoggedIn ? (
-        <>
-          <div className="header__avatar">
+      <div className="header__avatar">
+        <ToggleSwitch />
+        {isLoggedIn ? (
+          <>
             <button
               type="button"
               className="header__avatar_button"
@@ -38,11 +49,9 @@ const Header = ({
             >
               +Add clothes
             </button>
-            <div>
-              <Link to="/profile" className="header__avatar_name">
-                {PassCurrentUserProvider?.currentUser?.name}
-              </Link>
-            </div>
+            <Link to="/profile" className="header__avatar_name">
+              {PassCurrentUserProvider?.currentUser?.name}
+            </Link>
             <div className="header__avatar_image">
               <img
                 className="header__avatar_image"
@@ -51,12 +60,10 @@ const Header = ({
                 onClick={onSignOut}
               />
             </div>
-          </div>
-        </>
-      ) : (
-        //register and login buttons
-        <>
-          <div>
+          </>
+        ) : (
+          //register and login buttons
+          <>
             <button
               className="header__button"
               type="button"
@@ -64,21 +71,19 @@ const Header = ({
             >
               Sign Up
             </button>
-          </div>
-          <div>
             <button className="header__button" type="button" onClick={onLogin}>
               Log In
             </button>
-          </div>
-          <div className="header__avatar_image">
-            <img
-              className="header__avatar_image"
-              src={avatar_nouser}
-              alt="avatar for no user"
-            />
-          </div>
-        </>
-      )}
+            <div className="header__avatar_image">
+              <img
+                className="header__avatar_image"
+                src={avatar_nouser}
+                alt="avatar for no user"
+              />
+            </div>
+          </>
+        )}
+      </div>
     </header>
   );
 };

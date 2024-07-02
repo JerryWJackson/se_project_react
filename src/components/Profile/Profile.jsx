@@ -7,46 +7,41 @@ import "./Profile.css";
 
 const Profile = ({
   isLoggedIn,
+  clothingItems,
+  handleOpenModal,
   handleCloseModal,
   onCreateModal,
-  onEditProfile,
+  activeModal,
   onAddItem,
   onDeleteItem,
   onSelectCard,
-  clothingItems,
   onEditUser,
   onSignOut,
-  // clothingItems,
 }) => {
-  useEffect(() => {
-    console.log("ProfileComponent rendered");
-
-    // simulate fetching items
-    clothingItems().catch((err) => {
-      console.error("Error fetching items:", err);
-      // Check if this might cause a state change triggering redirects
-    });
-  }, []);
   return (
     <div className="profile__container">
       <SideBar
         onEditUser={onEditUser}
         onSignOut={onSignOut}
         isLoggedIn={isLoggedIn}
+        handleOpenModal={handleOpenModal}
       />
       <ClothesSection
         currentUser={PassCurrentUserProvider?.currentUser}
         clothingItems={clothingItems}
         handleCloseModal={handleCloseModal}
         onCreateModal={onCreateModal}
-        // items={clothingItems.filter(
-        //   (card) => card.owner === PassCurrentUserProvider?.currentUser._id
-        // )}
+        items={clothingItems.filter(
+          (card) => card.owner === PassCurrentUserProvider?.currentUser._id
+        )}
         onSelectCard={onSelectCard}
         onAddItem={onAddItem}
         onDeleteItem={onDeleteItem}
       />
-      <EditProfileModal isOpen={onEditProfile} onClose={handleCloseModal} />
+      <EditProfileModal
+        isOpen={activeModal === "edit"}
+        onClose={handleCloseModal}
+      />
     </div>
   );
 };

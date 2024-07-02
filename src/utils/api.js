@@ -19,8 +19,9 @@ export function fetchAllClothing() {
   });
 }
 
-export function addNewItem(item) {
-  return makeServerRequest(baseUrl, {
+export function addNewItem({ item }) {
+  console.log("item to add is ", item);
+  return makeServerRequest(`${baseUrl}/items`, {
     method: "POST",
     headers: authHeaders,
     body: JSON.stringify({
