@@ -1,5 +1,5 @@
 .clothesSection {
-  max-width: 80%;
+  width: 80vw;
   margin-top: 36px;
 }
 
@@ -11,6 +11,8 @@
   justify-content: center;
   max-width: 1360px;
   margin-top: 0;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .card_section-title {

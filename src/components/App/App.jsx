@@ -106,7 +106,7 @@ function App() {
     PassCurrentUserProvider.setCurrentUser({});
     setIsLoggedIn(false);
     handleCloseModal();
-    navigate.push("/");
+    navigate("/");
   };
 
   /* -------------------------------------------------------------------------- */
