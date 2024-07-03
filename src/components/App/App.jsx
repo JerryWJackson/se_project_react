@@ -61,6 +61,9 @@ function App() {
 
   const handleLogin = (email, password) => {
     setIsLoading(true);
+    // const reRender = () => {
+    //   setIsLoggedIn((isLoggedIn) => ++isLoggedIn);
+    // };
     console.log("attempting to log in user", email);
     auth
       .login(email, password)
@@ -69,8 +72,8 @@ function App() {
           handleToken(data.token);
           auth.getUserData(data.token).then((user) => {
             PassCurrentUserProvider.setCurrentUser(user.email, user.password);
+            setIsLoggedIn(true);
           });
-          setIsLoggedIn(true);
           handleCloseModal();
           navigate("/profile");
         }
@@ -125,7 +128,7 @@ function App() {
   };
 
   const onAddItem = (values) => {
-    console.log("new item values", values);
+    // console.log("new item values", values);
     api
       .addNewItem(values)
       .then((item) => {

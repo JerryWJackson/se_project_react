@@ -44,7 +44,7 @@ const Header = ({
           <>
             <button
               type="button"
-              className="header__avatar_button"
+              className="header__add-garment_button"
               onClick={onCreateModal}
             >
               +Add clothes

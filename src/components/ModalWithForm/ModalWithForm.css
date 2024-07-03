@@ -110,3 +110,6 @@
   font-size: 16px;
   line-height: 20px;
 }
+.modal__form_input {
+  width: 100vw;
+}

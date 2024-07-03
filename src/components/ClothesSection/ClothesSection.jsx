@@ -9,7 +9,7 @@ const ClothesSection = ({ clothingItems, onCreateModal, onSelectCard }) => {
         <p>Your Items</p>
         <button
           type="button"
-          className="card-section__avatar_button"
+          className="card-section__add-garment_button"
           onClick={onCreateModal}
         >
           +Add clothes
