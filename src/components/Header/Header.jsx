@@ -4,8 +4,6 @@ import avatar_nouser from "../../images/avatar_nouser.png";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { Link } from "react-router-dom";
 import { PassCurrentUserProvider } from "../../contexts/CurrentUserContext.jsx";
-import RegisterModal from "../RegisterModal/RegisterModal.jsx";
-import LoginModal from "../LoginModal/LoginModal.jsx";
 
 /**
  * modals ostensibly used in the header
@@ -16,13 +14,7 @@ import LoginModal from "../LoginModal/LoginModal.jsx";
       />
       <LoginModal isOpen={activeModal === "login"} onClose={handleCloseModal} />
  */
-const Header = ({
-  onCreateModal,
-  onRegister,
-  onLogin,
-  isLoggedIn,
-  onSignOut,
-}) => {
+const Header = ({ onCreateModal, onRegister, onLogin, isLoggedIn }) => {
   const formattedDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
@@ -57,7 +49,6 @@ const Header = ({
                 className="header__avatar_image"
                 src={PassCurrentUserProvider?.currentUser?.avatar}
                 alt="avatar"
-                onClick={onSignOut}
               />
             </div>
           </>
