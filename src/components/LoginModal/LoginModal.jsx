@@ -3,6 +3,7 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
 const LoginModal = ({
   activeModal,
+  modalName,
   closeActiveModal,
   handleLogin,
   setActiveModal,
@@ -26,21 +27,22 @@ const LoginModal = ({
     handleLogin(email, password);
   };
 
-  const handleOrRegister = () => {
-    setActiveModal("register");
+  const handleToggleModal = () => {
+    const modalName = "register";
+    setActiveModal(modalName);
   };
 
   return (
     <ModalWithForm
       closeActiveModal={closeActiveModal}
-      isOpen={activeModal === "login"}
+      isOpen={true}
       buttonText={isLoading ? "..." : "Next"}
       title="Log In"
       onSubmit={handleSubmit}
       logIn={true}
       altButton={true}
       altButtonText="or Register"
-      handleAltButton={handleOrRegister}
+      handleAltButton={handleToggleModal}
     >
       <label className="modal__label">
         Email

@@ -4,23 +4,26 @@ const ModalWithForm = ({
   children,
   buttonText,
   title,
-  onClose,
-  name,
+  closeActiveModal,
+  modalName,
   formName,
   isOpen,
   onSubmit,
   altButton,
   altButtonText,
-  logIn,
   handleAltButton,
 }) => {
   return (
-    <div className={`modal modal_type_${name} ${isOpen ? "modal_opened" : ""}`}>
-      <div className={`modal__content ${logIn ? "modal_content_login" : ""}`}>
+    <div
+      className={`modal modal_type_${modalName} ${
+        isOpen ? "modal_opened" : ""
+      }`}
+    >
+      <div className={"modal__content"}>
         <button
           className="modal__button-close"
           type="button"
-          onClick={onClose}
+          onClick={closeActiveModal}
         />
         <h3 className="modal__title">{title}</h3>
         <form name={formName} onSubmit={onSubmit}>

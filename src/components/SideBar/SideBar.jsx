@@ -1,7 +1,7 @@
 import "./SideBar.css";
 import { PassCurrentUserProvider } from "../../contexts/CurrentUserContext.jsx";
 
-const SideBar = ({ onEditUser, onSignOut, isLoggedIn }) => {
+const SideBar = ({ handleUpdateUser, onSignOut, isLoggedIn }) => {
   return (
     <section className="sideBar">
       <div className="sideBar__container">
@@ -18,7 +18,7 @@ const SideBar = ({ onEditUser, onSignOut, isLoggedIn }) => {
             <button
               className="sideBar__button sideBar__button_edit-profile"
               type="button"
-              onClick={onEditUser}
+              onClick={handleUpdateUser}
             >
               Change profile data
             </button>

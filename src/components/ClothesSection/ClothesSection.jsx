@@ -1,8 +1,32 @@
 import ItemCard from "../ItemCard/ItemCard";
 import "./ClothesSection.css";
+import { useMemo } from "react";
 import { PassCurrentUserProvider } from "../../contexts/CurrentUserContext.jsx";
 
-const ClothesSection = ({ clothingItems, onCreateModal, onSelectCard }) => {
+const ClothesSection = ({
+  currentUser,
+  items,
+  onCreateModal,
+  onSelectCard,
+  temp,
+}) => {
+  console.log("temp is ", temp);
+
+  const weatherType = useMemo(() => {
+    if (temp >= 86) {
+      return "hot";
+    } else if (temp >= 66 && temp <= 85) {
+      return "warm";
+    } else if (temp <= 65) {
+      return "cold";
+    }
+  }, [temp]);
+
+  const filteredCards = items.filter((item) => {
+    return item.weather.toLowerCase() === weatherType;
+  });
+
+  console.log("clothingItems are ", items);
   return (
     <section className="clothesSection">
       <div className="card_section-title">
@@ -16,8 +40,8 @@ const ClothesSection = ({ clothingItems, onCreateModal, onSelectCard }) => {
         </button>
       </div>
       <div className="card_items">
-        {clothingItems.map((item) => {
-          const isOwn = item.owner === PassCurrentUserProvider.currentUser._id;
+        {filteredCards.map((item) => {
+          const isOwn = item.owner === currentUser._id;
           if (isOwn) {
             return (
               <ItemCard

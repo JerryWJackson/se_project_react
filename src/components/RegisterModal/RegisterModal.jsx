@@ -3,6 +3,7 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
 const RegisterModal = ({
   activeModal,
+  modalName,
   closeActiveModal,
   onRegistration,
   onLogin,
@@ -41,7 +42,8 @@ const RegisterModal = ({
   };
 
   const handleToggleModal = () => {
-    setActiveModal("login");
+    const modalName = "login";
+    setActiveModal(modalName);
   };
 
   useEffect(() => {
@@ -54,7 +56,8 @@ const RegisterModal = ({
   return (
     <ModalWithForm
       closeActiveModal={closeActiveModal}
-      isOpen={activeModal === "register"}
+      modalName={modalName}
+      isOpen={activeModal === modalName}
       buttonText={isLoading ? "..." : "Next"}
       name="register"
       title="Sign up"

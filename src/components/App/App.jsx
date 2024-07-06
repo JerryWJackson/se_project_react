@@ -74,6 +74,15 @@ function App() {
             PassCurrentUserProvider.setCurrentUser(user.email, user.password);
             setIsLoggedIn(true);
           });
+          api
+            .fetchAllClothing()
+            .then((items) => {
+              setClothingItems(items);
+              console.log("setting clothing items array to ", clothingItems);
+            })
+            .catch((error) => {
+              console.error("Error: An error occurred", error);
+            });
           handleCloseModal();
           navigate("/profile");
         }
@@ -91,6 +100,15 @@ function App() {
     console.log("tokenStatus", tokenStatus);
     if (tokenStatus) {
       setIsLoggedIn(true);
+      api
+        .fetchAllClothing()
+        .then((items) => {
+          setClothingItems(items);
+          console.log("setting clothing items array to ", clothingItems);
+        })
+        .catch((error) => {
+          console.error("Error: An error occurred", error);
+        });
       return true;
     } else {
       return false;
@@ -121,6 +139,7 @@ function App() {
       .fetchAllClothing()
       .then((items) => {
         setClothingItems(items);
+        console.log("setting clothing items array to ", clothingItems);
       })
       .catch((error) => {
         console.error("Error: An error occurred", error);
@@ -174,6 +193,7 @@ function App() {
       setSelectedCard(EventTarget);
     }
     setActiveModal(modal);
+    console.log("active modal is ", activeModal);
   };
 
   /* -------------------------------------------------------------------------- */
@@ -236,6 +256,15 @@ function App() {
     }
   }, []);
 
+  // useEffect(() => {
+  //   let ignore = false;
+
+  //   if (!ignore) fetchAllItems();
+  //   return () => {
+  //     ignore = true;
+  //   };
+  // }, []);
+
   return (
     <div className="page">
       <CurrentUserProvider>
@@ -265,8 +294,9 @@ function App() {
                     onAddItem={onAddItem}
                     onDeleteItem={() => handleOpenModal("confirm")}
                     onSelectCard={() => handleOpenModal("preview")}
-                    onEditUser={handleUpdateUser}
+                    handleUpdateUser={handleUpdateUser}
                     onSignOut={handleSignOut}
+                    temp={temp}
                   />
                 </ProtectedRoute>
               }
@@ -291,6 +321,7 @@ function App() {
           {activeModal === "create" && (
             <AddItemModal
               handleCloseModal={handleCloseModal}
+              modalName={"addGarment"}
               onAddItem={onAddItem}
             />
           )}
@@ -312,7 +343,9 @@ function App() {
           )}
           {activeModal === "login" && (
             <LoginModal
-              onClose={handleCloseModal}
+              name="login"
+              isOpen={activeModal === "login"}
+              closeActiveModal={handleCloseModal}
               handleLogin={handleLogin}
               onSecondButtonClick={() => handleOpenModal("register")}
               setActiveModal={setActiveModal}
@@ -322,7 +355,9 @@ function App() {
           )}
           {activeModal === "register" && (
             <RegisterModal
-              onClose={handleCloseModal}
+              name="register"
+              isOpen={activeModal === "register"}
+              closeActiveModal={handleCloseModal}
               onRegistration={handleRegistration}
               onLogin={handleLogin}
               onSecondButtonClick={() => handleOpenModal("login")}

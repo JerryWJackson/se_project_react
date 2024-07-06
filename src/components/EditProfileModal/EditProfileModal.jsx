@@ -4,7 +4,12 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import * as auth from "../../utils/auth";
 
-const EditProfileModal = ({ isOpen, onClose, onEditProfile }) => {
+const EditProfileModal = ({
+  isOpen,
+  modalName,
+  closeActiveModal,
+  onEditProfile,
+}) => {
   const currentUser = useContext(CurrentUserContext);
   const [name, setName] = useState(currentUser?.name || "");
   const [avatar, setAvatar] = useState(currentUser?.avatar || "");
@@ -31,7 +36,8 @@ const EditProfileModal = ({ isOpen, onClose, onEditProfile }) => {
   return (
     <ModalWithForm
       isOpen={isOpen}
-      onClose={onClose}
+      closeActiveModal={closeActiveModal}
+      modalName="addGarment"
       onSubmit={handleSubmit}
       title="Edit Profile"
       buttonText="Save"

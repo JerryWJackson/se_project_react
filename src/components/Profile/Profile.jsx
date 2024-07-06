@@ -1,7 +1,6 @@
 import SideBar from "../SideBar/SideBar";
 import ClothesSection from "../ClothesSection/ClothesSection";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
-import { useEffect } from "react";
 import { PassCurrentUserProvider } from "../../contexts/CurrentUserContext.jsx";
 import "./Profile.css";
 
@@ -15,13 +14,14 @@ const Profile = ({
   onAddItem,
   onDeleteItem,
   onSelectCard,
-  onEditUser,
+  handleUpdateUser,
   onSignOut,
+  temp,
 }) => {
   return (
     <div className="profile__container">
       <SideBar
-        onEditUser={onEditUser}
+        handleUpdateUser={handleUpdateUser}
         onSignOut={onSignOut}
         isLoggedIn={isLoggedIn}
         handleOpenModal={handleOpenModal}
@@ -37,10 +37,13 @@ const Profile = ({
         onSelectCard={onSelectCard}
         onAddItem={onAddItem}
         onDeleteItem={onDeleteItem}
+        temp={temp}
       />
       <EditProfileModal
         isOpen={activeModal === "edit"}
-        onClose={handleCloseModal}
+        modalName={modalName}
+        closeActiveModal={handleCloseModal}
+        onEditProfile={handleUpdateUser}
       />
     </div>
   );

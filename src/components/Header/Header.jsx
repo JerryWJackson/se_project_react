@@ -56,13 +56,19 @@ const Header = ({ onCreateModal, onRegister, onLogin, isLoggedIn }) => {
           //register and login buttons
           <>
             <button
+              name="register"
               className="header__button"
               type="button"
               onClick={onRegister}
             >
               Sign Up
             </button>
-            <button className="header__button" type="button" onClick={onLogin}>
+            <button
+              name="login"
+              className="header__button"
+              type="button"
+              onClick={onLogin}
+            >
               Log In
             </button>
             <div className="header__avatar_image">
