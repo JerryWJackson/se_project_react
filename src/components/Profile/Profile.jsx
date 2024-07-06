@@ -41,7 +41,7 @@ const Profile = ({
       />
       <EditProfileModal
         isOpen={activeModal === "edit"}
-        modalName={modalName}
+        modalName="edit"
         closeActiveModal={handleCloseModal}
         onEditProfile={handleUpdateUser}
       />
