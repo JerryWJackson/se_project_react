@@ -71,7 +71,7 @@ function App() {
         if (data.token) {
           handleToken(data.token);
           auth.getUserData(data.token).then((user) => {
-            PassCurrentUserProvider.setCurrentUser(user.email, user.password);
+            PassCurrentUserProvider.setCurrentUser(user);
             setIsLoggedIn(true);
           });
           api

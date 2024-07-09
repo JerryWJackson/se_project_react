@@ -3,12 +3,13 @@ import React, { useContext, useState, useEffect } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import * as auth from "../../utils/auth";
+import { TOKEN_KEY } from "../../utils/token";
 
 const EditProfileModal = ({
   isOpen,
   modalName,
   closeActiveModal,
-  onEditProfile,
+  handleUpdateUser,
 }) => {
   const currentUser = useContext(CurrentUserContext);
   const [name, setName] = useState(currentUser?.name || "");
@@ -21,8 +22,7 @@ const EditProfileModal = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    auth
-      .updateUserProfile({ name, avatar })
+    handleUpdateUser(name, avatar)
       .then((updatedUser) => {
         // Update the context or handle updated user data here
         console.log("User profile updated:", updatedUser);
@@ -37,8 +37,8 @@ const EditProfileModal = ({
     <ModalWithForm
       isOpen={isOpen}
       closeActiveModal={closeActiveModal}
-      modalName="addGarment"
-      onSubmit={handleSubmit}
+      modalName="edit"
+      onSubmit={handleUpdateUser}
       title="Edit Profile"
       buttonText="Save"
       name="edit-profile"

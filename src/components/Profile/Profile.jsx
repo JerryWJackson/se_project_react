@@ -24,7 +24,7 @@ const Profile = ({
         handleUpdateUser={handleUpdateUser}
         onSignOut={onSignOut}
         isLoggedIn={isLoggedIn}
-        handleOpenModal={handleOpenModal}
+        handleOpenModal={handleOpenModal("edit")}
       />
       <ClothesSection
         currentUser={PassCurrentUserProvider?.currentUser}
@@ -39,12 +39,30 @@ const Profile = ({
         onDeleteItem={onDeleteItem}
         temp={temp}
       />
-      <EditProfileModal
-        isOpen={activeModal === "edit"}
-        modalName="edit"
-        closeActiveModal={handleCloseModal}
-        onEditProfile={handleUpdateUser}
-      />
+      {activeModal === "create" && (
+        <AddItemModal
+          handleCloseModal={handleCloseModal}
+          modalName="addGarment"
+          onAddItem={onAddItem}
+        />
+      )}
+      {activeModal === "edit" && (
+        <EditProfileModal
+          isOpen={activeModal === "edit"}
+          modalName="edit"
+          closeActiveModal={handleCloseModal}
+          handleUpdateUser={handleUpdateUser}
+          handleOpenConfirmationModal={() => handleOpenModal("confirm")}
+        />
+      )}
+      {activeModal === "preview" && (
+        <ItemModal
+          selectedCard={selectedCard}
+          name="previewGarment"
+          onClose={handleCloseModal}
+          handleOpenConfirmationModal={() => handleOpenModal("confirm")}
+        />
+      )}
     </div>
   );
 };

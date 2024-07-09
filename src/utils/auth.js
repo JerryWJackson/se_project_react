@@ -12,8 +12,6 @@ export const register = ({ user }) => {
 };
 
 export const login = (email, password) => {
-  // console.log("starting login process for", email);
-  // console.log("password ", password);
   return makeServerRequest(`${baseUrl}/signin`, {
     method: "POST",
     headers: defaultHeaders,
