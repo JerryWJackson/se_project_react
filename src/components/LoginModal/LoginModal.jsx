@@ -35,7 +35,8 @@ const LoginModal = ({
   return (
     <ModalWithForm
       closeActiveModal={closeActiveModal}
-      isOpen={true}
+      modalName={modalName}
+      isOpen={activeModal === modalName}
       buttonText={isLoading ? "..." : "Next"}
       title="Log In"
       onSubmit={handleSubmit}
