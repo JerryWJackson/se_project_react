@@ -23,12 +23,14 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { getForecastWeather } from "../../utils/weatherApi";
 import * as api from "../../utils/api";
 import * as auth from "../../utils/auth";
+import { handleOpenModal, handleCloseModal } from "../../utils/modals";
 import { getToken, handleToken, checkToken } from "../../utils/token";
 // css imports
 import "./App.css";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
+  const [activeModalIndex, setActiveModalIndex] = useState(0);
   const [selectedCard, setSelectedCard] = useState({});
   const [temp, setTemp] = useState(0);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
@@ -188,6 +190,24 @@ function App() {
   //   confirm, (confirm deletion)
   //   edit, (edit profile)
   //   create (create item)
+  // const modalList = [
+  //   ""
+  //   "login",
+  //   "register",
+  //   "preview",
+  //   "confirm",
+  //   "edit",
+  //   "create"
+  // ]
+
+  // pass these in to any Component using the methods found in modals.js
+  //     activeModal={modal === activeModal}
+  //     onShow={() => setActiveModal(modal)}
+
+  // pass these in to any Component using the handleOpenModal method found in modals.js
+  //     selectedCard={item === card}
+  //     onSelectCard={(card) => setSelectedCard(card)}
+
   const handleOpenModal = (modal) => {
     if (modal === "preview") {
       setSelectedCard(EventTarget);

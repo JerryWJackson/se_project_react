@@ -6,7 +6,6 @@ import * as auth from "../../utils/auth";
 import { TOKEN_KEY } from "../../utils/token";
 
 const EditProfileModal = ({
-  isOpen,
   modalName,
   closeActiveModal,
   handleUpdateUser,
@@ -35,9 +34,9 @@ const EditProfileModal = ({
 
   return (
     <ModalWithForm
-      isOpen={isOpen}
       closeActiveModal={closeActiveModal}
-      modalName="edit"
+      modalName={modalName}
+      isOpen={activeModal === modalName}
       onSubmit={handleUpdateUser}
       title="Edit Profile"
       buttonText="Save"

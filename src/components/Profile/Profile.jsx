@@ -48,7 +48,6 @@ const Profile = ({
       )}
       {activeModal === "edit" && (
         <EditProfileModal
-          isOpen={activeModal === "edit"}
           modalName="edit"
           closeActiveModal={handleCloseModal}
           handleUpdateUser={handleUpdateUser}
