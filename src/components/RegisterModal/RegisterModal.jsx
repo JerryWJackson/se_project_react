@@ -57,7 +57,7 @@ const RegisterModal = ({
     <ModalWithForm
       closeActiveModal={closeActiveModal}
       modalName={modalName}
-      isOpen={activeModal === modalName}
+      isOpen={activeModal == modalName}
       buttonText={isLoading ? "..." : "Next"}
       name="register"
       title="Sign up"

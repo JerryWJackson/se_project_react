@@ -7,6 +7,7 @@ import { TOKEN_KEY } from "../../utils/token";
 
 const EditProfileModal = ({
   modalName,
+  activeModal,
   closeActiveModal,
   handleUpdateUser,
 }) => {
@@ -36,7 +37,7 @@ const EditProfileModal = ({
     <ModalWithForm
       closeActiveModal={closeActiveModal}
       modalName={modalName}
-      isOpen={activeModal === modalName}
+      isOpen={activeModal == modalName}
       onSubmit={handleUpdateUser}
       title="Edit Profile"
       buttonText="Save"

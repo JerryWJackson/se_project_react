@@ -308,7 +308,6 @@ function App() {
                     clothingItems={clothingItems}
                     handleCloseModal={handleCloseModal}
                     handleOpenModal={handleOpenModal}
-                    onActiveModal={() => handleOpenModal("create")}
                     onEditProfile={() => handleOpenModal("edit")}
                     activeModal={activeModal}
                     onAddItem={onAddItem}
@@ -338,13 +337,11 @@ function App() {
             />
           </Routes>
           <Footer />
-          {activeModal === "create" && (
-            <AddItemModal
-              handleCloseModal={handleCloseModal}
-              modalName={"addGarment"}
-              onAddItem={onAddItem}
-            />
-          )}
+          <AddItemModal
+            handleCloseModal={handleCloseModal}
+            modalName={"addGarment"}
+            onAddItem={onAddItem}
+          />
           {activeModal === "preview" && (
             <ItemModal
               selectedCard={selectedCard}
@@ -364,7 +361,7 @@ function App() {
           {activeModal === "login" && (
             <LoginModal
               name="login"
-              isOpen={activeModal === "login"}
+              isOpen={activeModal == "login"}
               closeActiveModal={handleCloseModal}
               handleLogin={handleLogin}
               onSecondButtonClick={() => handleOpenModal("register")}
@@ -376,7 +373,7 @@ function App() {
           {activeModal === "register" && (
             <RegisterModal
               name="register"
-              isOpen={activeModal === "register"}
+              isOpen={activeModal == "register"}
               closeActiveModal={handleCloseModal}
               onRegistration={handleRegistration}
               onLogin={handleLogin}

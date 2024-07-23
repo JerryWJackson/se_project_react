@@ -1,5 +1,8 @@
 import SideBar from "../SideBar/SideBar";
 import ClothesSection from "../ClothesSection/ClothesSection";
+import ItemModal from "../ItemModal/ItemModal";
+import AddItemModal from "../AddItemModal/AddItemModal";
+import DeleteConfirmModal from "../DeleteConfirmModal/DeleteConfirmModal";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
 import { PassCurrentUserProvider } from "../../contexts/CurrentUserContext.jsx";
 import "./Profile.css";
@@ -39,29 +42,25 @@ const Profile = ({
         onDeleteItem={onDeleteItem}
         temp={temp}
       />
-      {activeModal === "create" && (
-        <AddItemModal
-          handleCloseModal={handleCloseModal}
-          modalName="addGarment"
-          onAddItem={onAddItem}
-        />
-      )}
-      {activeModal === "edit" && (
-        <EditProfileModal
-          modalName="edit"
-          closeActiveModal={handleCloseModal}
-          handleUpdateUser={handleUpdateUser}
-          handleOpenConfirmationModal={() => handleOpenModal("confirm")}
-        />
-      )}
-      {activeModal === "preview" && (
-        <ItemModal
-          selectedCard={selectedCard}
-          name="previewGarment"
-          onClose={handleCloseModal}
-          handleOpenConfirmationModal={() => handleOpenModal("confirm")}
-        />
-      )}
+      <AddItemModal
+        modalName="addGarment"
+        activeModal={activeModal}
+        closeActiveModal={handleCloseModal}
+        onAddItem={onAddItem}
+      />
+      <EditProfileModal
+        modalName="edit"
+        activeModal={activeModal}
+        closeActiveModal={handleCloseModal}
+        handleUpdateUser={handleUpdateUser}
+        handleOpenConfirmationModal={() => handleOpenModal("confirm")}
+      />
+      <ItemModal
+        selectedCard={onSelectCard}
+        name="previewGarment"
+        onClose={handleCloseModal}
+        handleOpenConfirmationModal={() => handleOpenModal("confirm")}
+      />
     </div>
   );
 };
