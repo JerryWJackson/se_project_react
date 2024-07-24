@@ -4,6 +4,7 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 const LoginModal = ({
   activeModal,
   modalName,
+  isOpen,
   closeActiveModal,
   handleLogin,
   setActiveModal,
@@ -36,7 +37,7 @@ const LoginModal = ({
     <ModalWithForm
       closeActiveModal={closeActiveModal}
       modalName={modalName}
-      isOpen={activeModal == modalName}
+      isOpen={isOpen}
       buttonText={isLoading ? "..." : "Next"}
       title="Log In"
       onSubmit={handleSubmit}
@@ -56,7 +57,7 @@ const LoginModal = ({
           onChange={handleEmail}
         />
       </label>
-      <label className="modal__bottomlabel">
+      <label className="modal__label">
         Password
         <input
           className="modal__input"

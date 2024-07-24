@@ -13,17 +13,33 @@
   display: flex;
 }
 
-.modal_type_addGarment .modal__content {
+.modal__content {
   background-color: white;
   font-family: "Cabinet Grotesk", Arial, sans-serif;
   font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
   width: 496px;
-  height: 436px;
   border-radius: 20px;
+  border: none;
   padding: 20px 20px;
   position: relative;
   display: flex;
   flex-direction: column;
+}
+
+.modal__content .modal_type_login {
+  height: 304px;
+}
+
+.modal__content .modal_type_register {
+  height: 456px;
+}
+
+.modal__content .modal_type_addGarment {
+}
+
+.modal__content .modal_type_editProfile {
 }
 
 .modal__button-close {
@@ -71,13 +87,18 @@
 .modal__form {
   display: flex;
   flex-direction: column;
-  height: 52px;
+  border: none;
 }
 
-.modal__form_input {
+.modal__fieldset {
+  border: none;
+}
+
+.modal__input {
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.8);
-  width: 100vw;
+  font-size: 16px;
+  line-height: 20px;
 }
 
 .modal__label {
@@ -90,26 +111,11 @@
   padding-bottom: 0;
 }
 
-.modal__label .modal__form_input {
-  width: 100vw;
+.modal__label .modal__input {
 }
 
 .modal__title {
   font-size: 16px;
   line-height: 1.2;
-  width: 100vw;
-}
-
-.modal__content {
-  display: flex;
-  flex-direction: column;
-  max-width: 496px;
-  max-height: 496px;
-  padding: 28px;
-  margin: 0;
-  font-size: 16px;
-  line-height: 20px;
-}
-.modal__form_input {
   width: 100vw;
 }

@@ -45,6 +45,7 @@ const Profile = ({
       <AddItemModal
         modalName="addGarment"
         activeModal={activeModal}
+        isOpen={isOpen}
         closeActiveModal={handleCloseModal}
         onAddItem={onAddItem}
       />

@@ -6,13 +6,13 @@ const ModalWithForm = ({
   title,
   closeActiveModal,
   modalName,
-  formName,
   isOpen,
   onSubmit,
   altButton,
   altButtonText,
   handleAltButton,
 }) => {
+  console.log("modalName is ", modalName);
   return (
     <div
       className={`modal modal_type_${modalName} ${
@@ -26,30 +26,28 @@ const ModalWithForm = ({
           onClick={closeActiveModal}
         />
         <h3 className="modal__title">{title}</h3>
-        <form name={formName} onSubmit={onSubmit}>
-          {children}
-          <p className="button__container">
+        {children}
+        <p className="button__container">
+          <button
+            className={`modal__button modal__button-submit ${
+              altButton ? "modal__submit-button-v2" : ""
+            }`}
+            type="submit"
+          >
+            {buttonText}
+          </button>
+          {altButton ? (
             <button
-              className={`modal__button modal__button-submit ${
-                altButton ? "modal__submit-button-v2" : ""
-              }`}
-              type="submit"
+              className="modal__button modal__button-login"
+              type="button"
+              onClick={handleAltButton}
             >
-              {buttonText}
+              {altButtonText}
             </button>
-            {altButton ? (
-              <button
-                className="modal__button modal__button-login"
-                type="button"
-                onClick={handleAltButton}
-              >
-                {altButtonText}
-              </button>
-            ) : (
-              <></>
-            )}
-          </p>
-        </form>
+          ) : (
+            <></>
+          )}
+        </p>
       </div>
     </div>
   );

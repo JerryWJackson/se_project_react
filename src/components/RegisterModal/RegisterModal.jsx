@@ -4,6 +4,7 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 const RegisterModal = ({
   activeModal,
   modalName,
+  isOpen,
   closeActiveModal,
   onRegistration,
   onLogin,
@@ -57,7 +58,7 @@ const RegisterModal = ({
     <ModalWithForm
       closeActiveModal={closeActiveModal}
       modalName={modalName}
-      isOpen={activeModal == modalName}
+      isOpen={isOpen}
       buttonText={isLoading ? "..." : "Next"}
       name="register"
       title="Sign up"

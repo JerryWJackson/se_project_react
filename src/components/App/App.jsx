@@ -213,7 +213,7 @@ function App() {
       setSelectedCard(EventTarget);
     }
     setActiveModal(modal);
-    console.log("active modal is ", activeModal);
+    console.log("active modal is ", modal);
   };
 
   /* -------------------------------------------------------------------------- */
@@ -337,15 +337,18 @@ function App() {
             />
           </Routes>
           <Footer />
-          <AddItemModal
-            handleCloseModal={handleCloseModal}
-            modalName={"addGarment"}
-            onAddItem={onAddItem}
-          />
+          {activeModal === "addGarment" && (
+            <AddItemModal
+              handleCloseModal={handleCloseModal}
+              modalName={"addGarment"}
+              onAddItem={onAddItem}
+            />
+          )}
           {activeModal === "preview" && (
             <ItemModal
               selectedCard={selectedCard}
               name="previewGarment"
+              modalName={"previewGarment"}
               onClose={handleCloseModal}
               handleOpenConfirmationModal={() => handleOpenModal("confirm")}
             />
@@ -361,7 +364,8 @@ function App() {
           {activeModal === "login" && (
             <LoginModal
               name="login"
-              isOpen={activeModal == "login"}
+              modalName={"login"}
+              isOpen={activeModal === "login" ? "true" : "false"}
               closeActiveModal={handleCloseModal}
               handleLogin={handleLogin}
               onSecondButtonClick={() => handleOpenModal("register")}
@@ -373,7 +377,8 @@ function App() {
           {activeModal === "register" && (
             <RegisterModal
               name="register"
-              isOpen={activeModal == "register"}
+              modalName={"register"}
+              isOpen={activeModal === "register" ? "true" : "false"}
               closeActiveModal={handleCloseModal}
               onRegistration={handleRegistration}
               onLogin={handleLogin}
