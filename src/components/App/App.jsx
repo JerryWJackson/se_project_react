@@ -74,6 +74,8 @@ function App() {
           handleToken(data.token);
           auth.getUserData(data.token).then((user) => {
             PassCurrentUserProvider.setCurrentUser(user);
+            let currentUser = user;
+            console.log("currentUser is ", currentUser);
             setIsLoggedIn(true);
           });
           api
@@ -304,6 +306,7 @@ function App() {
               element={
                 <ProtectedRoute path="/profile" isLoggedIn={isLoggedIn}>
                   <Profile
+                    currentUser={PassCurrentUserProvider.currentUser}
                     isLoggedIn={isLoggedIn}
                     clothingItems={clothingItems}
                     handleCloseModal={handleCloseModal}

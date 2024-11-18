@@ -5,9 +5,11 @@ import AddItemModal from "../AddItemModal/AddItemModal";
 import DeleteConfirmModal from "../DeleteConfirmModal/DeleteConfirmModal";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
 import { PassCurrentUserProvider } from "../../contexts/CurrentUserContext.jsx";
+import { useEffect, useState } from "react";
 import "./Profile.css";
 
 const Profile = ({
+  currentUser,
   isLoggedIn,
   clothingItems,
   handleOpenModal,
@@ -22,6 +24,13 @@ const Profile = ({
   onSignOut,
   temp,
 }) => {
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     setName(currentUser.name || "");
+  //     setAvatarUrl(currentUser.avatar || "");
+  //   }
+  // }, [isOpen, currentUser]);
+
   return (
     <div className="profile__container">
       <SideBar
