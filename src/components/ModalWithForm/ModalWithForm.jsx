@@ -33,6 +33,7 @@ const ModalWithForm = ({
               altButton ? "modal__submit-button-v2" : ""
             }`}
             type="submit"
+            onClick={onSubmit}
           >
             {buttonText}
           </button>

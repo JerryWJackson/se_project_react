@@ -14,6 +14,7 @@ const Profile = ({
   handleCloseModal,
   onCreateModal,
   activeModal,
+  isOpen,
   onAddItem,
   onDeleteItem,
   onSelectCard,
