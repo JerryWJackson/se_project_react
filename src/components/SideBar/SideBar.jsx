@@ -9,11 +9,11 @@ const SideBar = ({ handleUpdateUser, onSignOut, isLoggedIn }) => {
           <>
             <img
               className="sideBar__avatar_image"
-              src={PassCurrentUserProvider.currentUser.avatar}
+              src={currentUser.avatar}
               alt="avatar"
             />
             <p className="sideBar__username">
-              {PassCurrentUserProvider.currentUser.name}
+              {currentUser.name}
             </p>
             <button
               className="sideBar__button sideBar__button_edit-profile"

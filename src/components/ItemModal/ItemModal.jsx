@@ -2,7 +2,7 @@ import "./ItemModal.css";
 import { PassCurrentUserProvider } from "../../contexts/CurrentUserContext.jsx";
 
 const ItemModal = ({ selectedCard, onClose, handleOpenConfirmationModal }) => {
-  const isOwn = selectedCard.owner === PassCurrentUserProvider.currentUser._id;
+  const isOwn = selectedCard.owner === currentUser._id;
   const itemDeleteButtonClassName = `item__delete-button ${
     isOwn ? "item__delete-button_visible" : "item__delete-button_hidden"
   }`;

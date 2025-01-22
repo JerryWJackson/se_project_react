@@ -1,18 +1,7 @@
-import { useState, createContext } from "react";
+import { createContext } from "react";
 
-const CurrentUserContext = createContext([{}, () => {}]);
-const PassCurrentUserProvider = {};
+const CurrentUserContext = createContext({
+  currentUser: "",
+});
 
-const CurrentUserProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(CurrentUserContext);
-
-  PassCurrentUserProvider.currentUser = currentUser;
-  PassCurrentUserProvider.setCurrentUser = setCurrentUser;
-
-  return (
-    <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
-      {children}
-    </CurrentUserContext.Provider>
-  );
-};
-export { CurrentUserContext, CurrentUserProvider, PassCurrentUserProvider };
+export { CurrentUserContext };

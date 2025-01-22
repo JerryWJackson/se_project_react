@@ -41,7 +41,7 @@ const ClothesSection = ({
       </div>
       <div className="card_items">
         {filteredCards.map((item) => {
-          const isOwn = item.owner === PassCurrentUserProvider.currentUser._id;
+          const isOwn = item.owner === currentUser._id;
           if (isOwn) {
             return (
               <ItemCard

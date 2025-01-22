@@ -3,6 +3,9 @@ import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Profile from "../Profile/Profile";
 import Footer from "../Footer/Footer";
+// context imports
+import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
+import { CurrentUserProvider } from "../../contexts/CurrentUserContext.jsx";
 // modal component imports
 import ItemModal from "../ItemModal/ItemModal";
 import AddItemModal from "../AddItemModal/AddItemModal";
@@ -10,12 +13,6 @@ import DeleteConfirmModal from "../DeleteConfirmModal/DeleteConfirmModal";
 import LoginModal from "../LoginModal/LoginModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
-// context imports
-import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
-import {
-  CurrentUserProvider,
-  PassCurrentUserProvider,
-} from "../../contexts/CurrentUserContext.jsx";
 // utility imports
 import { useEffect, useState } from "react";
 import { Navigate, Routes, Route, useNavigate } from "react-router-dom";
@@ -34,6 +31,7 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [temp, setTemp] = useState(0);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+  const [currentUser, setCurrentUser] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [weather, setWeather] = useState("");
   const [isDay, setIsDay] = useState(false);
@@ -51,7 +49,7 @@ function App() {
       .then((res) => {
         console.log("registration response is ", res);
         // console.log("app.jsx/L52 user is ", user);
-        PassCurrentUserProvider.setCurrentUser(res);
+        setCurrentUser(res);
         setIsLoggedIn(true);
         console.log("logging user in");
         handleLogin(res.email, res.password);
@@ -73,7 +71,7 @@ function App() {
         if (data.token) {
           handleToken(data.token);
           auth.getUserData(data.token).then((user) => {
-            PassCurrentUserProvider.setCurrentUser(user);
+            setCurrentUser(user);
             let currentUser = user;
             console.log("currentUser is ", currentUser);
             setIsLoggedIn(true);
@@ -123,12 +121,12 @@ function App() {
     const jwt = localStorage.getItem("jwt");
     auth
       .updateUserProfile(values, jwt)
-      .then((res) => PassCurrentUserProvider.setCurrentUser(res));
+      .then((res) => setCurrentUser(res));
   };
 
   const handleSignOut = () => {
     handleToken();
-    PassCurrentUserProvider.setCurrentUser({});
+    setCurrentUser(currentUser === null)
     setIsLoggedIn(false);
     handleCloseModal();
     navigate("/");
@@ -259,10 +257,10 @@ function App() {
       auth
         .getUserData(jwt)
         .then((data) => {
-          PassCurrentUserProvider.setCurrentUser(data);
+          setCurrentUser(data);
           console.log(
             "currentUser updated to ",
-            PassCurrentUserProvider.currentUser
+            currentUser
           );
         })
         .catch((err) => {
@@ -306,7 +304,7 @@ function App() {
               element={
                 <ProtectedRoute path="/profile" isLoggedIn={isLoggedIn}>
                   <Profile
-                    currentUser={PassCurrentUserProvider.currentUser}
+                    currentUser={currentUser}
                     isLoggedIn={isLoggedIn}
                     clothingItems={clothingItems}
                     handleCloseModal={handleCloseModal}
