@@ -15,7 +15,7 @@ import RegisterModal from "../RegisterModal/RegisterModal";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
 // utility imports
 import { useEffect, useState } from "react";
-import { Navigate, Routes, Route, useNavigate } from "react-router-dom";
+import { Navigate, Route, Switch, useNavigate } from "react-router-dom";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { getForecastWeather } from "../../utils/weatherApi";
 import * as api from "../../utils/api";
@@ -119,14 +119,12 @@ function App() {
 
   const handleUpdateUser = (values) => {
     const jwt = localStorage.getItem("jwt");
-    auth
-      .updateUserProfile(values, jwt)
-      .then((res) => setCurrentUser(res));
+    auth.updateUserProfile(values, jwt).then((res) => setCurrentUser(res));
   };
 
   const handleSignOut = () => {
     handleToken();
-    setCurrentUser(currentUser === null)
+    setCurrentUser(currentUser === null);
     setIsLoggedIn(false);
     handleCloseModal();
     navigate("/");
@@ -258,10 +256,7 @@ function App() {
         .getUserData(jwt)
         .then((data) => {
           setCurrentUser(data);
-          console.log(
-            "currentUser updated to ",
-            currentUser
-          );
+          console.log("currentUser updated to ", currentUser);
         })
         .catch((err) => {
           if (err.response && err.resonse.status === 401) {
@@ -298,45 +293,38 @@ function App() {
             isLoggedIn={isLoggedIn}
             onSignOut={handleSignOut}
           />
-          <Routes>
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute path="/profile" isLoggedIn={isLoggedIn}>
-                  <Profile
-                    currentUser={currentUser}
-                    isLoggedIn={isLoggedIn}
-                    clothingItems={clothingItems}
-                    handleCloseModal={handleCloseModal}
-                    handleOpenModal={handleOpenModal}
-                    onEditProfile={() => handleOpenModal("edit")}
-                    activeModal={activeModal}
-                    onAddItem={onAddItem}
-                    onDeleteItem={() => handleOpenModal("confirm")}
-                    onSelectCard={() => handleOpenModal("preview")}
-                    handleUpdateUser={handleUpdateUser}
-                    onSignOut={handleSignOut}
-                    temp={temp}
-                  />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              exact
-              path="/"
-              element={
-                <Main
-                  day={isDay}
-                  weather={weather}
-                  temp={temp}
-                  onSelectCard={() => handleOpenModal("preview")}
-                  setClothingItems={clothingItems}
-                  // onCardLike={handleCardLike}
+          <Switch>
+            <Route exact path="/">
+              <Main
+                day={isDay}
+                weather={weather}
+                temp={temp}
+                onSelectCard={() => handleOpenModal("preview")}
+                setClothingItems={clothingItems}
+                // onCardLike={handleCardLike}
+                isLoggedIn={isLoggedIn}
+              />
+            </Route>
+            <Route path="/profile">
+              <ProtectedRoute path="/profile" isLoggedIn={isLoggedIn}>
+                <Profile
+                  currentUser={currentUser}
                   isLoggedIn={isLoggedIn}
+                  clothingItems={clothingItems}
+                  handleCloseModal={handleCloseModal}
+                  handleOpenModal={handleOpenModal}
+                  onEditProfile={() => handleOpenModal("edit")}
+                  activeModal={activeModal}
+                  onAddItem={onAddItem}
+                  onDeleteItem={() => handleOpenModal("confirm")}
+                  onSelectCard={() => handleOpenModal("preview")}
+                  handleUpdateUser={handleUpdateUser}
+                  onSignOut={handleSignOut}
+                  temp={temp}
                 />
-              }
-            />
-          </Routes>
+              </ProtectedRoute>
+            </Route>
+          </Switch>
           <Footer />
           {activeModal === "addGarment" && (
             <AddItemModal
