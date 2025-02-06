@@ -26,7 +26,7 @@
   margin-bottom: 0;
 }
 
-.card-section__add-garment_button {
+.card-section__add-Item_button {
   font-weight: 400;
   font-size: 12px;
   line-height: 1.2;
@@ -34,6 +34,6 @@
   background-color: transparent;
 }
 
-.card-section__add-garment_button:hover {
+.card-section__add-Item_button:hover {
   cursor: pointer;
 }

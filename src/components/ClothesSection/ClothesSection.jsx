@@ -33,7 +33,7 @@ const ClothesSection = ({
         <p>Your Items</p>
         <button
           type="button"
-          className="card-section__add-garment_button"
+          className="card-section__add-Item_button"
           onClick={onCreateModal}
         >
           +Add clothes

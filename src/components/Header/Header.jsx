@@ -36,7 +36,7 @@ const Header = ({ onCreateModal, onRegister, onLogin, isLoggedIn }) => {
           <>
             <button
               type="button"
-              className="header__add-garment_button"
+              className="header__add-Item_button"
               onClick={onCreateModal}
             >
               +Add clothes

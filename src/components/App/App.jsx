@@ -31,7 +31,7 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [temp, setTemp] = useState(0);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
-  const [currentUser, setCurrentUser] = useState([]);
+  // const [currentUser, setCurrentUser] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [weather, setWeather] = useState("");
   const [isDay, setIsDay] = useState(false);
@@ -146,7 +146,7 @@ function App() {
       });
   };
 
-  const onAddItem = (values) => {
+  const handleAddItem = (values) => {
     // console.log("new item values", values);
     api
       .addNewItem(values)
@@ -159,7 +159,7 @@ function App() {
       .catch((err) => console.log("Error:", err));
   };
 
-  const onDeleteItem = (e) => {
+  const handleDeleteItem = (e) => {
     e.preventDefault();
     api
       .deleteItem(selectedCard._id)
@@ -181,33 +181,8 @@ function App() {
     setActiveModal("");
   };
 
-  // available modals are =>
-  //   login, (login existing user)
-  //   register, (register new user)
-  //   preview, (card preview)
-  //   confirm, (confirm deletion)
-  //   edit, (edit profile)
-  //   create (create item)
-  // const modalList = [
-  //   ""
-  //   "login",
-  //   "register",
-  //   "preview",
-  //   "confirm",
-  //   "edit",
-  //   "create"
-  // ]
-
-  // pass these in to any Component using the methods found in modals.js
-  //     activeModal={modal === activeModal}
-  //     onShow={() => setActiveModal(modal)}
-
-  // pass these in to any Component using the handleOpenModal method found in modals.js
-  //     selectedCard={item === card}
-  //     onSelectCard={(card) => setSelectedCard(card)}
-
   const handleOpenModal = (modal) => {
-    if (modal === "preview") {
+    if (modal === "previewItem") {
       setSelectedCard(EventTarget);
     }
     setActiveModal(modal);
@@ -299,7 +274,7 @@ function App() {
                 day={isDay}
                 weather={weather}
                 temp={temp}
-                onSelectCard={() => handleOpenModal("preview")}
+                onSelectCard={() => handleOpenModal("previewItem")}
                 setClothingItems={clothingItems}
                 // onCardLike={handleCardLike}
                 isLoggedIn={isLoggedIn}
@@ -315,9 +290,9 @@ function App() {
                   handleOpenModal={handleOpenModal}
                   onEditProfile={() => handleOpenModal("edit")}
                   activeModal={activeModal}
-                  onAddItem={onAddItem}
-                  onDeleteItem={() => handleOpenModal("confirm")}
-                  onSelectCard={() => handleOpenModal("preview")}
+                  onAddItem={handleAddItem}
+                  onDeleteItem={handleDeleteItem}
+                  onSelectCard={() => handleOpenModal("previewItem")}
                   handleUpdateUser={handleUpdateUser}
                   onSignOut={handleSignOut}
                   temp={temp}
@@ -326,36 +301,34 @@ function App() {
             </Route>
           </Switch>
           <Footer />
-          {activeModal === "addGarment" && (
+          {activeModal === "addItem" && (
             <AddItemModal
               handleCloseModal={handleCloseModal}
-              modalName={"addGarment"}
-              onAddItem={onAddItem}
+              isOpen={activeModal === "addItem"}
+              onAddItem={handleAddItem}
             />
           )}
-          {activeModal === "preview" && (
+          {activeModal === "previewItem" && (
             <ItemModal
               selectedCard={selectedCard}
-              name="previewGarment"
-              modalName={"previewGarment"}
+              name="previewItem"
+              modalName={"previewItem"}
               onClose={handleCloseModal}
               handleOpenConfirmationModal={() => handleOpenModal("confirm")}
             />
           )}
-          {activeModal === "confirm" && (
+          {/* {activeModal === "confirm" && (
             <DeleteConfirmModal
               selectedCard={selectedCard}
               name="deleteConfirm"
               onClose={handleCloseModal}
-              onDeleteItem={onDeleteItem}
+              onDeleteItem={handleDeleteItem}
             />
-          )}
+          )} */}
           {activeModal === "login" && (
             <LoginModal
-              name="login"
-              modalName={"login"}
-              isOpen={activeModal === "login" ? "true" : "false"}
-              closeActiveModal={handleCloseModal}
+              isOpen={activeModal === "login"}
+              onClose={handleCloseModal}
               handleLogin={handleLogin}
               onSecondButtonClick={() => handleOpenModal("register")}
               setActiveModal={setActiveModal}
@@ -365,16 +338,23 @@ function App() {
           )}
           {activeModal === "register" && (
             <RegisterModal
-              name="register"
-              modalName={"register"}
-              isOpen={activeModal === "register" ? "true" : "false"}
-              closeActiveModal={handleCloseModal}
+              isOpen={activeModal === "register"}
+              onClose={handleCloseModal}
               onRegistration={handleRegistration}
               onLogin={handleLogin}
               onSecondButtonClick={() => handleOpenModal("login")}
               setActiveModal={setActiveModal}
               isLoading={isLoading}
               setIsLoading={setIsLoading}
+            />
+          )}
+          {activeModal === "editProfile" && (
+            <EditProfileModal
+              isOpen={activeModal === "edit"}
+              onClose={handleCloseModal}
+              onSubmit={handleEditProfile}
+              isLoading={isLoading}
+              onCreateModal={handleEditModal}
             />
           )}
         </CurrentTemperatureUnitContext.Provider>
