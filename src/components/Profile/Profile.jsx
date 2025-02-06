@@ -53,7 +53,7 @@ const Profile = ({
         temp={temp}
       />
       <AddItemModal
-        modalName="addGarment"
+        modalName="addItem"
         activeModal={activeModal}
         isOpen={isOpen}
         closeActiveModal={handleCloseModal}
@@ -68,7 +68,7 @@ const Profile = ({
       />
       <ItemModal
         selectedCard={onSelectCard}
-        name="previewGarment"
+        name="previewItem"
         onClose={handleCloseModal}
         handleOpenConfirmationModal={() => handleOpenModal("confirm")}
       />
