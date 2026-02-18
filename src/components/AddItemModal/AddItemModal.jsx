@@ -1,26 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import PropTypes from "prop-types";
+import { useForm } from "../../hooks/useForm";
 
 const AddItemModal = ({ handleCloseModal, modalName, isOpen, onAddItem }) => {
-  const buttonText = "Add Item";
-  const [name, setName] = useState("");
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
+  const { values, handleChange, setValues } = useForm({
+    name: "",
+    imageUrl: "",
+    weather: "",
+  });
 
-  const [imageUrl, setUrl] = useState("");
-  const handleURLChange = (e) => {
-    setUrl(e.target.value);
-  };
-
-  const [weather, setWeather] = useState("");
-  const handleWeatherChange = (e) => {
-    setWeather(e.target.value);
-  };
+  useEffect(() => {
+    if (isOpen) {
+      setValues({ name: "", imageUrl: "", weather: "" });
+    }
+  }, [isOpen, setValues]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAddItem({ name, imageUrl, weather });
+    onAddItem(values);
   };
 
   return (
@@ -31,7 +29,7 @@ const AddItemModal = ({ handleCloseModal, modalName, isOpen, onAddItem }) => {
       modalName={modalName}
       onClose={handleCloseModal}
       onSubmit={handleSubmit}
-      buttonText={buttonText}
+      buttonText="Add Item"
     >
       <div>
         <label className="modal__form_item">
@@ -43,8 +41,8 @@ const AddItemModal = ({ handleCloseModal, modalName, isOpen, onAddItem }) => {
             minLength="1"
             maxLength="30"
             placeholder="Name"
-            value={name}
-            onChange={handleNameChange}
+            value={values.name}
+            onChange={handleChange}
           />
         </label>
         <label className="modal__form_item">
@@ -54,31 +52,48 @@ const AddItemModal = ({ handleCloseModal, modalName, isOpen, onAddItem }) => {
             type="url"
             name="imageUrl"
             placeholder="Image URL"
-            value={imageUrl}
-            onChange={handleURLChange}
+            value={values.imageUrl}
+            onChange={handleChange}
           />
         </label>
-        <fieldset
-          className="weather-type-selector"
-          value={weather}
-          onChange={handleWeatherChange}
-        >
+        <fieldset className="weather-type-selector">
           <legend>Select the weather type:</legend>
           <div className="radio-button">
             <label className="radio-button_label">
-              <input type="radio" id="hot" name="type" value="hot" />
+              <input
+                type="radio"
+                id="hot"
+                name="weather"
+                value="hot"
+                onChange={handleChange}
+                checked={values.weather === "hot"}
+              />
               Hot
             </label>
           </div>
           <div className="radio-button">
             <label className="radio-button_label">
-              <input type="radio" id="warm" name="type" value="warm" />
+              <input
+                type="radio"
+                id="warm"
+                name="weather"
+                value="warm"
+                onChange={handleChange}
+                checked={values.weather === "warm"}
+              />
               Warm
             </label>
           </div>
           <div className="radio-button">
             <label className="radio-button_label">
-              <input type="radio" id="cold" name="type" value="cold" />
+              <input
+                type="radio"
+                id="cold"
+                name="weather"
+                value="cold"
+                onChange={handleChange}
+                checked={values.weather === "cold"}
+              />
               Cold
             </label>
           </div>
@@ -86,6 +101,13 @@ const AddItemModal = ({ handleCloseModal, modalName, isOpen, onAddItem }) => {
       </div>
     </ModalWithForm>
   );
+};
+
+AddItemModal.propTypes = {
+  handleCloseModal: PropTypes.func.isRequired,
+  modalName: PropTypes.string,
+  isOpen: PropTypes.bool.isRequired,
+  onAddItem: PropTypes.func.isRequired,
 };
 
 export default AddItemModal;

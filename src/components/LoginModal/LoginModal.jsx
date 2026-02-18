@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import PropTypes from "prop-types";
+import { useForm } from "../../hooks/useForm";
 
 const LoginModal = ({
   activeModal,
@@ -11,27 +13,27 @@ const LoginModal = ({
   isLoading,
   setIsLoading,
 }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleEmail = (e) => {
-    setEmail(e.target.value);
-  };
-  const handlePassword = (e) => {
-    setPassword(e.target.value);
-  };
+  const { values, handleChange, setValues } = useForm({
+    email: "",
+    password: "",
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
-
-    handleLogin(email, password);
+    handleLogin(values.email, values.password);
   };
 
   const handleToggleModal = () => {
     const modalName = "register";
     setActiveModal(modalName);
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      setValues({ email: "", password: "" });
+    }
+  }, [isOpen, setValues]);
 
   return (
     <ModalWithForm
@@ -53,8 +55,8 @@ const LoginModal = ({
           type="email"
           placeholder="email"
           name="email"
-          value={email}
-          onChange={handleEmail}
+          value={values.email}
+          onChange={handleChange}
         />
       </label>
       <label className="modal__label">
@@ -63,12 +65,24 @@ const LoginModal = ({
           className="modal__input"
           type="password"
           placeholder="Password"
-          name="Password"
-          value={password}
-          onChange={handlePassword}
+          name="password"
+          value={values.password}
+          onChange={handleChange}
         />
       </label>
     </ModalWithForm>
   );
 };
+
+LoginModal.propTypes = {
+  activeModal: PropTypes.string,
+  modalName: PropTypes.string,
+  isOpen: PropTypes.bool.isRequired,
+  closeActiveModal: PropTypes.func.isRequired,
+  handleLogin: PropTypes.func.isRequired,
+  setActiveModal: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
+  setIsLoading: PropTypes.func,
+};
+
 export default LoginModal;

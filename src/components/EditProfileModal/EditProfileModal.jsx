@@ -1,37 +1,33 @@
-// src/components/EditProfileModal/EditProfileModal.jsx
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import * as auth from "../../utils/auth";
-import { TOKEN_KEY } from "../../utils/token";
+import PropTypes from "prop-types";
+import { useForm } from "../../hooks/useForm";
 
 const EditProfileModal = ({
   modalName,
-  activeModal,
   isOpen,
   closeActiveModal,
   handleUpdateUser,
 }) => {
   const currentUser = useContext(CurrentUserContext);
-  const [name, setName] = useState(currentUser?.name || "");
-  const [avatar, setAvatar] = useState(currentUser?.avatar || "");
+  const { values, handleChange, setValues } = useForm({
+    name: "",
+    avatar: "",
+  });
 
   useEffect(() => {
-    setName(currentUser?.name || "");
-    setAvatar(currentUser?.avatar || "");
-  }, [currentUser]);
+    if (isOpen) {
+      setValues({
+        name: currentUser?.name || "",
+        avatar: currentUser?.avatar || "",
+      });
+    }
+  }, [isOpen, currentUser, setValues]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleUpdateUser(name, avatar)
-      .then((updatedUser) => {
-        // Update the context or handle updated user data here
-
-        onClose();
-      })
-      .catch((error) => {
-        console.error("Error updating profile:", error);
-      });
+    handleUpdateUser(values);
   };
 
   return (
@@ -39,32 +35,42 @@ const EditProfileModal = ({
       closeActiveModal={closeActiveModal}
       modalName={modalName}
       isOpen={isOpen}
-      onSubmit={handleUpdateUser}
+      onSubmit={handleSubmit}
       title="Edit Profile"
       buttonText="Save"
       name="edit-profile"
-      formName="edit-profile"
     >
-      <label>
+      <label className="modal__label">
         Name:
         <input
+          className="modal__input"
           type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          name="name"
+          value={values.name}
+          onChange={handleChange}
           required
         />
       </label>
-      <label>
+      <label className="modal__label">
         Avatar URL:
         <input
-          type="text"
-          value={avatar}
-          onChange={(e) => setAvatar(e.target.value)}
+          className="modal__input"
+          type="url"
+          name="avatar"
+          value={values.avatar}
+          onChange={handleChange}
           required
         />
       </label>
     </ModalWithForm>
   );
+};
+
+EditProfileModal.propTypes = {
+  modalName: PropTypes.string,
+  isOpen: PropTypes.bool.isRequired,
+  closeActiveModal: PropTypes.func.isRequired,
+  handleUpdateUser: PropTypes.func.isRequired,
 };
 
 export default EditProfileModal;
