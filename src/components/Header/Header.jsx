@@ -5,17 +5,15 @@ import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext.jsx";
+import { ModalContext } from "../../contexts/ModalContext";
+import PropTypes from "prop-types";
 
-/**
- * modals ostensibly used in the header
- *
-      <RegisterModal
-        isOpen={activeModal === "register"}
-        onClose={handleCloseModal}
-      />
-      <LoginModal isOpen={activeModal === "login"} onClose={handleCloseModal} />
- */
-const Header = ({ onCreateModal, onRegister, onLogin, isLoggedIn }) => {
+const Header = ({ isLoggedIn }) => {
+  const { handleOpenModal } = useContext(ModalContext);
+  const onCreateModal = () => handleOpenModal("create");
+  const onRegister = () => handleOpenModal("register");
+  const onLogin = () => handleOpenModal("login");
+
   const currentUser = useContext(CurrentUserContext);
   const formattedDate = new Date().toLocaleString("default", {
     month: "long",
@@ -85,6 +83,13 @@ const Header = ({ onCreateModal, onRegister, onLogin, isLoggedIn }) => {
       </div>
     </header>
   );
+};
+
+Header.propTypes = {
+  onCreateModal: PropTypes.func.isRequired,
+  onRegister: PropTypes.func.isRequired,
+  onLogin: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
 };
 
 export default Header;

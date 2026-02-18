@@ -1,4 +1,5 @@
 import "./ModalWithForm.css";
+import PropTypes from "prop-types";
 
 const ModalWithForm = ({
   children,
@@ -12,7 +13,6 @@ const ModalWithForm = ({
   altButtonText,
   handleAltButton,
 }) => {
-
   return (
     <div
       className={`modal modal_type_${modalName} ${
@@ -52,6 +52,19 @@ const ModalWithForm = ({
       </div>
     </div>
   );
+};
+
+ModalWithForm.propTypes = {
+  children: PropTypes.node.isRequired,
+  buttonText: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  closeActiveModal: PropTypes.func,
+  modalName: PropTypes.string.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  altButton: PropTypes.bool,
+  altButtonText: PropTypes.string,
+  handleAltButton: PropTypes.func,
 };
 
 export default ModalWithForm;

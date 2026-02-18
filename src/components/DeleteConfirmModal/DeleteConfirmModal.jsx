@@ -1,4 +1,5 @@
 import "./DeleteConfirmModal.css";
+import PropTypes from "prop-types";
 
 const DeleteConfirmModal = ({ selectedCard, onClose, onDeleteItem }) => {
   const buttonConfirmText = "Yes, delete item";
@@ -38,4 +39,11 @@ const DeleteConfirmModal = ({ selectedCard, onClose, onDeleteItem }) => {
     </div>
   );
 };
+
+DeleteConfirmModal.propTypes = {
+  selectedCard: PropTypes.object.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onDeleteItem: PropTypes.func.isRequired,
+};
+
 export default DeleteConfirmModal;

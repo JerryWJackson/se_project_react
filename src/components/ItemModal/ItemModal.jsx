@@ -1,6 +1,7 @@
 import "./ItemModal.css";
 import { useContext } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext.jsx";
+import PropTypes from "prop-types";
 
 const ItemModal = ({ selectedCard, onClose, handleOpenConfirmationModal }) => {
   const currentUser = useContext(CurrentUserContext);
@@ -40,4 +41,11 @@ const ItemModal = ({ selectedCard, onClose, handleOpenConfirmationModal }) => {
     </div>
   );
 };
+
+ItemModal.propTypes = {
+  selectedCard: PropTypes.object.isRequired,
+  onClose: PropTypes.func.isRequired,
+  handleOpenConfirmationModal: PropTypes.func.isRequired,
+};
+
 export default ItemModal;
