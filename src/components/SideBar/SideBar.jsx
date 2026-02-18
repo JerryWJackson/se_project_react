@@ -1,6 +1,7 @@
 import "./SideBar.css";
 import { useContext } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext.jsx";
+import PropTypes from "prop-types";
 
 const SideBar = ({ handleUpdateUser, onSignOut, isLoggedIn }) => {
   const currentUser = useContext(CurrentUserContext);
@@ -36,6 +37,12 @@ const SideBar = ({ handleUpdateUser, onSignOut, isLoggedIn }) => {
       </div>
     </section>
   );
+};
+
+SideBar.propTypes = {
+  handleUpdateUser: PropTypes.func.isRequired,
+  onSignOut: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
 };
 
 export default SideBar;

@@ -69,14 +69,14 @@ export const weatherOptions = [
   },
 ];
 
-const apiKey = "d4f7aaf277abe33386f84dc212a69e83";
+const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
 const latitude = 30.37522;
 const longitude = -97.71174;
 const units = "Imperial";
 
 export const endpointUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=${units}&appid=${apiKey}`;
 
-export const baseUrl = "http://localhost:3001";
+export const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:3001";
 export const defaultHeaders = {
   Accept: "application/json",
   "Content-Type": "application/json",
