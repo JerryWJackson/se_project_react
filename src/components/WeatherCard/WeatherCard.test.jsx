@@ -1,22 +1,22 @@
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import WeatherCard from "./WeatherCard";
-import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
+import { UserPreferencesContext } from "../../contexts/UserPreferencesContext";
 import { weatherOptions } from "../../utils/constants";
 
 describe("WeatherCard", () => {
   it("renders correctly with temperature and correct image", () => {
     const weatherOption = weatherOptions[0]; // clear day
     render(
-      <CurrentTemperatureUnitContext.Provider
-        value={{ currentTemperatureUnit: "F" }}
+      <UserPreferencesContext.Provider
+        value={{ temperatureUnit: "F" }}
       >
         <WeatherCard
           day={weatherOption.day}
           weather={weatherOption.weather}
           temp={75}
         />
-      </CurrentTemperatureUnitContext.Provider>
+      </UserPreferencesContext.Provider>
     );
 
     expect(screen.getByText("75°F")).toBeInTheDocument();

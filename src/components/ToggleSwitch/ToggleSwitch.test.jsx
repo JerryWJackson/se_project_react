@@ -1,32 +1,32 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import ToggleSwitch from "./ToggleSwitch";
-import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
+import { UserPreferencesContext } from "../../contexts/UserPreferencesContext";
 
 describe("ToggleSwitch", () => {
   it("renders correctly", () => {
     render(
-      <CurrentTemperatureUnitContext.Provider
-        value={{ currentTemperatureUnit: "F", handleToggleSwitchChange: vi.fn() }}
+      <UserPreferencesContext.Provider
+        value={{ temperatureUnit: "F", toggleTemperatureUnit: vi.fn() }}
       >
         <ToggleSwitch />
-      </CurrentTemperatureUnitContext.Provider>
+      </UserPreferencesContext.Provider>
     );
     expect(screen.getByRole("checkbox")).toBeInTheDocument();
   });
 
-  it("calls handleToggleSwitchChange when clicked", () => {
-    const handleToggleSwitchChange = vi.fn();
+  it("calls toggleTemperatureUnit when clicked", () => {
+    const toggleTemperatureUnit = vi.fn();
     render(
-      <CurrentTemperatureUnitContext.Provider
-        value={{ currentTemperatureUnit: "F", handleToggleSwitchChange }}
+      <UserPreferencesContext.Provider
+        value={{ temperatureUnit: "F", toggleTemperatureUnit }}
       >
         <ToggleSwitch />
-      </CurrentTemperatureUnitContext.Provider>
+      </UserPreferencesContext.Provider>
     );
 
     const checkbox = screen.getByRole("checkbox");
     fireEvent.click(checkbox);
-    expect(handleToggleSwitchChange).toHaveBeenCalled();
+    expect(toggleTemperatureUnit).toHaveBeenCalled();
   });
 });

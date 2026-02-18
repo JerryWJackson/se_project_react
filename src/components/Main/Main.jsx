@@ -1,13 +1,20 @@
-import WeatherCard from "../WeatherCard/WeatherCard";
 import ItemCard from "../ItemCard/ItemCard";
 import "./Main.css";
+import WeatherCard from "../WeatherCard/WeatherCard";
 import { useContext } from "react";
-import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
+import { UserPreferencesContext } from "../../contexts/UserPreferencesContext";
+import { ModalContext } from "../../contexts/ModalContext";
+import PropTypes from "prop-types";
 
-function Main({ day, weather, temp, onSelectCard, setClothingItems }) {
-
-  const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
+function Main({ day, weather, temp, clothingItems }) {
+  const { handleOpenModal } = useContext(ModalContext);
+  const { temperatureUnit } = useContext(UserPreferencesContext);
+  const currentTemperatureUnit = temperatureUnit;
   const weatherTemp = temp?.[currentTemperatureUnit];
+  
+  const onSelectCard = (item) => {
+    handleOpenModal("previewItem", item);
+  };
   const getWeatherType = () => {
     if (temp.F >= 86) {
       return "hot";
@@ -19,7 +26,7 @@ function Main({ day, weather, temp, onSelectCard, setClothingItems }) {
   };
   const weatherType = getWeatherType();
 
-  const filteredCards = setClothingItems.filter((item) => {
+  const filteredCards = clothingItems.filter((item) => {
     return item.weather.toLowerCase() === weatherType;
   });
 
@@ -46,5 +53,13 @@ function Main({ day, weather, temp, onSelectCard, setClothingItems }) {
     </main>
   );
 }
+
+Main.propTypes = {
+  day: PropTypes.bool,
+  weather: PropTypes.string,
+  temp: PropTypes.object,
+  onSelectCard: PropTypes.func.isRequired,
+  clothingItems: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default Main;
