@@ -58,7 +58,6 @@ Main.propTypes = {
   day: PropTypes.bool,
   weather: PropTypes.string,
   temp: PropTypes.object,
-  onSelectCard: PropTypes.func.isRequired,
   clothingItems: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
