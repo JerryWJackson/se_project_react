@@ -8,7 +8,7 @@ const ToggleSwitch = () => {
     CurrentTemperatureUnitContext
   );
 
-  // console.log('ToggleSwitch.js --', currentTemperatureUnit);
+
 
   return (
     <label className="switch">

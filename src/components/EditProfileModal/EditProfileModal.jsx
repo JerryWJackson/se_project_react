@@ -26,7 +26,7 @@ const EditProfileModal = ({
     handleUpdateUser(name, avatar)
       .then((updatedUser) => {
         // Update the context or handle updated user data here
-        console.log("User profile updated:", updatedUser);
+
         onClose();
       })
       .catch((error) => {

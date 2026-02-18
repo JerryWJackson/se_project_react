@@ -5,8 +5,7 @@ import { useContext } from "react";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 
 function Main({ day, weather, temp, onSelectCard, setClothingItems }) {
-  // console.log("day is", day);
-  // console.log("weather is", weather);
+
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
   const weatherTemp = temp?.[currentTemperatureUnit];
   const getWeatherType = () => {

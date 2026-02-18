@@ -4,7 +4,7 @@ import ItemModal from "../ItemModal/ItemModal";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import DeleteConfirmModal from "../DeleteConfirmModal/DeleteConfirmModal";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
-import { PassCurrentUserProvider } from "../../contexts/CurrentUserContext.jsx";
+
 import { useEffect, useState } from "react";
 import "./Profile.css";
 
@@ -40,12 +40,12 @@ const Profile = ({
         handleOpenModal={handleOpenModal("edit")}
       />
       <ClothesSection
-        currentUser={PassCurrentUserProvider?.currentUser}
+        currentUser={currentUser}
         clothingItems={clothingItems}
         handleCloseModal={handleCloseModal}
         onCreateModal={onCreateModal}
         items={clothingItems.filter(
-          (card) => card.owner === PassCurrentUserProvider?.currentUser._id
+          (card) => card.owner === currentUser._id
         )}
         onSelectCard={onSelectCard}
         onAddItem={onAddItem}

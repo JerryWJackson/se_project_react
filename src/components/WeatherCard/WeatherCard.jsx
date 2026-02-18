@@ -2,6 +2,7 @@ import "./WeatherCard.css";
 import { useContext } from "react";
 import { weatherOptions } from "../../utils/constants";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
+import PropTypes from "prop-types";
 
 const WeatherCard = ({ day, weather, temp }) => {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
@@ -9,7 +10,7 @@ const WeatherCard = ({ day, weather, temp }) => {
     return item.day === day && item.weather === weather;
   });
 
-  // console.log("imgSrc is", imgSrc);
+
 
   const imgSrcUrl = imgSrc?.url || "";
 
@@ -27,6 +28,12 @@ const WeatherCard = ({ day, weather, temp }) => {
       </div>
     </section>
   );
+};
+
+WeatherCard.propTypes = {
+  day: PropTypes.bool,
+  weather: PropTypes.string,
+  temp: PropTypes.number,
 };
 
 export default WeatherCard;

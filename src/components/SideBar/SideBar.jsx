@@ -1,7 +1,9 @@
 import "./SideBar.css";
-import { PassCurrentUserProvider } from "../../contexts/CurrentUserContext.jsx";
+import { useContext } from "react";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext.jsx";
 
 const SideBar = ({ handleUpdateUser, onSignOut, isLoggedIn }) => {
+  const currentUser = useContext(CurrentUserContext);
   return (
     <section className="sideBar">
       <div className="sideBar__container">

@@ -3,7 +3,8 @@ import logo from "../../images/logo.svg";
 import avatar_nouser from "../../images/avatar_nouser.png";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { Link } from "react-router-dom";
-import { PassCurrentUserProvider } from "../../contexts/CurrentUserContext.jsx";
+import { useContext } from "react";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext.jsx";
 
 /**
  * modals ostensibly used in the header
@@ -15,6 +16,7 @@ import { PassCurrentUserProvider } from "../../contexts/CurrentUserContext.jsx";
       <LoginModal isOpen={activeModal === "login"} onClose={handleCloseModal} />
  */
 const Header = ({ onCreateModal, onRegister, onLogin, isLoggedIn }) => {
+  const currentUser = useContext(CurrentUserContext);
   const formattedDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
@@ -42,12 +44,12 @@ const Header = ({ onCreateModal, onRegister, onLogin, isLoggedIn }) => {
               +Add clothes
             </button>
             <Link to="/profile" className="header__avatar_name">
-              {PassCurrentUserProvider?.currentUser?.name}
+              {currentUser?.name}
             </Link>
             <div className="header__avatar_image">
               <img
                 className="header__avatar_image"
-                src={PassCurrentUserProvider?.currentUser?.avatar}
+                src={currentUser?.avatar}
                 alt="avatar"
               />
             </div>

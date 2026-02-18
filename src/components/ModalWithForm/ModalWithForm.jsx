@@ -12,7 +12,7 @@ const ModalWithForm = ({
   altButtonText,
   handleAltButton,
 }) => {
-  console.log("modalName is ", modalName);
+
   return (
     <div
       className={`modal modal_type_${modalName} ${

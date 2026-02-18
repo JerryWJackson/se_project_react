@@ -1,4 +1,4 @@
-import { getToken } from "../utils/token";
+
 
 export const weatherOptions = [
   {
@@ -81,8 +81,4 @@ export const defaultHeaders = {
   Accept: "application/json",
   "Content-Type": "application/json",
 };
-export const authHeaders = {
-  Accept: "application/json",
-  "Content-Type": "application/json",
-  Authorization: `Bearer ${getToken()}`,
-};
+

@@ -1,7 +1,7 @@
 import ItemCard from "../ItemCard/ItemCard";
 import "./ClothesSection.css";
 import { useMemo } from "react";
-import { PassCurrentUserProvider } from "../../contexts/CurrentUserContext.jsx";
+
 
 const ClothesSection = ({
   currentUser,
@@ -10,7 +10,7 @@ const ClothesSection = ({
   onSelectCard,
   temp,
 }) => {
-  console.log("temp is ", temp);
+
 
   const weatherType = useMemo(() => {
     if (temp >= 86) {
@@ -26,7 +26,7 @@ const ClothesSection = ({
     return item.weather.toLowerCase() === weatherType;
   });
 
-  console.log("clothingItems are ", items);
+
   return (
     <section className="clothesSection">
       <div className="card_section-title">

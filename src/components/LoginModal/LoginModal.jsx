@@ -24,7 +24,7 @@ const LoginModal = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
-    console.log("submitting login");
+
     handleLogin(email, password);
   };
 

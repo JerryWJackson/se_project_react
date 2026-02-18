@@ -1,6 +1,7 @@
-import { defaultHeaders, authHeaders, baseUrl } from "./constants";
-import { PassCurrentUserProvider } from "../contexts/CurrentUserContext.jsx";
+import { defaultHeaders, baseUrl } from "./constants";
 import { getToken } from "../utils/token";
+
+
 
 export function checkServerResponse(res) {
   if (res.ok) {
@@ -20,23 +21,28 @@ export function fetchAllClothing() {
 }
 
 export function addNewItem(item) {
-  // console.log("item to add is ", item);
+
   return makeServerRequest(`${baseUrl}/items`, {
     method: "POST",
-    headers: authHeaders,
+    headers: {
+      ...defaultHeaders,
+      Authorization: `Bearer ${getToken()}`,
+    },
     body: JSON.stringify({
       name: item.name,
       imageUrl: item.imageUrl,
       weather: item.weather,
-      owner: PassCurrentUserProvider?.currentUser?._id,
+
     }),
   });
 }
 
 export function deleteItem(id) {
-  const token = getToken();
   return makeServerRequest(`${baseUrl}/${id}`, {
     method: "DELETE",
-    headers: authHeaders,
+    headers: {
+      ...defaultHeaders,
+      Authorization: `Bearer ${getToken()}`,
+    },
   });
 }
