@@ -5,7 +5,7 @@ const DeleteConfirmModal = ({ selectedCard, onClose, onDeleteItem }) => {
   const buttonConfirmText = "Yes, delete item";
   const buttonCancelText = "Cancel";
   return (
-    <div className="modal">
+    <div className={`modal modal_opened`}>
       <div className="modal__content">
         <button
           className="modal__button-close"
@@ -33,7 +33,6 @@ const DeleteConfirmModal = ({ selectedCard, onClose, onDeleteItem }) => {
           >
             {buttonCancelText}
           </button>
-          <p className="modal__item-id">{selectedCard._id}</p>
         </div>
       </div>
     </div>

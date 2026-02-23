@@ -4,14 +4,11 @@ import PropTypes from "prop-types";
 import { useForm } from "../../hooks/useForm";
 
 const LoginModal = ({
-  activeModal,
-  modalName,
   isOpen,
-  closeActiveModal,
+  onClose,
   handleLogin,
-  setActiveModal,
+  onSecondButtonClick,
   isLoading,
-  setIsLoading,
 }) => {
   const { values, handleChange, setValues } = useForm({
     email: "",
@@ -20,13 +17,7 @@ const LoginModal = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsLoading(true);
     handleLogin(values.email, values.password);
-  };
-
-  const handleToggleModal = () => {
-    const modalName = "register";
-    setActiveModal(modalName);
   };
 
   useEffect(() => {
@@ -37,8 +28,8 @@ const LoginModal = ({
 
   return (
     <ModalWithForm
-      closeActiveModal={closeActiveModal}
-      modalName={modalName}
+      closeActiveModal={onClose}
+      modalName="login"
       isOpen={isOpen}
       buttonText={isLoading ? "..." : "Next"}
       title="Log In"
@@ -46,7 +37,7 @@ const LoginModal = ({
       logIn={true}
       altButton={true}
       altButtonText="or Register"
-      handleAltButton={handleToggleModal}
+      handleAltButton={onSecondButtonClick}
     >
       <label className="modal__label">
         Email
@@ -57,6 +48,7 @@ const LoginModal = ({
           name="email"
           value={values.email}
           onChange={handleChange}
+          required
         />
       </label>
       <label className="modal__label">
@@ -68,6 +60,7 @@ const LoginModal = ({
           name="password"
           value={values.password}
           onChange={handleChange}
+          required
         />
       </label>
     </ModalWithForm>
@@ -75,14 +68,11 @@ const LoginModal = ({
 };
 
 LoginModal.propTypes = {
-  activeModal: PropTypes.string,
-  modalName: PropTypes.string,
   isOpen: PropTypes.bool.isRequired,
-  closeActiveModal: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   handleLogin: PropTypes.func.isRequired,
-  setActiveModal: PropTypes.func.isRequired,
+  onSecondButtonClick: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
-  setIsLoading: PropTypes.func,
 };
 
 export default LoginModal;

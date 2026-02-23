@@ -16,11 +16,7 @@ export function useAuth() {
     auth
       .register({ user })
       .then((res) => {
-        setCurrentUser(res);
-        setIsLoggedIn(true);
-        handleLogin(res.email, res.password);
-        handleCloseModal();
-        navigate("/profile");
+        handleLogin(user.email, user.password);
       })
       .catch(console.error)
       .finally(() => setAuthLoading(false));
