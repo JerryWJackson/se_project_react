@@ -3,7 +3,7 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import PropTypes from "prop-types";
 import { useForm } from "../../hooks/useForm";
 
-const AddItemModal = ({ handleCloseModal, modalName, isOpen, onAddItem }) => {
+const AddItemModal = ({ onClose, isOpen, onAddItem }) => {
   const { values, handleChange, setValues } = useForm({
     name: "",
     imageUrl: "",
@@ -26,8 +26,8 @@ const AddItemModal = ({ handleCloseModal, modalName, isOpen, onAddItem }) => {
       title="New Garment"
       name="addItem"
       isOpen={isOpen}
-      modalName={modalName}
-      onClose={handleCloseModal}
+      modalName="addItem"
+      closeActiveModal={onClose}
       onSubmit={handleSubmit}
       buttonText="Add Item"
     >
@@ -43,6 +43,7 @@ const AddItemModal = ({ handleCloseModal, modalName, isOpen, onAddItem }) => {
             placeholder="Name"
             value={values.name}
             onChange={handleChange}
+            required
           />
         </label>
         <label className="modal__form_item">
@@ -54,6 +55,7 @@ const AddItemModal = ({ handleCloseModal, modalName, isOpen, onAddItem }) => {
             placeholder="Image URL"
             value={values.imageUrl}
             onChange={handleChange}
+            required
           />
         </label>
         <fieldset className="weather-type-selector">
@@ -104,8 +106,7 @@ const AddItemModal = ({ handleCloseModal, modalName, isOpen, onAddItem }) => {
 };
 
 AddItemModal.propTypes = {
-  handleCloseModal: PropTypes.func.isRequired,
-  modalName: PropTypes.string,
+  onClose: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
   onAddItem: PropTypes.func.isRequired,
 };

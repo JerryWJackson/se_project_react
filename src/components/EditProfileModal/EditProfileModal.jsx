@@ -4,12 +4,7 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import PropTypes from "prop-types";
 import { useForm } from "../../hooks/useForm";
 
-const EditProfileModal = ({
-  modalName,
-  isOpen,
-  closeActiveModal,
-  handleUpdateUser,
-}) => {
+const EditProfileModal = ({ isOpen, closeActiveModal, handleUpdateUser }) => {
   const currentUser = useContext(CurrentUserContext);
   const { values, handleChange, setValues } = useForm({
     name: "",
@@ -33,7 +28,7 @@ const EditProfileModal = ({
   return (
     <ModalWithForm
       closeActiveModal={closeActiveModal}
-      modalName={modalName}
+      modalName="edit-profile"
       isOpen={isOpen}
       onSubmit={handleSubmit}
       title="Edit Profile"
@@ -67,7 +62,6 @@ const EditProfileModal = ({
 };
 
 EditProfileModal.propTypes = {
-  modalName: PropTypes.string,
   isOpen: PropTypes.bool.isRequired,
   closeActiveModal: PropTypes.func.isRequired,
   handleUpdateUser: PropTypes.func.isRequired,

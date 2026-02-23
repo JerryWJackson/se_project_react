@@ -8,7 +8,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   gap: 20px;
-  justify-content: center;
+  justify-content: flex-start;
   max-width: 1360px;
   margin-top: 0;
   margin-left: 20px;
