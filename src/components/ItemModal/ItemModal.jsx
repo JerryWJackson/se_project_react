@@ -9,33 +9,33 @@ const ItemModal = ({ selectedCard, onClose, handleOpenConfirmationModal }) => {
   const itemDeleteButtonClassName = `item__delete-button ${
     isOwn ? "item__delete-button_visible" : "item__delete-button_hidden"
   }`;
-  const buttonText = "Delete Item";
   return (
-    <div className="modal">
+    <div className={`modal modal_opened`}>
       <div className="modal__content">
         <button
           className="modal__button-close"
           type="button"
           onClick={onClose}
         ></button>
-        <img
-          className="modal__item-image"
-          src={selectedCard.imageUrl}
-          alt={selectedCard.name}
-        />
-        <h3 className="modal__item-name">{selectedCard.name}</h3>
+        <div className="modal__image-container">
+          <img
+            className="modal__item-image"
+            src={selectedCard.imageUrl}
+            alt={selectedCard.name}
+          />
+        </div>
         <div className="modal__item-info_container">
-          <div className="modal__item-weather">
-            Weather: {selectedCard.weather}
+          <div className="modal__item-header">
+            <p className="modal__item-name">{selectedCard.name}</p>
+            <button
+              className={itemDeleteButtonClassName}
+              type="button"
+              onClick={handleOpenConfirmationModal}
+            >
+              Delete item
+            </button>
           </div>
-          <button
-            className={itemDeleteButtonClassName}
-            type="button"
-            onClick={handleOpenConfirmationModal}
-          >
-            {buttonText}
-          </button>
-          <p className="modal__item-id">{selectedCard._id}</p>
+          <p className="modal__item-weather">Weather: {selectedCard.weather}</p>
         </div>
       </div>
     </div>
