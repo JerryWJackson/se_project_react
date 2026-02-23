@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 
 const Header = ({ isLoggedIn }) => {
   const { handleOpenModal } = useContext(ModalContext);
-  const onCreateModal = () => handleOpenModal("create");
+  const onCreateModal = () => handleOpenModal("addItem");
   const onRegister = () => handleOpenModal("register");
   const onLogin = () => handleOpenModal("login");
 
@@ -45,11 +45,17 @@ const Header = ({ isLoggedIn }) => {
               {currentUser?.name}
             </Link>
             <div className="header__avatar_image">
-              <img
-                className="header__avatar_image"
-                src={currentUser?.avatar}
-                alt="avatar"
-              />
+              {currentUser?.avatar ? (
+                <img
+                  className="header__avatar_image"
+                  src={currentUser.avatar}
+                  alt="avatar"
+                />
+              ) : (
+                <div className="header__avatar_placeholder">
+                  {currentUser?.name?.[0]?.toUpperCase() ?? "?"}
+                </div>
+              )}
             </div>
           </>
         ) : (
@@ -86,9 +92,6 @@ const Header = ({ isLoggedIn }) => {
 };
 
 Header.propTypes = {
-  onCreateModal: PropTypes.func.isRequired,
-  onRegister: PropTypes.func.isRequired,
-  onLogin: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
 };
 

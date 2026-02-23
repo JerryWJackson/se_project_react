@@ -39,3 +39,17 @@
   height: 40px;
   border-radius: 50%;
 }
+
+.header__avatar_placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  color: #333;
+  font-size: 18px;
+  font-weight: 700;
+  user-select: none;
+}

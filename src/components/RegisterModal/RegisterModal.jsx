@@ -4,15 +4,11 @@ import PropTypes from "prop-types";
 import { useForm } from "../../hooks/useForm";
 
 const RegisterModal = ({
-  activeModal,
-  modalName,
   isOpen,
-  closeActiveModal,
+  onClose,
   onRegistration,
-  onLogin,
-  setActiveModal,
+  onSecondButtonClick,
   isLoading,
-  setIsLoading,
 }) => {
   const { values, handleChange, setValues } = useForm({
     email: "",
@@ -23,13 +19,7 @@ const RegisterModal = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsLoading(true);
     onRegistration({ user: values });
-  };
-
-  const handleToggleModal = () => {
-    const modalName = "login";
-    setActiveModal(modalName);
   };
 
   useEffect(() => {
@@ -40,8 +30,8 @@ const RegisterModal = ({
 
   return (
     <ModalWithForm
-      closeActiveModal={closeActiveModal}
-      modalName={modalName}
+      closeActiveModal={onClose}
+      modalName="register"
       isOpen={isOpen}
       buttonText={isLoading ? "..." : "Next"}
       name="register"
@@ -49,7 +39,7 @@ const RegisterModal = ({
       onSubmit={handleSubmit}
       altButton={true}
       altButtonText="or Login"
-      handleAltButton={handleToggleModal}
+      handleAltButton={onSecondButtonClick}
     >
       <fieldset className="modal__fieldset">
         <label className="modal__label">
@@ -61,6 +51,7 @@ const RegisterModal = ({
             name="email"
             value={values.email}
             onChange={handleChange}
+            required
           />
         </label>
         <label className="modal__label">
@@ -74,6 +65,7 @@ const RegisterModal = ({
             onChange={handleChange}
             minLength="1"
             maxLength="30"
+            required
           />
         </label>
         <label className="modal__label">
@@ -85,6 +77,7 @@ const RegisterModal = ({
             name="name"
             value={values.name}
             onChange={handleChange}
+            required
           />
         </label>
         <label className="modal__label modal__bottomlabel">
@@ -96,6 +89,7 @@ const RegisterModal = ({
             name="avatar"
             value={values.avatar}
             onChange={handleChange}
+            required
           />
         </label>
       </fieldset>
@@ -104,15 +98,11 @@ const RegisterModal = ({
 };
 
 RegisterModal.propTypes = {
-  activeModal: PropTypes.string,
-  modalName: PropTypes.string,
   isOpen: PropTypes.bool.isRequired,
-  closeActiveModal: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   onRegistration: PropTypes.func.isRequired,
-  onLogin: PropTypes.func.isRequired,
-  setActiveModal: PropTypes.func.isRequired,
+  onSecondButtonClick: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
-  setIsLoading: PropTypes.func,
 };
 
 export default RegisterModal;
