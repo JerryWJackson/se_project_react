@@ -42,5 +42,31 @@ export function useClothingItems() {
       .finally(() => setItemsLoading(false));
   };
 
-  return { clothingItems, handleAddItem, handleDeleteItem, itemsLoading };
+  const handleCardLike = ({ id, isLiked }, token) => {
+    !isLiked
+      ? api
+          .addCardLike(id, token)
+          .then((updatedCard) => {
+            setClothingItems((cards) =>
+              cards.map((item) => (item._id === id ? updatedCard : item)),
+            );
+          })
+          .catch((err) => console.log(err))
+      : api
+          .removeCardLike(id, token)
+          .then((updatedCard) => {
+            setClothingItems((cards) =>
+              cards.map((item) => (item._id === id ? updatedCard : item)),
+            );
+          })
+          .catch((err) => console.log(err));
+  };
+
+  return {
+    clothingItems,
+    handleAddItem,
+    handleDeleteItem,
+    handleCardLike,
+    itemsLoading,
+  };
 }

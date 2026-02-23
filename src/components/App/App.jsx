@@ -23,9 +23,8 @@ import { useWeather } from "../../hooks/useWeather";
 import { useClothingItems } from "../../hooks/useClothingItems";
 
 function App() {
-  const { activeModal, handleOpenModal, handleCloseModal, modalPayload } = useContext(
-    ModalContext
-  );
+  const { activeModal, handleOpenModal, handleCloseModal, modalPayload } =
+    useContext(ModalContext);
 
   const {
     currentUser,
@@ -39,8 +38,13 @@ function App() {
 
   const { temp, weather, isDay } = useWeather();
 
-  const { clothingItems, handleAddItem, handleDeleteItem, itemsLoading } =
-    useClothingItems();
+  const {
+    clothingItems,
+    handleAddItem,
+    handleDeleteItem,
+    handleCardLike,
+    itemsLoading,
+  } = useClothingItems();
 
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [theme, setTheme] = useState("light");
@@ -81,6 +85,7 @@ function App() {
                   weather={weather}
                   temp={temp}
                   clothingItems={clothingItems}
+                  onCardLike={handleCardLike}
                 />
               }
             />
@@ -96,6 +101,7 @@ function App() {
                     onDeleteItem={handleDeleteItemWrapper}
                     handleUpdateUser={handleUpdateUser}
                     onSignOut={handleSignOut}
+                    onCardLike={handleCardLike}
                     temp={temp}
                   />
                 </ProtectedRoute>
@@ -105,7 +111,7 @@ function App() {
           <Footer />
           {activeModal === "addItem" && (
             <AddItemModal
-              handleCloseModal={handleCloseModal}
+              onClose={handleCloseModal}
               isOpen={activeModal === "addItem"}
               onAddItem={handleAddItem}
             />

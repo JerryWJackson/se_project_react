@@ -4,30 +4,46 @@ import WeatherCard from "../WeatherCard/WeatherCard";
 import { useContext } from "react";
 import { UserPreferencesContext } from "../../contexts/UserPreferencesContext";
 import { ModalContext } from "../../contexts/ModalContext";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import PropTypes from "prop-types";
 
-function Main({ day, weather, temp, clothingItems }) {
+function Main({ day, weather, temp, clothingItems, onCardLike }) {
   const { handleOpenModal } = useContext(ModalContext);
   const { temperatureUnit } = useContext(UserPreferencesContext);
-  const currentTemperatureUnit = temperatureUnit;
-  const weatherTemp = temp?.[currentTemperatureUnit];
-  
+  const currentUser = useContext(CurrentUserContext);
+  const currentTemp = temp?.[temperatureUnit];
+
+  const weatherTemp = currentTemp;
+
   const onSelectCard = (item) => {
     handleOpenModal("previewItem", item);
   };
   const getWeatherType = () => {
-    if (temp.F >= 86) {
-      return "hot";
-    } else if (temp.F >= 66 && temp.F <= 85) {
-      return "warm";
-    } else if (temp.F <= 65) {
-      return "cold";
+    if (temperatureUnit === "F") {
+      if (currentTemp >= 86) {
+        return "hot";
+      } else if (currentTemp >= 66 && currentTemp <= 85) {
+        return "warm";
+      } else if (currentTemp <= 65) {
+        return "cold";
+      }
+    } else {
+      if (currentTemp >= 30) {
+        return "hot";
+      } else if (currentTemp >= 19 && currentTemp <= 29) {
+        return "warm";
+      } else if (currentTemp <= 18) {
+        return "cold";
+      }
     }
   };
   const weatherType = getWeatherType();
 
   const filteredCards = clothingItems.filter((item) => {
-    return item.weather.toLowerCase() === weatherType;
+    return (
+      item.weather.toLowerCase() === weatherType &&
+      String(item.owner) === String(currentUser?._id)
+    );
   });
 
   return (
@@ -35,8 +51,7 @@ function Main({ day, weather, temp, clothingItems }) {
       <WeatherCard day={day} weather={weather} temp={weatherTemp} />
       <section className="card_section" id="card-section">
         <p className="card_section-title">
-          Today is {weatherTemp}°{currentTemperatureUnit} / You may want to
-          wear:
+          Today is {weatherTemp}°{temperatureUnit} / You may want to wear:
         </p>
         <div className="card_items">
           {filteredCards.map((item) => {
@@ -45,6 +60,7 @@ function Main({ day, weather, temp, clothingItems }) {
                 item={item}
                 key={item._id}
                 onSelectCard={onSelectCard}
+                onCardLike={onCardLike}
               />
             );
           })}
@@ -59,6 +75,7 @@ Main.propTypes = {
   weather: PropTypes.string,
   temp: PropTypes.object,
   clothingItems: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onCardLike: PropTypes.func.isRequired,
 };
 
 export default Main;

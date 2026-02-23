@@ -9,23 +9,29 @@ const ClothesSection = ({
   items,
   onCreateModal,
   onSelectCard,
+  onCardLike,
   temp,
 }) => {
   const { temperatureUnit } = useContext(UserPreferencesContext);
-  const currentTemp = temp?.[temperatureUnit] || 999;
-  
+  const currentTemp = temp?.[temperatureUnit];
+
   const weatherType = useMemo(() => {
-    if (currentTemp >= 86) {
-      return "hot";
-    } else if (currentTemp >= 66 && currentTemp <= 85) {
-      return "warm";
-    } else if (currentTemp <= 65) {
-      return "cold";
+    if (temperatureUnit === "F") {
+      if (currentTemp >= 86) return "hot";
+      if (currentTemp >= 66 && currentTemp <= 85) return "warm";
+      if (currentTemp <= 65) return "cold";
+    } else {
+      if (currentTemp >= 30) return "hot";
+      if (currentTemp >= 19 && currentTemp <= 29) return "warm";
+      if (currentTemp <= 18) return "cold";
     }
-  }, [currentTemp]);
+  }, [currentTemp, temperatureUnit]);
 
   const filteredCards = items.filter((item) => {
-    return item.weather.toLowerCase() === weatherType;
+    return (
+      item.weather.toLowerCase() === weatherType &&
+      String(item.owner) === String(currentUser?._id)
+    );
   });
 
   return (
@@ -42,16 +48,14 @@ const ClothesSection = ({
       </div>
       <div className="card_items">
         {filteredCards.map((item) => {
-          const isOwn = item.owner === currentUser._id;
-          if (isOwn) {
-            return (
-              <ItemCard
-                item={item}
-                key={item._id}
-                onSelectCard={onSelectCard}
-              />
-            );
-          }
+          return (
+            <ItemCard
+              item={item}
+              key={item._id}
+              onSelectCard={onSelectCard}
+              onCardLike={onCardLike}
+            />
+          );
         })}
       </div>
     </section>
@@ -63,7 +67,8 @@ ClothesSection.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
   onCreateModal: PropTypes.func.isRequired,
   onSelectCard: PropTypes.func.isRequired,
-  temp: PropTypes.number,
+  onCardLike: PropTypes.func.isRequired,
+  temp: PropTypes.object,
 };
 
 export default ClothesSection;

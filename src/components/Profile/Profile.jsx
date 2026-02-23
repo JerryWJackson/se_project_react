@@ -10,13 +10,13 @@ const Profile = ({
   currentUser,
   isLoggedIn,
   clothingItems,
-  onAddItem,
-  onDeleteItem,
   handleUpdateUser,
   onSignOut,
+  onCardLike,
   temp,
 }) => {
-  const { activeModal, handleOpenModal, handleCloseModal, modalPayload } = useContext(ModalContext);
+  const { activeModal, handleOpenModal, handleCloseModal, modalPayload } =
+    useContext(ModalContext);
 
   const onCreateModal = () => handleOpenModal("addItem");
   const onSelectCard = (item) => handleOpenModal("previewItem", item);
@@ -34,9 +34,8 @@ const Profile = ({
         items={clothingItems}
         onCreateModal={onCreateModal}
         onSelectCard={onSelectCard}
+        onCardLike={onCardLike}
         temp={temp}
-        onAddItem={onAddItem}
-        onDeleteItem={onDeleteItem}
       />
     </div>
   );
@@ -46,10 +45,9 @@ Profile.propTypes = {
   currentUser: PropTypes.object,
   isLoggedIn: PropTypes.bool.isRequired,
   clothingItems: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onAddItem: PropTypes.func.isRequired,
-  onDeleteItem: PropTypes.func.isRequired,
   handleUpdateUser: PropTypes.func.isRequired,
   onSignOut: PropTypes.func.isRequired,
+  onCardLike: PropTypes.func.isRequired,
   temp: PropTypes.object,
 };
 
