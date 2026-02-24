@@ -3,11 +3,11 @@
 import { makeServerRequest } from "./api";
 import { baseUrl, defaultHeaders } from "./constants";
 
-export const register = ({ user }) => {
+export const register = ({ name, avatar, email, password }) => {
   return makeServerRequest(`${baseUrl}/signup`, {
     method: "POST",
     headers: defaultHeaders,
-    body: JSON.stringify({ user }),
+    body: JSON.stringify({ name, avatar, email, password }),
   });
 };
 

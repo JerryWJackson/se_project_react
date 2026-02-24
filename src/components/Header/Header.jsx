@@ -1,6 +1,6 @@
 import "./Header.css";
 import logo from "../../images/logo.svg";
-import avatar_nouser from "../../images/avatar_nouser.png";
+import avatarNoUser from "../../images/avatar_nouser.png";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
@@ -80,7 +80,7 @@ const Header = ({ isLoggedIn }) => {
             <div className="header__avatar_image">
               <img
                 className="header__avatar_image"
-                src={avatar_nouser}
+                src={avatarNoUser}
                 alt="avatar for no user"
               />
             </div>

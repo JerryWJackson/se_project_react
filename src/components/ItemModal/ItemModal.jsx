@@ -27,13 +27,15 @@ const ItemModal = ({ selectedCard, onClose, handleOpenConfirmationModal }) => {
         <div className="modal__item-info_container">
           <div className="modal__item-header">
             <p className="modal__item-name">{selectedCard.name}</p>
-            <button
-              className={itemDeleteButtonClassName}
-              type="button"
-              onClick={handleOpenConfirmationModal}
-            >
-              Delete item
-            </button>
+            {isOwn && (
+              <button
+                className={itemDeleteButtonClassName}
+                type="button"
+                onClick={handleOpenConfirmationModal}
+              >
+                Delete item
+              </button>
+            )}
           </div>
           <p className="modal__item-weather">Weather: {selectedCard.weather}</p>
         </div>

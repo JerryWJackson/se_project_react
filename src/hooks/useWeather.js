@@ -17,7 +17,7 @@ export function useWeather() {
         );
       })
       .catch(console.error);
-  }, []); // Depend on nothing, run once? Original App depended on [weather]? No, original App expected infinite loop if [weather]. Wait.
+  }, []);
 
   return { temp, weather, isDay };
 }

@@ -8,16 +8,14 @@ const SideBar = ({ handleUpdateUser, onSignOut, isLoggedIn }) => {
   return (
     <section className="sideBar">
       <div className="sideBar__container">
-        {isLoggedIn && (
+        {isLoggedIn && currentUser && (
           <>
             <img
               className="sideBar__avatar_image"
               src={currentUser.avatar}
               alt="avatar"
             />
-            <p className="sideBar__username">
-              {currentUser.name}
-            </p>
+            <p className="sideBar__username">{currentUser.name}</p>
             <button
               className="sideBar__button sideBar__button_edit-profile"
               type="button"
