@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import "./LoginModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import PropTypes from "prop-types";
 import { useForm } from "../../hooks/useForm";

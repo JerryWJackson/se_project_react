@@ -10,7 +10,7 @@ describe("ToggleSwitch", () => {
         value={{ temperatureUnit: "F", toggleTemperatureUnit: vi.fn() }}
       >
         <ToggleSwitch />
-      </UserPreferencesContext.Provider>
+      </UserPreferencesContext.Provider>,
     );
     expect(screen.getByRole("checkbox")).toBeInTheDocument();
   });
@@ -22,7 +22,7 @@ describe("ToggleSwitch", () => {
         value={{ temperatureUnit: "F", toggleTemperatureUnit }}
       >
         <ToggleSwitch />
-      </UserPreferencesContext.Provider>
+      </UserPreferencesContext.Provider>,
     );
 
     const checkbox = screen.getByRole("checkbox");
@@ -30,3 +30,5 @@ describe("ToggleSwitch", () => {
     expect(toggleTemperatureUnit).toHaveBeenCalled();
   });
 });
+
+export { ToggleSwitch };
