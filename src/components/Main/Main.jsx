@@ -40,10 +40,7 @@ function Main({ day, weather, temp, clothingItems, onCardLike }) {
   const weatherType = getWeatherType();
 
   const filteredCards = clothingItems.filter((item) => {
-    return (
-      item.weather.toLowerCase() === weatherType &&
-      String(item.owner) === String(currentUser?._id)
-    );
+    return item.weather.toLowerCase() === weatherType;
   });
 
   return (

@@ -20,7 +20,7 @@ const RegisterModal = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onRegistration({ user: values });
+    onRegistration(values);
   };
 
   useEffect(() => {

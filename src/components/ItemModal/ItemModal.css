@@ -93,11 +93,11 @@
   padding: 0;
   cursor: pointer;
 }
-item__delete-button_visible {
+.item__delete-button_visible {
   visibility: visible;
 }
 
-item__delete-button_hidden {
+.item__delete-button_hidden {
   visibility: hidden;
 }
 

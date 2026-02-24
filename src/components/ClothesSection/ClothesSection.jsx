@@ -28,10 +28,7 @@ const ClothesSection = ({
   }, [currentTemp, temperatureUnit]);
 
   const filteredCards = items.filter((item) => {
-    return (
-      item.weather.toLowerCase() === weatherType &&
-      String(item.owner) === String(currentUser?._id)
-    );
+    return String(item.owner) === String(currentUser?._id);
   });
 
   return (

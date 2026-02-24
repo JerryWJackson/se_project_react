@@ -11,12 +11,12 @@ export function useAuth() {
   const { handleCloseModal } = useContext(ModalContext);
   const navigate = useNavigate();
 
-  const handleRegistration = ({ user }) => {
+  const handleRegistration = (values) => {
     setAuthLoading(true);
     auth
-      .register({ user })
-      .then((res) => {
-        handleLogin(user.email, user.password);
+      .register(values)
+      .then(() => {
+        handleLogin(values.email, values.password);
       })
       .catch(console.error)
       .finally(() => setAuthLoading(false));
@@ -66,11 +66,11 @@ export function useAuth() {
     const jwt = getToken();
     if (jwt) {
       if (checkToken(jwt)) {
-        setIsLoggedIn(true);
         auth
           .getUserData(jwt)
           .then((data) => {
             setCurrentUser(data);
+            setIsLoggedIn(true);
           })
           .catch((err) => {
             console.error(err);
