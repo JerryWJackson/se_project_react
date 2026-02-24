@@ -94,7 +94,6 @@ function App() {
               element={
                 <ProtectedRoute isLoggedIn={isLoggedIn}>
                   <Profile
-                    currentUser={currentUser}
                     isLoggedIn={isLoggedIn}
                     clothingItems={clothingItems}
                     onAddItem={handleAddItem}

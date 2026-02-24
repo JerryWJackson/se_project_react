@@ -47,7 +47,7 @@ export function useAuth() {
     auth
       .updateUserProfile(values, jwt)
       .then((res) => {
-        setCurrentUser(res);
+        setCurrentUser(res.data);
         handleCloseModal();
       })
       .catch(console.error)

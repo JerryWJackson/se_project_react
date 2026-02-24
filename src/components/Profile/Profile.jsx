@@ -6,6 +6,8 @@ import "./Profile.css";
 import PropTypes from "prop-types";
 import { ModalContext } from "../../contexts/ModalContext";
 
+const currentUser = useContext(CurrentUserContext);
+
 const Profile = ({
   currentUser,
   isLoggedIn,
@@ -30,7 +32,6 @@ const Profile = ({
         isLoggedIn={isLoggedIn}
       />
       <ClothesSection
-        currentUser={currentUser}
         items={clothingItems}
         onCreateModal={onCreateModal}
         onSelectCard={onSelectCard}

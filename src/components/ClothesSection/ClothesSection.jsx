@@ -4,8 +4,9 @@ import { useMemo, useContext } from "react";
 import { UserPreferencesContext } from "../../contexts/UserPreferencesContext";
 import PropTypes from "prop-types";
 
+const currentUser = useContext(CurrentUserContext);
+
 const ClothesSection = ({
-  currentUser,
   items,
   onCreateModal,
   onSelectCard,
