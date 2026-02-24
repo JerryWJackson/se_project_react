@@ -2,6 +2,7 @@
   "name": "se_project_react",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://JerryWJackson.github.io/se_project_react",
   "type": "module",
   "dependencies": {
     "@babel/plugin-transform-class-properties": "^7.24.1",
