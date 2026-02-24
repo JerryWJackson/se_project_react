@@ -3,9 +3,15 @@ import { useContext } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext.jsx";
 import PropTypes from "prop-types";
 
-const ItemModal = ({ selectedCard, onClose, handleOpenConfirmationModal }) => {
+const ItemModal = ({
+  isLoggedIn,
+  selectedCard,
+  onClose,
+  handleOpenConfirmationModal,
+}) => {
   const currentUser = useContext(CurrentUserContext);
-  const isOwn = selectedCard.owner === currentUser?._id;
+  const isOwn =
+    isLoggedIn && String(selectedCard.owner) === String(currentUser?._id);
   const itemDeleteButtonClassName = `item__delete-button ${
     isOwn ? "item__delete-button_visible" : "item__delete-button_hidden"
   }`;

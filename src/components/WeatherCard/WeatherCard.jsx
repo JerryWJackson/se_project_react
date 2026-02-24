@@ -8,12 +8,10 @@ const WeatherCard = ({ day, weather, temp }) => {
   const { temperatureUnit } = useContext(UserPreferencesContext);
   const currentTemperatureUnit = temperatureUnit;
   const weatherOption = weatherOptions.find((item) => {
-    return item.day === day && item.weather === weather;
+    return item.day === day && item.weather === weather?.toLowerCase();
   });
 
-
-
-  const imgSrcUrl = weatherOption?.url || "";
+  const imgSrcUrl = weatherOption?.url || weatherOptions[0]?.url || "";
 
   return (
     <section className="weather_card" id="weather">

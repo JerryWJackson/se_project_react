@@ -3,8 +3,7 @@
 }
 
 .card_section {
-  margin-top: 40px;
-  max-width: 1360px;
+  margin-top: 52px;
 }
 
 .card_items {
@@ -14,7 +13,6 @@
   gap: 20px;
   justify-content: flex-start;
   margin-top: 20px;
-  max-width: 1360px;
 }
 
 .card_section-title {

@@ -6,33 +6,29 @@ import PropTypes from "prop-types";
 const SideBar = ({ handleUpdateUser, onSignOut, isLoggedIn }) => {
   const currentUser = useContext(CurrentUserContext);
   return (
-    <section className="sideBar">
-      <div className="sideBar__container">
-        {isLoggedIn && currentUser && (
-          <>
+    <section className="sidebar">
+      {isLoggedIn && currentUser && (
+        <>
+          <div className="sidebar__user-info">
             <img
-              className="sideBar__avatar_image"
+              className="sidebar__avatar"
               src={currentUser.avatar}
               alt="avatar"
             />
-            <p className="sideBar__username">{currentUser.name}</p>
-            <button
-              className="sideBar__button sideBar__button_edit-profile"
-              type="button"
-              onClick={handleUpdateUser}
-            >
-              Change profile data
-            </button>
-            <button
-              className="sideBar__button sideBar__button-logout"
-              type="button"
-              onClick={onSignOut}
-            >
-              Log out
-            </button>
-          </>
-        )}
-      </div>
+            <p className="sidebar__username">{currentUser.name}</p>
+          </div>
+          <button
+            className="sidebar__button"
+            type="button"
+            onClick={handleUpdateUser}
+          >
+            Change profile data
+          </button>
+          <button className="sidebar__button" type="button" onClick={onSignOut}>
+            Log out
+          </button>
+        </>
+      )}
     </section>
   );
 };

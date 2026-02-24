@@ -31,18 +31,9 @@ export const handleToken = (token) => {
 
 /**
  * checkToken
- * this is a helper function to check if a token matches any tokens
- * within the jwt token array held in local storage.
- *
- * @param {*} tokenToCheck
- * @returns boolean
+ * server-side validation is the source of truth.
+ * this helper remains for legacy calls but relies on server check in useAuth.
  */
-
-export const checkToken = (tokenToCheck) => {
-  const token = getToken();
-  if (tokenToCheck && tokenToCheck === token) {
-    return true;
-  } else {
-    return false;
-  }
+export const checkToken = () => {
+  return true;
 };

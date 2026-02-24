@@ -30,7 +30,7 @@ const Header = ({ isLoggedIn }) => {
         </div>
         <div className="header__app-logo_date">{formattedDate}, Austin</div>
       </div>
-      <div className="header__avatar">
+      <div className="header__auth-container">
         <ToggleSwitch />
         {isLoggedIn ? (
           <>
@@ -44,10 +44,10 @@ const Header = ({ isLoggedIn }) => {
             <Link to="/profile" className="header__avatar_name">
               {currentUser?.name}
             </Link>
-            <div className="header__avatar_image">
+            <div className="header__user-container">
               {currentUser?.avatar ? (
                 <img
-                  className="header__avatar_image"
+                  className="header__avatar"
                   src={currentUser.avatar}
                   alt="avatar"
                 />
@@ -77,9 +77,9 @@ const Header = ({ isLoggedIn }) => {
             >
               Log In
             </button>
-            <div className="header__avatar_image">
+            <div className="header__user-container">
               <img
-                className="header__avatar_image"
+                className="header__avatar"
                 src={avatarNoUser}
                 alt="avatar for no user"
               />

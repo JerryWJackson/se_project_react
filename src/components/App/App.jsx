@@ -118,6 +118,7 @@ function App() {
           )}
           {activeModal === "previewItem" && (
             <ItemModal
+              isLoggedIn={isLoggedIn}
               selectedCard={modalPayload || {}}
               name="previewItem"
               modalName={"previewItem"}

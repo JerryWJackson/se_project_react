@@ -65,22 +65,16 @@ export function useAuth() {
   useEffect(() => {
     const jwt = getToken();
     if (jwt) {
-      if (checkToken(jwt)) {
-        auth
-          .getUserData(jwt)
-          .then((data) => {
-            setCurrentUser(data);
-            setIsLoggedIn(true);
-          })
-          .catch((err) => {
-            console.error(err);
-            if (err.response && err.response.status === 401) {
-              handleSignOut();
-            }
-          });
-      } else {
-        setIsLoggedIn(false);
-      }
+      auth
+        .getUserData(jwt)
+        .then((data) => {
+          setCurrentUser(data);
+          setIsLoggedIn(true);
+        })
+        .catch((err) => {
+          console.error(err);
+          handleSignOut();
+        });
     }
   }, []);
 

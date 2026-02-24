@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   min-height: 60px;
-  padding: 0 20px 0;
+  padding: 0 40px 0;
   font-family: "Cabinet Grotesk", Arial, sans-serif;
   font-weight: 700;
   font-size: 20px;
@@ -16,10 +16,26 @@
   align-items: center;
 }
 
-.header__avatar {
+.header__auth-container {
   display: flex;
   gap: 20px;
   align-items: center;
+}
+
+.header__button {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 20px;
+  color: #000;
+  cursor: pointer;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.header__button:hover {
+  color: rgba(0, 0, 0, 1);
 }
 
 .header__add-Item_button {
@@ -35,9 +51,17 @@
   cursor: pointer;
 }
 
-.header__avatar_image {
+.header__user-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header__avatar {
+  width: 40px;
   height: 40px;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .header__avatar_placeholder {
