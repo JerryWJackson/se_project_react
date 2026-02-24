@@ -6,10 +6,7 @@ import "./Profile.css";
 import PropTypes from "prop-types";
 import { ModalContext } from "../../contexts/ModalContext";
 
-const currentUser = useContext(CurrentUserContext);
-
 const Profile = ({
-  currentUser,
   isLoggedIn,
   clothingItems,
   handleUpdateUser,
@@ -43,7 +40,6 @@ const Profile = ({
 };
 
 Profile.propTypes = {
-  currentUser: PropTypes.object,
   isLoggedIn: PropTypes.bool.isRequired,
   clothingItems: PropTypes.arrayOf(PropTypes.object).isRequired,
   handleUpdateUser: PropTypes.func.isRequired,

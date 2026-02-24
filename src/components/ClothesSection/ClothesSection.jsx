@@ -4,8 +4,6 @@ import { useMemo, useContext } from "react";
 import { UserPreferencesContext } from "../../contexts/UserPreferencesContext";
 import PropTypes from "prop-types";
 
-const currentUser = useContext(CurrentUserContext);
-
 const ClothesSection = ({
   items,
   onCreateModal,
@@ -15,6 +13,8 @@ const ClothesSection = ({
 }) => {
   const { temperatureUnit } = useContext(UserPreferencesContext);
   const currentTemp = temp?.[temperatureUnit];
+
+  const currentUser = useContext(CurrentUserContext);
 
   const weatherType = useMemo(() => {
     if (temperatureUnit === "F") {
