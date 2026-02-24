@@ -8,15 +8,13 @@ describe("WeatherCard", () => {
   it("renders correctly with temperature and correct image", () => {
     const weatherOption = weatherOptions[0]; // clear day
     render(
-      <UserPreferencesContext.Provider
-        value={{ temperatureUnit: "F" }}
-      >
+      <UserPreferencesContext.Provider value={{ temperatureUnit: "F" }}>
         <WeatherCard
           day={weatherOption.day}
           weather={weatherOption.weather}
           temp={75}
         />
-      </UserPreferencesContext.Provider>
+      </UserPreferencesContext.Provider>,
     );
 
     expect(screen.getByText("75°F")).toBeInTheDocument();
@@ -24,3 +22,5 @@ describe("WeatherCard", () => {
     expect(image).toHaveAttribute("src", weatherOption.url);
   });
 });
+
+export { WeatherCard };

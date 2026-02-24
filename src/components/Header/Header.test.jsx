@@ -12,13 +12,19 @@ describe("Header", () => {
     render(
       <MemoryRouter>
         <ModalContext.Provider value={{ handleOpenModal }}>
-          <UserPreferencesContext.Provider value={{ temperatureUnit: "F", toggleTemperatureUnit: vi.fn(), theme: "light" }}>
+          <UserPreferencesContext.Provider
+            value={{
+              temperatureUnit: "F",
+              toggleTemperatureUnit: vi.fn(),
+              theme: "light",
+            }}
+          >
             <CurrentUserContext.Provider value={null}>
               <Header isLoggedIn={false} />
             </CurrentUserContext.Provider>
           </UserPreferencesContext.Provider>
         </ModalContext.Provider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.getByText("Sign Up")).toBeInTheDocument();
@@ -27,21 +33,35 @@ describe("Header", () => {
 
   it("renders correctly when logged in", () => {
     const handleOpenModal = vi.fn();
-    const currentUser = { name: "Test User", avatar: "http://example.com/avatar.png" };
+    const currentUser = {
+      name: "Test User",
+      avatar: "http://example.com/avatar.png",
+    };
     render(
       <MemoryRouter>
         <ModalContext.Provider value={{ handleOpenModal }}>
-          <UserPreferencesContext.Provider value={{ temperatureUnit: "F", toggleTemperatureUnit: vi.fn(), theme: "light" }}>
+          <UserPreferencesContext.Provider
+            value={{
+              temperatureUnit: "F",
+              toggleTemperatureUnit: vi.fn(),
+              theme: "light",
+            }}
+          >
             <CurrentUserContext.Provider value={currentUser}>
               <Header isLoggedIn={true} />
             </CurrentUserContext.Provider>
           </UserPreferencesContext.Provider>
         </ModalContext.Provider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.getByText("Test User")).toBeInTheDocument();
     expect(screen.queryByText("Sign Up")).not.toBeInTheDocument();
-    expect(screen.getByRole("img", { name: /Test User/i })).toHaveAttribute("src", currentUser.avatar);
+    expect(screen.getByRole("img", { name: /Test User/i })).toHaveAttribute(
+      "src",
+      currentUser.avatar,
+    );
   });
 });
+
+export { Header };

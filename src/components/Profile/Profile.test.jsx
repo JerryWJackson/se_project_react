@@ -9,22 +9,33 @@ import { UserPreferencesContext } from "../../contexts/UserPreferencesContext";
 describe("Profile", () => {
   it("renders correctly with user info and clothes section", () => {
     const handleOpenModal = vi.fn();
-    const currentUser = { name: "Test User", avatar: "http://example.com/avatar.png" };
+    const currentUser = {
+      name: "Test User",
+      avatar: "http://example.com/avatar.png",
+    };
     const clothingItems = [
       { _id: "1", name: "Shirt", imageUrl: "url1", weather: "hot" },
-      { _id: "2", name: "Jacket", imageUrl: "url2", weather: "cold" }
+      { _id: "2", name: "Jacket", imageUrl: "url2", weather: "cold" },
     ];
     const temp = { F: 86, C: 30 }; // Hot weather
 
     render(
       <MemoryRouter>
-        <ModalContext.Provider value={{
-          activeModal: "",
-          handleOpenModal,
-          handleCloseModal: vi.fn(),
-          modalPayload: null
-        }}>
-          <UserPreferencesContext.Provider value={{ temperatureUnit: "F", toggleTemperatureUnit: vi.fn(), theme: "light" }}>
+        <ModalContext.Provider
+          value={{
+            activeModal: "",
+            handleOpenModal,
+            handleCloseModal: vi.fn(),
+            modalPayload: null,
+          }}
+        >
+          <UserPreferencesContext.Provider
+            value={{
+              temperatureUnit: "F",
+              toggleTemperatureUnit: vi.fn(),
+              theme: "light",
+            }}
+          >
             <CurrentUserContext.Provider value={currentUser}>
               <Profile
                 currentUser={currentUser}
@@ -39,7 +50,7 @@ describe("Profile", () => {
             </CurrentUserContext.Provider>
           </UserPreferencesContext.Provider>
         </ModalContext.Provider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.getByText("Test User")).toBeInTheDocument();
@@ -51,3 +62,5 @@ describe("Profile", () => {
     // Wait, let's verify ClothesSection logic.
   });
 });
+
+export { Profile };

@@ -14,15 +14,20 @@ describe("ItemCard", () => {
     render(<ItemCard item={mockItem} onSelectCard={vi.fn()} />);
     expect(screen.getByText("Test Item")).toBeInTheDocument();
     expect(screen.getByRole("button")).toBeInTheDocument();
-    expect(screen.getByRole("button")).toHaveAttribute("src", mockItem.imageUrl);
+    expect(screen.getByRole("button")).toHaveAttribute(
+      "src",
+      mockItem.imageUrl,
+    );
   });
 
   it("calls onSelectCard when clicked", () => {
     const handleSelectCard = vi.fn();
     render(<ItemCard item={mockItem} onSelectCard={handleSelectCard} />);
-    
+
     const image = screen.getByRole("button");
     fireEvent.click(image);
     expect(handleSelectCard).toHaveBeenCalledWith(mockItem);
   });
 });
+
+export { ItemCard };
